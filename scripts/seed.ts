@@ -219,21 +219,280 @@ The **Uplift V2** hits the sweet spot of quality, stability, and price for most 
 *Disclosure: As an Amazon Associate, we earn from qualifying purchases.*
 `,
   },
+  {
+    slug: "best-mechanical-keyboards",
+    title: "Best Mechanical Keyboards for Coding in 2026",
+    excerpt: "We tested 15 mechanical keyboards to find the best switches, layouts, and features for programmers and writers.",
+    date: "2026-05-20",
+    category: "Equipment",
+    content: `
+## Why Your Keyboard Matters
+
+If you spend 8+ hours a day typing, your keyboard is the most-used tool on your desk. A good mechanical keyboard can reduce fatigue, improve accuracy, and make typing genuinely enjoyable.
+
+## How We Tested
+
+We evaluated keyboards on: switch feel, build quality, ergonomics, programmability, noise level, and value for money. Each keyboard was used for at least one full work week.
+
+## Top Picks
+
+### Best Overall: Keychron Q6 Max
+
+The Q6 Max combines premium aluminum construction, hot-swappable switches, and wireless connectivity in one stunning package. The Gateron Jupiter switches are smooth and satisfying right out of the box.
+
+**Pros:**
+- Full aluminum CNC body
+- Hot-swappable switches
+- Bluetooth + 2.4GHz + wired
+- QMK/VIA programmable
+- Outstanding build quality
+
+**Cons:**
+- Heavy (not portable)
+- Pricey for beginners
+- No dedicated media keys
+
+**Rating: 4.7/5** | **Price: $199**
+
+### Best Budget: Royal Kludge RK84
+
+Proof that you don't need to spend hundreds for a great typing experience. The RK84 offers wireless connectivity, hot-swap sockets, and a compact 75% layout at an unbeatable price.
+
+**Pros:**
+- Incredible value
+- Hot-swappable switches
+- Triple-mode connectivity
+- USB passthrough hub
+- Compact but retains function row
+
+**Cons:**
+- Plastic case feels budget
+- Stock stabilizers need tuning
+- Battery life is average
+
+**Rating: 4.3/5** | **Price: $59**
+
+### Best Ergonomic: ZSA Moonlander
+
+For those struggling with wrist pain, the Moonlander's split design and fully customizable layout are game-changing. The learning curve is steep, but your wrists will thank you.
+
+**Pros:**
+- Dramatic wrist pain relief
+- Endlessly customizable
+- Excellent build quality
+- Portable carrying case included
+- Active community for layouts
+
+**Cons:**
+- Expensive
+- 2-4 week adaptation period
+- No wireless option
+
+**Rating: 4.5/5** | **Price: $365**
+
+## Switch Types Explained
+
+- **Linear (Red):** Smooth keystroke, no bump. Best for gaming. Quiet when lubed.
+- **Tactile (Brown):** Noticeable bump at actuation. Best all-rounder for typing and gaming.
+- **Clicky (Blue):** Loud click with tactile bump. Satisfying for typing, annoying for coworkers.
+
+## Our Recommendation
+
+Start with the **Keychron Q6 Max** if you want a premium experience out of the box. Go with the **RK84** if you're on a budget. Switch to the **Moonlander** if ergonomics are your top priority.
+
+*Disclosure: As an Amazon Associate, we earn from qualifying purchases.*
+`,
+  },
+  {
+    slug: "best-password-managers",
+    title: "Best Password Managers in 2026: Secure Your Digital Life",
+    excerpt: "Compare the top password managers for security, ease of use, and features. Find the right one to protect your accounts.",
+    date: "2026-05-18",
+    category: "Software",
+    content: `
+## Why You Need a Password Manager
+
+Reusing passwords is the #1 security risk for most people. A password manager generates and stores unique, strong passwords for every account — you only need to remember one master password.
+
+## Evaluation Criteria
+
+Security architecture, cross-platform support, user experience, password sharing, emergency access, and pricing.
+
+## Top Picks
+
+### Best Overall: 1Password
+
+1Password strikes the perfect balance between security and usability. Its Secret Key design means even if someone hacks 1Password's servers, your vault stays encrypted.
+
+**Pros:**
+- Best-in-class security design
+- Intuitive, polished UI
+- Excellent family sharing
+- Watchtower breach monitoring
+- Travel Mode for border crossings
+
+**Cons:**
+- No free tier
+- Limited offline access
+- Subscription required
+
+**Rating: 4.7/5** | **Price: $2.99/month**
+
+### Best Free: Bitwarden
+
+Bitwarden is open-source, independently audited, and offers a generous free tier with unlimited password storage across all devices.
+
+**Pros:**
+- Free tier is genuinely great
+- Open source & audited
+- Self-hosting option
+- Unlimited devices on free plan
+- Passkey support
+
+**Cons:**
+- UI less polished than competitors
+- Auto-fill can be clunky
+- No built-in VPN
+
+**Rating: 4.4/5** | **Price: Free / $10/year Premium**
+
+### Best for Beginners: NordPass
+
+From the makers of NordVPN, NordPass offers a clean, simple interface that's perfect for password manager newcomers. Setup takes under 5 minutes.
+
+**Pros:**
+- Extremely easy to use
+- Strong security (XChaCha20 encryption)
+- Built-in data breach scanner
+- Password health reports
+- Good family plan
+
+**Cons:**
+- Free tier limited to one device
+- Newer than competitors
+- Fewer advanced features
+
+**Rating: 4.2/5** | **Price: Free / $1.49/month**
+
+## Comparison Table
+
+| Feature | 1Password | Bitwarden | NordPass |
+|---------|-----------|-----------|----------|
+| Free tier | No | Yes (unlimited) | Yes (1 device) |
+| Open source | No | Yes | No |
+| Passkey support | Yes | Yes | Yes |
+| Family sharing | Yes | Yes (Premium) | Yes |
+| Travel mode | Yes | No | No |
+
+## Final Verdict
+
+**1Password** is the best overall for those willing to pay. **Bitwarden** is the obvious choice if you want a free, open-source solution. **NordPass** is ideal if you want the simplest experience possible.
+
+*Disclosure: Some links in this article are affiliate links. We may earn a commission from qualifying purchases.*
+`,
+  },
+  {
+    slug: "best-budget-monitors",
+    title: "Best Budget Monitors for Programming (2026)",
+    excerpt: "We tested affordable monitors under $400 to find the best displays for coding, productivity, and eye comfort.",
+    date: "2026-04-15",
+    category: "Equipment",
+    content: `
+## Why a Good Monitor Matters for Coders
+
+More screen real estate means less alt-tabbing, better code visibility, and reduced eye strain. You don't need a $1,000 display — modern budget monitors offer impressive quality for the price.
+
+## What We Looked For
+
+Resolution, panel type (IPS vs VA), refresh rate, color accuracy, connectivity, and ergonomic adjustments. All picks are under $400.
+
+## Top Picks
+
+### Best Overall: Dell S2722QC
+
+A 27-inch 4K IPS monitor with USB-C connectivity at this price is remarkable. Text is razor-sharp, colors are accurate, and the USB-C port charges your laptop while carrying video.
+
+**Pros:**
+- Crisp 4K resolution at 27"
+- USB-C with 65W power delivery
+- Good color accuracy out of the box
+- Built-in speakers
+- VESA mount compatible
+
+**Cons:**
+- 60Hz only (no high refresh rate)
+- HDR is mediocre
+- Stand lacks swivel adjustment
+
+**Rating: 4.6/5** | **Price: $279**
+
+### Best Ultrawide: LG 29WP60G-B
+
+An ultrawide 29" IPS display that lets you comfortably fit two code files side by side. At 2560x1080, it's not the sharpest, but the extra horizontal space is transformative for productivity.
+
+**Pros:**
+- Ultrawide aspect ratio for side-by-side coding
+- IPS panel with good colors
+- FreeSync support
+- Affordable entry to ultrawide
+- 75Hz refresh rate
+
+**Cons:**
+- 1080p vertical resolution
+- No USB-C
+- Stand has limited adjustability
+
+**Rating: 4.3/5** | **Price: $199**
+
+### Best Dual-Screen Setup: ASUS ProArt PA247CV
+
+If you prefer dual monitors, the ProArt delivers factory-calibrated color accuracy and a built-in USB-C hub. Buy two for the ultimate budget coding station.
+
+**Pros:**
+- Factory calibrated (Delta E < 2)
+- USB-C with 65W PD
+- Excellent color accuracy
+- Daisy-chain capable
+- 3-year warranty
+
+**Cons:**
+- 24" is on the smaller side
+- 1080p resolution
+- Plastic build
+
+**Rating: 4.4/5** | **Price: $229**
+
+## Productivity Tips
+
+- **4K at 27" with 150% scaling** gives you the sharpest text — ideal for long coding sessions
+- **Ultrawide monitors** reduce the need for dual screens and eliminate bezel gaps
+- **Dual screens** are a cheaper way to get more total pixels
+- Always look for **USB-C with power delivery** to reduce cable clutter
+
+## Final Verdict
+
+The **Dell S2722QC** is the sweet spot — 4K clarity, USB-C convenience, and under $300. For those on a tighter budget, the **LG 29WP60G-B** ultrawide offers fantastic productivity at under $200.
+
+*Disclosure: As an Amazon Associate, we earn from qualifying purchases.*
+`,
+  },
 ];
 
-const existing = readStore("posts");
-if (existing.length > 0) {
-  console.log(`Database already has ${existing.length} posts. Skipping seed.`);
-  process.exit(0);
-}
+(async () => {
+  const existing = readStore("posts");
+  if (existing.length > 0) {
+    console.log(`Database already has ${existing.length} posts. Skipping seed.`);
+    process.exit(0);
+  }
 
-const now = new Date().toISOString();
-const seeded = posts.map((post, i) => ({
-  ...post,
-  id: i + 1,
-  created_at: now,
-  updated_at: now,
-}));
+  const now = new Date().toISOString();
+  const seeded = posts.map((post, i) => ({
+    ...post,
+    id: i + 1,
+    created_at: now,
+    updated_at: now,
+  }));
 
-await writeStore("posts", seeded);
-console.log(`Seeded ${seeded.length} blog posts.`);
+  await writeStore("posts", seeded);
+  console.log(`Seeded ${seeded.length} blog posts.`);
+})();
