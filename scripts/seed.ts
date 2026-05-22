@@ -1,8 +1,8 @@
 // Run this script to seed the database with existing blog posts.
-// Usage: npx tsx src/lib/seed.ts
+// Usage: npx tsx scripts/seed.ts
 
-import { readStore, writeStore } from "./db";
-import type { BlogPost } from "./blog-admin";
+import { readStore, writeStore } from "../src/lib/db";
+import type { BlogPost } from "../src/lib/blog-admin";
 
 const posts: Omit<BlogPost, "id" | "created_at" | "updated_at">[] = [
   {
