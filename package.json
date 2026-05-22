@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "db:seed": "npx tsx scripts/seed.ts",
-    "prebuild": "npm run db:seed"
+    "lint": "next lint"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.1.0",

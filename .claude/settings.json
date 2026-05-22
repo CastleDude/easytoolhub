@@ -146,7 +146,13 @@
       "Bash(git init *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(ls src/lib/seed.ts)",
+      "Bash(ls scripts/seed.ts)",
+      "Bash(git ls-tree *)",
+      "Bash(git fetch *)",
+      "WebFetch(domain:github.com)",
+      "Bash(cmd /c \"rmdir /s /q .next\")"
     ],
     "additionalDirectories": [
       "d:\\Download\\Mysite\\Ask\\src\\app\\blog",
