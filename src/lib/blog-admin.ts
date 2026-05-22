@@ -63,8 +63,6 @@ function ensureSeeded(): BlogPost[] {
     created_at: now,
     updated_at: now,
   }));
-  // Fire-and-forget async write — next cold start will have the file
-  writeStore(STORE, seededCache).catch(() => {});
   return seededCache;
 }
 
@@ -85,14 +83,11 @@ export function getAllSlugs(): string[] {
 }
 
 export async function createPost(input: BlogPostInput): Promise<BlogPost> {
-  const posts = readStore<BlogPost>(STORE);
-  if (posts.length === 0 && seededCache) {
-    // Use seeded cache if store is empty
-    posts.push(...seededCache);
-  }
+  const posts = [...ensureSeeded()];
   const now = new Date().toISOString();
+  const maxId = posts.reduce((max, p) => Math.max(max, p.id), 0);
   const post: BlogPost = {
-    id: nextId(STORE),
+    id: maxId + 1,
     ...input,
     created_at: now,
     updated_at: now,
@@ -104,10 +99,7 @@ export async function createPost(input: BlogPostInput): Promise<BlogPost> {
 }
 
 export async function updatePost(id: number, input: Partial<BlogPostInput>): Promise<BlogPost | undefined> {
-  let posts = readStore<BlogPost>(STORE);
-  if (posts.length === 0 && seededCache) {
-    posts = [...seededCache];
-  }
+  const posts = [...ensureSeeded()];
   const index = posts.findIndex((p) => p.id === id);
   if (index === -1) return undefined;
 
@@ -122,10 +114,7 @@ export async function updatePost(id: number, input: Partial<BlogPostInput>): Pro
 }
 
 export async function deletePost(id: number): Promise<boolean> {
-  let posts = readStore<BlogPost>(STORE);
-  if (posts.length === 0 && seededCache) {
-    posts = [...seededCache];
-  }
+  const posts = [...ensureSeeded()];
   const filtered = posts.filter((p) => p.id !== id);
   if (filtered.length === posts.length) return false;
   await writeStore(STORE, filtered);
