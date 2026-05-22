@@ -26,7 +26,7 @@ export default function BlogForm({
     slug: "",
     excerpt: "",
     date: new Date().toISOString().split("T")[0],
-    category: "软件",
+    category: "Software",
     content: "",
   });
   const [saving, setSaving] = useState(false);
@@ -39,7 +39,7 @@ export default function BlogForm({
         slug: initial.slug || "",
         excerpt: initial.excerpt || "",
         date: initial.date || new Date().toISOString().split("T")[0],
-        category: initial.category || "软件",
+        category: initial.category || "Software",
         content: initial.content || "",
       });
     }
@@ -90,7 +90,7 @@ export default function BlogForm({
     setSaving(false);
   }
 
-  const categories = ["软件", "设备", "指南", "对比", "综合"];
+  const categories = ["Software", "Equipment", "Guide", "Comparison", "General"];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 max-w-4xl">
