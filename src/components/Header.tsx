@@ -26,8 +26,13 @@ export default function Header() {
       <div className="container-main flex items-center justify-between h-16">
         <a
           href={`/${locale}`}
-          className="text-xl font-bold text-primary-600 dark:text-primary-400"
+          className="text-xl font-bold text-primary-600 dark:text-primary-400 flex items-center gap-2"
         >
+          <img
+            src="/images/easytoolhubicon.png"
+            alt=""
+            className="w-7 h-7"
+          />
           {t("logo")}
         </a>
 

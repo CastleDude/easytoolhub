@@ -35,6 +35,9 @@ export async function generateMetadata({
       canonical: `/${locale}`,
       languages: alternates,
     },
+    icons: {
+      icon: "/images/easytoolhubicon.png",
+    },
     openGraph: {
       type: "website",
       siteName: t("siteName"),
