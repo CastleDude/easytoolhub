@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { getBlogPosts } from "@/lib/blog";
 
+export const dynamic = "force-dynamic";
+
 export default async function BlogPage({
   params,
 }: {

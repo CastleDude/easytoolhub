@@ -4,6 +4,8 @@ import { getBlogPost, getAllBlogSlugs, getRelatedPosts } from "@/lib/blog";
 import AdBanner from "@/components/AdBanner";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string; locale: string }>;
 }
