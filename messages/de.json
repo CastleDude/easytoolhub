@@ -269,7 +269,25 @@
         "AUD": "Australischer Dollar (A$)",
         "CHF": "Schweizer Franken (Fr)",
         "MXN": "Mexikanischer Peso (MX$)",
-        "BRL": "Brasilianischer Real (R$)"
+        "BRL": "Brasilianischer Real (R$)",
+      "CZK": "Tschechische Krone (Kč)",
+      "DKK": "Dänische Krone (kr)",
+      "HKD": "Hongkong-Dollar (HK$)",
+      "HUF": "Ungarischer Forint (Ft)",
+      "IDR": "Indonesische Rupiah (Rp)",
+      "ILS": "Israelischer Neuer Schekel (₪)",
+      "ISK": "Isländische Krone (kr)",
+      "MYR": "Malaysischer Ringgit (RM)",
+      "NOK": "Norwegische Krone (kr)",
+      "NZD": "Neuseeland-Dollar (NZ$)",
+      "PHP": "Philippinischer Peso (₱)",
+      "PLN": "Polnischer Złoty (zł)",
+      "RON": "Rumänischer Leu (lei)",
+      "SEK": "Schwedische Krone (kr)",
+      "SGD": "Singapur-Dollar (S$)",
+      "THB": "Thailändischer Baht (฿)",
+      "TRY": "Türkische Lira (₺)",
+      "ZAR": "Südafrikanischer Rand (R)"
       }
     },
     "romanNumeral": {
@@ -481,7 +499,25 @@
       "Equipment": "Ausrüstung",
       "Guide": "Anleitung",
       "Comparison": "Vergleich",
-      "General": "Allgemein"
+      "General": "Allgemein",
+    "CZK": "Tschechische Krone (Kč)",
+    "DKK": "Dänische Krone (kr)",
+    "HKD": "Hongkong-Dollar (HK$)",
+    "HUF": "Ungarischer Forint (Ft)",
+    "IDR": "Indonesische Rupiah (Rp)",
+    "ILS": "Israelischer Neuer Schekel (₪)",
+    "ISK": "Isländische Krone (kr)",
+    "MYR": "Malaysischer Ringgit (RM)",
+    "NOK": "Norwegische Krone (kr)",
+    "NZD": "Neuseeland-Dollar (NZ$)",
+    "PHP": "Philippinischer Peso (₱)",
+    "PLN": "Polnischer Złoty (zł)",
+    "RON": "Rumänischer Leu (lei)",
+    "SEK": "Schwedische Krone (kr)",
+    "SGD": "Singapur-Dollar (S$)",
+    "THB": "Thailändischer Baht (฿)",
+    "TRY": "Türkische Lira (₺)",
+    "ZAR": "Südafrikanischer Rand (R)"
     }
   },
   "About": {

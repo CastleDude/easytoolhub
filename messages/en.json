@@ -269,7 +269,25 @@
         "AUD": "Australian Dollar (A$)",
         "CHF": "Swiss Franc (Fr)",
         "MXN": "Mexican Peso (MX$)",
-        "BRL": "Brazilian Real (R$)"
+        "BRL": "Brazilian Real (R$)",
+      "CZK": "Czech Koruna (Kč)",
+      "DKK": "Danish Krone (kr)",
+      "HKD": "Hong Kong Dollar (HK$)",
+      "HUF": "Hungarian Forint (Ft)",
+      "IDR": "Indonesian Rupiah (Rp)",
+      "ILS": "Israeli New Shekel (₪)",
+      "ISK": "Icelandic Króna (kr)",
+      "MYR": "Malaysian Ringgit (RM)",
+      "NOK": "Norwegian Krone (kr)",
+      "NZD": "New Zealand Dollar (NZ$)",
+      "PHP": "Philippine Peso (₱)",
+      "PLN": "Polish Złoty (zł)",
+      "RON": "Romanian Leu (lei)",
+      "SEK": "Swedish Krona (kr)",
+      "SGD": "Singapore Dollar (S$)",
+      "THB": "Thai Baht (฿)",
+      "TRY": "Turkish Lira (₺)",
+      "ZAR": "South African Rand (R)"
       }
     },
     "romanNumeral": {
@@ -485,7 +503,25 @@
       "Equipment": "Equipment",
       "Guide": "Guide",
       "Comparison": "Comparison",
-      "General": "General"
+      "General": "General",
+    "CZK": "Czech Koruna (Kč)",
+    "DKK": "Danish Krone (kr)",
+    "HKD": "Hong Kong Dollar (HK$)",
+    "HUF": "Hungarian Forint (Ft)",
+    "IDR": "Indonesian Rupiah (Rp)",
+    "ILS": "Israeli New Shekel (₪)",
+    "ISK": "Icelandic Króna (kr)",
+    "MYR": "Malaysian Ringgit (RM)",
+    "NOK": "Norwegian Krone (kr)",
+    "NZD": "New Zealand Dollar (NZ$)",
+    "PHP": "Philippine Peso (₱)",
+    "PLN": "Polish Złoty (zł)",
+    "RON": "Romanian Leu (lei)",
+    "SEK": "Swedish Krona (kr)",
+    "SGD": "Singapore Dollar (S$)",
+    "THB": "Thai Baht (฿)",
+    "TRY": "Turkish Lira (₺)",
+    "ZAR": "South African Rand (R)"
     }
   },
   "About": {
