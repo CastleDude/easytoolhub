@@ -7,6 +7,7 @@ import BlogEditor from "./BlogEditor";
 interface BlogFormData {
   title: string;
   slug: string;
+  locale: string;
   excerpt: string;
   date: string;
   category: string;
@@ -24,6 +25,7 @@ export default function BlogForm({
   const [form, setForm] = useState<BlogFormData>({
     title: "",
     slug: "",
+    locale: "zh",
     excerpt: "",
     date: new Date().toISOString().split("T")[0],
     category: "Software",
@@ -37,6 +39,7 @@ export default function BlogForm({
       setForm({
         title: initial.title || "",
         slug: initial.slug || "",
+        locale: initial.locale || "en",
         excerpt: initial.excerpt || "",
         date: initial.date || new Date().toISOString().split("T")[0],
         category: initial.category || "Software",
@@ -80,7 +83,8 @@ export default function BlogForm({
     });
 
     if (res.ok) {
-      router.push("/admin/blog");
+      const slug = form.slug || (await res.json())?.slug;
+      router.push(`/admin/blog?new=${encodeURIComponent(slug)}`);
       router.refresh();
     } else {
       const data = await res.json().catch(() => ({}));
@@ -90,7 +94,13 @@ export default function BlogForm({
     setSaving(false);
   }
 
-  const categories = ["Software", "Equipment", "Guide", "Comparison", "General"];
+  const categoryOptions = [
+    { value: "Software", label: "软件" },
+    { value: "Equipment", label: "设备" },
+    { value: "Guide", label: "指南" },
+    { value: "Comparison", label: "对比" },
+    { value: "General", label: "综合" },
+  ];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 max-w-4xl">
@@ -134,14 +144,32 @@ export default function BlogForm({
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">语言 / Locale</label>
+          <select
+            value={form.locale}
+            onChange={(e) => updateField("locale", e.target.value)}
+            className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+          >
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="ru">Русский</option>
+          </select>
+        </div>
+
+        <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">分类</label>
           <select
             value={form.category}
             onChange={(e) => updateField("category", e.target.value)}
             className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
           >
-            {categories.map((c) => (
-              <option key={c} value={c}>{c}</option>
+            {categoryOptions.map((c) => (
+              <option key={c.value} value={c.value}>{c.label}</option>
             ))}
           </select>
         </div>

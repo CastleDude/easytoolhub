@@ -11,6 +11,7 @@
   "dependencies": {
     "@mdx-js/mdx": "^3.1.0",
     "@next/mdx": "^15.1.0",
+    "@vitalets/google-translate-api": "^9.2.1",
     "bcryptjs": "^3.0.3",
     "easymde": "^2.21.0",
     "jose": "^6.2.3",

@@ -1,6 +1,7 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
+import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -89,17 +90,20 @@ export default function UnitConverterPage() {
             ))}
           </select>
         </div>
-        <div className="flex items-end pb-1">
+        <div className="flex items-end pb-[3px]">
           <button
             onClick={() => {
               const tmp = fromUnit;
               setFromUnit(toUnit);
               setToUnit(tmp);
+              setResult(null);
             }}
-            className="px-4 py-3 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-lg"
+            className="shrink-0 w-10 h-[46px] flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             aria-label={t("swap")}
           >
-            ⇄
+            <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4-4 4M21 12H9M7 16l-4-4 4-4M3 12h12" />
+            </svg>
           </button>
         </div>
         <div className="flex-1">
@@ -144,6 +148,7 @@ export default function UnitConverterPage() {
       </div>
       <ToolClickTracker toolSlug="unit-converter" />
       <FeedbackWidget toolSlug="unit-converter" />
+      <FavoritedTools />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import type { BlogPost } from "../src/lib/blog-admin";
 const posts: Omit<BlogPost, "id" | "created_at" | "updated_at">[] = [
   {
     slug: "best-productivity-apps",
+    locale: "en",
     title: "Best Productivity Apps in 2026: Boost Your Workflow",
     excerpt: "We tested over 20 productivity apps to find the best ones for task management, note-taking, and focus. Here are our top picks.",
     date: "2026-05-15",
@@ -88,6 +89,7 @@ Choose **Notion** if you want one tool to replace many. Pick **Todoist** for pur
   },
   {
     slug: "best-note-taking-apps",
+    locale: "en",
     title: "5 Best Note-Taking Apps Compared (2026 Edition)",
     excerpt: "From simple to sophisticated — find the perfect note-taking app for your workflow with our hands-on comparison.",
     date: "2026-05-10",
@@ -145,6 +147,7 @@ If you're in the Apple ecosystem, the built-in Notes app has become surprisingly
   },
   {
     slug: "best-standing-desks",
+    locale: "en",
     title: "Best Standing Desks for Home Offices in 2026",
     excerpt: "We researched and tested the top standing desks to find the best options for every budget and workspace.",
     date: "2026-04-28",
@@ -221,6 +224,7 @@ The **Uplift V2** hits the sweet spot of quality, stability, and price for most 
   },
   {
     slug: "best-mechanical-keyboards",
+    locale: "en",
     title: "Best Mechanical Keyboards for Coding in 2026",
     excerpt: "We tested 15 mechanical keyboards to find the best switches, layouts, and features for programmers and writers.",
     date: "2026-05-20",
@@ -305,6 +309,7 @@ Start with the **Keychron Q6 Max** if you want a premium experience out of the b
   },
   {
     slug: "best-password-managers",
+    locale: "en",
     title: "Best Password Managers in 2026: Secure Your Digital Life",
     excerpt: "Compare the top password managers for security, ease of use, and features. Find the right one to protect your accounts.",
     date: "2026-05-18",
@@ -393,6 +398,7 @@ From the makers of NordVPN, NordPass offers a clean, simple interface that's per
   },
   {
     slug: "best-budget-monitors",
+    locale: "en",
     title: "Best Budget Monitors for Programming (2026)",
     excerpt: "We tested affordable monitors under $400 to find the best displays for coding, productivity, and eye comfort.",
     date: "2026-04-15",

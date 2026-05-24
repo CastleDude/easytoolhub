@@ -51,13 +51,16 @@
     "ctaDesc": "無料ツールと専門家レビューの完全なコレクションをご覧ください。",
     "ctaButton": "すべてのツールを見る →",
     "viewAllTools": "21個のツールをすべて見る ↓",
-    "favAdd": "お気に入りに追加",
-    "favRemove": "お気に入りから削除"
+    "favAdd": "ピン留め",
+    "favRemove": "ピン解除"
   },
   "Tools": {
     "title": "すべてのツール",
     "description": "無料のオンライン計算機、コンバーター、テキストツールの完全なコレクションをご覧ください。",
     "subtitle": "ブラウザで直接動作する無料ツール。登録不要。",
+    "pin": "ピン留め",
+    "unpin": "ピン解除",
+    "pinnedShortcuts": "よく使うツール",
     "percentage": {
       "title": "パーセント計算機",
       "description": "パーセンテージ、パーセント変化を計算し、ある数値が別の数値の何パーセントかを求めます。",
@@ -212,7 +215,33 @@
       "toTimezone": "変換先タイムゾーン",
       "convert": "変換",
       "result": "変換後の時刻",
-      "now": "現在時刻を使用"
+      "now": "現在時刻を使用",
+      "swap": "タイムゾーンを入れ替え",
+      "timeDiff": "時差",
+      "timeDiffAhead": "<blue>{from}</blue> は <blue>{to}</blue> より {hours}時間{minutes}分進んでいます",
+      "timeDiffBehind": "<blue>{from}</blue> は <blue>{to}</blue> より {hours}時間{minutes}分遅れています",
+      "timeDiffSame": "<blue>{from}</blue> と <blue>{to}</blue> は同じタイムゾーンです",
+      "timezones": {
+        "UTC-12": "ベーカー島 (UTC-12)",
+        "UTC-11": "米領サモア (UTC-11)",
+        "UTC-10": "ハワイ (UTC-10)",
+        "UTC-9": "アラスカ (UTC-9)",
+        "UTC-8": "太平洋時間 (UTC-8)",
+        "UTC-7": "山岳部時間 (UTC-7)",
+        "UTC-6": "中部時間 (UTC-6)",
+        "UTC-5": "東部時間 (UTC-5)",
+        "UTC-4": "大西洋時間 (UTC-4)",
+        "UTC-3": "ブラジル (UTC-3)",
+        "UTC+0": "ロンドン (UTC+0)",
+        "UTC+1": "ベルリン/パリ (UTC+1)",
+        "UTC+2": "東ヨーロッパ (UTC+2)",
+        "UTC+3": "モスクワ (UTC+3)",
+        "UTC+5:30": "インド (UTC+5:30)",
+        "UTC+8": "中国/北京 (UTC+8)",
+        "UTC+9": "日本/韓国 (UTC+9)",
+        "UTC+10": "シドニー (UTC+10)",
+        "UTC+12": "ニュージーランド (UTC+12)"
+      }
     },
     "currencyConverter": {
       "title": "通貨変換器",
@@ -224,7 +253,24 @@
       "convert": "変換",
       "result": "変換後の金額",
       "placeholder": "金額を入力",
-      "disclaimer": "為替レートはデモ用です。実際のレートにはライブAPIをご利用ください。"
+      "rateDate": "レート日付",
+      "exchangeRate": "為替レート",
+      "swap": "通貨を入れ替え",
+      "disclaimer": "欧州中央銀行の基準レートに基づき、毎日更新されます。",
+      "currencies": {
+        "USD": "米ドル ($)",
+        "EUR": "ユーロ (€)",
+        "GBP": "英ポンド (£)",
+        "JPY": "日本円 (¥)",
+        "CNY": "中国元 (¥)",
+        "KRW": "韓国ウォン (₩)",
+        "INR": "インドルピー (₹)",
+        "CAD": "カナダドル (C$)",
+        "AUD": "豪ドル (A$)",
+        "CHF": "スイスフラン (Fr)",
+        "MXN": "メキシコペソ (MX$)",
+        "BRL": "ブラジルレアル (R$)"
+      }
     },
     "romanNumeral": {
       "title": "ローマ数字変換器",
@@ -429,7 +475,14 @@
     "subtitle": "生産性を高める最高のツールと製品の正直で詳細なレビュー。",
     "back": "← すべてのレビューに戻る",
     "related": "関連記事",
-    "notFound": "記事が見つかりません"
+    "notFound": "記事が見つかりません",
+    "categories": {
+      "Software": "ソフトウェア",
+      "Equipment": "機器",
+      "Guide": "ガイド",
+      "Comparison": "比較",
+      "General": "一般"
+    }
   },
   "About": {
     "title": "私たちについて",

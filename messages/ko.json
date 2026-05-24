@@ -51,13 +51,16 @@
     "ctaDesc": "무료 도구와 전문가 리뷰 전체 컬렉션을 둘러보세요.",
     "ctaButton": "모든 도구 보기 →",
     "viewAllTools": "21개 도구 모두 보기 ↓",
-    "favAdd": "즐겨찾기 추가",
-    "favRemove": "즐겨찾기 제거"
+    "favAdd": "상단 고정",
+    "favRemove": "고정 해제"
   },
   "Tools": {
     "title": "모든 도구",
     "description": "무료 온라인 계산기, 변환기 및 텍스트 도구의 전체 컬렉션을 둘러보세요.",
     "subtitle": "브라우저에서 바로 작동하는 무료 도구. 회원가입 불필요.",
+    "pin": "상단 고정",
+    "unpin": "고정 해제",
+    "pinnedShortcuts": "자주 사용하는 도구",
     "percentage": {
       "title": "백분율 계산기",
       "description": "백분율, 백분율 변화를 계산하고 한 숫자가 다른 숫자의 몇 퍼센트인지 찾습니다.",
@@ -212,7 +215,33 @@
       "toTimezone": "변환 후 시간대",
       "convert": "변환",
       "result": "변환된 시간",
-      "now": "현재 시간 사용"
+      "now": "현재 시간 사용",
+      "swap": "시간대 맞바꾸기",
+      "timeDiff": "시차",
+      "timeDiffAhead": "<blue>{from}</blue>이(가) <blue>{to}</blue>보다 {hours}시간 {minutes}분 빠릅니다",
+      "timeDiffBehind": "<blue>{from}</blue>이(가) <blue>{to}</blue>보다 {hours}시간 {minutes}분 느립니다",
+      "timeDiffSame": "<blue>{from}</blue>과(와) <blue>{to}</blue>은(는) 같은 시간대에 있습니다",
+      "timezones": {
+        "UTC-12": "베이커 섬 (UTC-12)",
+        "UTC-11": "미국령 사모아 (UTC-11)",
+        "UTC-10": "하와이 (UTC-10)",
+        "UTC-9": "알래스카 (UTC-9)",
+        "UTC-8": "태평양 시간 (UTC-8)",
+        "UTC-7": "산악 시간 (UTC-7)",
+        "UTC-6": "중부 시간 (UTC-6)",
+        "UTC-5": "동부 시간 (UTC-5)",
+        "UTC-4": "대서양 시간 (UTC-4)",
+        "UTC-3": "브라질 (UTC-3)",
+        "UTC+0": "런던 (UTC+0)",
+        "UTC+1": "베를린/파리 (UTC+1)",
+        "UTC+2": "동유럽 (UTC+2)",
+        "UTC+3": "모스크바 (UTC+3)",
+        "UTC+5:30": "인도 (UTC+5:30)",
+        "UTC+8": "중국/베이징 (UTC+8)",
+        "UTC+9": "일본/한국 (UTC+9)",
+        "UTC+10": "시드니 (UTC+10)",
+        "UTC+12": "뉴질랜드 (UTC+12)"
+      }
     },
     "currencyConverter": {
       "title": "환율 변환기",
@@ -224,7 +253,24 @@
       "convert": "변환",
       "result": "변환된 금액",
       "placeholder": "금액 입력",
-      "disclaimer": "환율은 데모용입니다. 실제 환율은 실시간 API를 사용하세요."
+      "rateDate": "환율 날짜",
+      "exchangeRate": "환율",
+      "swap": "통화 교체",
+      "disclaimer": "유럽중앙은행 기준 환율, 매일 업데이트됩니다.",
+      "currencies": {
+        "USD": "미국 달러 ($)",
+        "EUR": "유로 (€)",
+        "GBP": "영국 파운드 (£)",
+        "JPY": "일본 엔 (¥)",
+        "CNY": "중국 위안 (¥)",
+        "KRW": "한국 원 (₩)",
+        "INR": "인도 루피 (₹)",
+        "CAD": "캐나다 달러 (C$)",
+        "AUD": "호주 달러 (A$)",
+        "CHF": "스위스 프랑 (Fr)",
+        "MXN": "멕시코 페소 (MX$)",
+        "BRL": "브라질 레알 (R$)"
+      }
     },
     "romanNumeral": {
       "title": "로마 숫자 변환기",
@@ -429,7 +475,14 @@
     "subtitle": "생산성을 높이는 최고의 도구와 제품에 대한 정직하고 심층적인 리뷰.",
     "back": "← 모든 리뷰로 돌아가기",
     "related": "관련 글",
-    "notFound": "게시글을 찾을 수 없습니다"
+    "notFound": "게시글을 찾을 수 없습니다",
+    "categories": {
+      "Software": "소프트웨어",
+      "Equipment": "장비",
+      "Guide": "가이드",
+      "Comparison": "비교",
+      "General": "일반"
+    }
   },
   "About": {
     "title": "회사 소개",

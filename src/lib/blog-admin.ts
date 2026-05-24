@@ -3,6 +3,7 @@ import { readStore, writeStore, nextId } from "./db";
 export interface BlogPost {
   id: number;
   slug: string;
+  locale: string;
   title: string;
   excerpt: string;
   date: string;
@@ -14,6 +15,7 @@ export interface BlogPost {
 
 export interface BlogPostInput {
   slug: string;
+  locale?: string;
   title: string;
   excerpt: string;
   date: string;
@@ -23,20 +25,28 @@ export interface BlogPostInput {
 
 const STORE = "posts";
 
-export function listPosts(): BlogPost[] {
-  return readStore<BlogPost>(STORE).sort((a, b) => b.date.localeCompare(a.date));
+export function listPosts(locale?: string): BlogPost[] {
+  const posts = readStore<BlogPost>(STORE);
+  const filtered = locale ? posts.filter((p) => p.locale === locale) : posts;
+  return filtered.sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export function getPostById(id: number): BlogPost | undefined {
   return readStore<BlogPost>(STORE).find((p) => p.id === id);
 }
 
-export function getPostBySlug(slug: string): BlogPost | undefined {
-  return readStore<BlogPost>(STORE).find((p) => p.slug === slug);
+export function getPostBySlug(slug: string, locale?: string): BlogPost | undefined {
+  const posts = readStore<BlogPost>(STORE);
+  if (locale) {
+    return posts.find((p) => p.slug === slug && p.locale === locale);
+  }
+  return posts.find((p) => p.slug === slug);
 }
 
-export function getAllSlugs(): string[] {
-  return readStore<BlogPost>(STORE).map((p) => p.slug);
+export function getAllSlugs(locale?: string): string[] {
+  const posts = readStore<BlogPost>(STORE);
+  const filtered = locale ? posts.filter((p) => p.locale === locale) : posts;
+  return filtered.map((p) => p.slug);
 }
 
 export async function createPost(input: BlogPostInput): Promise<BlogPost> {
@@ -44,6 +54,7 @@ export async function createPost(input: BlogPostInput): Promise<BlogPost> {
   const now = new Date().toISOString();
   const post: BlogPost = {
     id: nextId(STORE),
+    locale: input.locale || "en",
     ...input,
     created_at: now,
     updated_at: now,
@@ -75,16 +86,26 @@ export async function deletePost(id: number): Promise<boolean> {
   return true;
 }
 
-export function getRelatedPosts(currentSlug: string, count: number = 3): Omit<BlogPost, "content">[] {
+export async function deletePostsBySlug(slug: string): Promise<number> {
+  const posts = readStore<BlogPost>(STORE);
+  const matched = posts.filter((p) => p.slug === slug);
+  if (matched.length === 0) return 0;
+  const filtered = posts.filter((p) => p.slug !== slug);
+  await writeStore(STORE, filtered);
+  return matched.length;
+}
+
+export function getRelatedPosts(currentSlug: string, locale?: string, count: number = 3): Omit<BlogPost, "content">[] {
   const posts = readStore<BlogPost>(STORE)
-    .filter((p) => p.slug !== currentSlug)
+    .filter((p) => p.slug !== currentSlug && (!locale || p.locale === locale))
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, count);
   return posts.map(({ content, ...rest }) => rest);
 }
 
-export function getPostCount(): number {
-  return readStore<BlogPost>(STORE).length;
+export function getPostCount(locale?: string): number {
+  const posts = readStore<BlogPost>(STORE);
+  return locale ? posts.filter((p) => p.locale === locale).length : posts.length;
 }
 
 export function slugify(text: string): string {

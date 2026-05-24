@@ -51,13 +51,16 @@
     "ctaDesc": "浏览我们完整的免费工具和专家评测集合。",
     "ctaButton": "查看所有工具 →",
     "viewAllTools": "查看全部 21 个工具 ↓",
-    "favAdd": "加入收藏",
-    "favRemove": "取消收藏"
+    "favAdd": "置顶",
+    "favRemove": "取消置顶"
   },
   "Tools": {
     "title": "所有工具",
     "description": "浏览我们完整的免费在线计算器、转换器和文本工具集合。",
     "subtitle": "直接在浏览器中运行的免费在线工具。无需注册。",
+    "pin": "置顶",
+    "unpin": "取消置顶",
+    "pinnedShortcuts": "常用工具快捷入口",
     "percentage": {
       "title": "百分比计算器",
       "description": "计算百分比、百分比变化，以及一个数是另一个数的百分之几。",
@@ -212,7 +215,33 @@
       "toTimezone": "目标时区",
       "convert": "转换",
       "result": "转换后的时间",
-      "now": "使用当前时间"
+      "now": "使用当前时间",
+      "swap": "调换时区",
+      "timeDiff": "时差",
+      "timeDiffAhead": "<blue>{from}</blue> 比 <blue>{to}</blue> 快 {hours}小时{minutes}分钟",
+      "timeDiffBehind": "<blue>{from}</blue> 比 <blue>{to}</blue> 慢 {hours}小时{minutes}分钟",
+      "timeDiffSame": "<blue>{from}</blue> 与 <blue>{to}</blue> 处于同一时区",
+      "timezones": {
+        "UTC-12": "贝克岛 (UTC-12)",
+        "UTC-11": "美属萨摩亚 (UTC-11)",
+        "UTC-10": "夏威夷 (UTC-10)",
+        "UTC-9": "阿拉斯加 (UTC-9)",
+        "UTC-8": "太平洋时间 (UTC-8)",
+        "UTC-7": "山地时间 (UTC-7)",
+        "UTC-6": "中部时间 (UTC-6)",
+        "UTC-5": "东部时间 (UTC-5)",
+        "UTC-4": "大西洋时间 (UTC-4)",
+        "UTC-3": "巴西 (UTC-3)",
+        "UTC+0": "伦敦 (UTC+0)",
+        "UTC+1": "柏林/巴黎 (UTC+1)",
+        "UTC+2": "东欧 (UTC+2)",
+        "UTC+3": "莫斯科 (UTC+3)",
+        "UTC+5:30": "印度 (UTC+5:30)",
+        "UTC+8": "中国/北京 (UTC+8)",
+        "UTC+9": "日本/韩国 (UTC+9)",
+        "UTC+10": "悉尼 (UTC+10)",
+        "UTC+12": "新西兰 (UTC+12)"
+      }
     },
     "currencyConverter": {
       "title": "货币转换器",
@@ -224,7 +253,24 @@
       "convert": "转换",
       "result": "转换后的金额",
       "placeholder": "输入金额",
-      "disclaimer": "汇率仅供演示参考。如需真实汇率，请使用实时 API。"
+      "rateDate": "参考日期（最新可用数据）",
+      "exchangeRate": "当前汇率",
+      "swap": "调换币种",
+      "disclaimer": "汇率数据来自欧洲央行参考汇率，每日更新。",
+      "currencies": {
+        "USD": "美元 ($)",
+        "EUR": "欧元 (€)",
+        "GBP": "英镑 (£)",
+        "JPY": "日元 (¥)",
+        "CNY": "人民币 (¥)",
+        "KRW": "韩元 (₩)",
+        "INR": "印度卢比 (₹)",
+        "CAD": "加拿大元 (C$)",
+        "AUD": "澳大利亚元 (A$)",
+        "CHF": "瑞士法郎 (Fr)",
+        "MXN": "墨西哥比索 (MX$)",
+        "BRL": "巴西雷亚尔 (R$)"
+      }
     },
     "romanNumeral": {
       "title": "罗马数字转换器",
@@ -433,7 +479,14 @@
     "subtitle": "诚实、深入的评测，涵盖提升生产力的最佳工具和产品。",
     "back": "← 返回所有评测",
     "related": "相关文章",
-    "notFound": "文章未找到"
+    "notFound": "文章未找到",
+    "categories": {
+      "Software": "软件",
+      "Equipment": "设备",
+      "Guide": "指南",
+      "Comparison": "对比",
+      "General": "综合"
+    }
   },
   "About": {
     "title": "关于我们",

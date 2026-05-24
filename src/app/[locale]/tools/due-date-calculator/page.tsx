@@ -1,6 +1,7 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
+import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -62,6 +63,7 @@ export default function DueDateCalculatorPage() {
       <p className="mt-8 text-xs text-gray-400 dark:text-gray-500 text-center">{t("disclaimer")}</p>
       <ToolClickTracker toolSlug="due-date-calculator" />
       <FeedbackWidget toolSlug="due-date-calculator" />
+      <FavoritedTools />
     </div>
   );
 }

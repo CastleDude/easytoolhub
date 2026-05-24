@@ -1,5 +1,16 @@
 import { getTranslations } from "next-intl/server";
 
+const DATE_LOCALE: Record<string, string> = {
+  en: "en-US",
+  zh: "zh-CN",
+  es: "es-ES",
+  fr: "fr-FR",
+  de: "de-DE",
+  ja: "ja-JP",
+  ko: "ko-KR",
+  ru: "ru-RU",
+};
+
 export default async function PrivacyPage({
   params,
 }: {
@@ -13,7 +24,7 @@ export default async function PrivacyPage({
       <h1 className="text-3xl font-bold mb-6">{t("heading")}</h1>
       <p className="text-sm text-gray-500 dark:text-gray-400 mb-8">
         {t("lastUpdated")}{" "}
-        {new Date().toLocaleDateString(locale === "zh" ? "zh-CN" : locale === "ja" ? "ja-JP" : locale === "ko" ? "ko-KR" : "en-US", {
+        {new Date().toLocaleDateString(DATE_LOCALE[locale] || "en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",

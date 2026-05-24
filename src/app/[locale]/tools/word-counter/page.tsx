@@ -1,6 +1,7 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
+import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -45,6 +46,7 @@ export default function WordCounterPage() {
       </div>
       <ToolClickTracker toolSlug="word-counter" />
       <FeedbackWidget toolSlug="word-counter" />
+      <FavoritedTools />
     </div>
   );
 }

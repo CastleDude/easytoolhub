@@ -11,11 +11,11 @@ interface BlogPostPageProps {
 }
 
 export async function generateStaticParams() {
-  const paths: { slug: string; locale: string }[] = [];
-  const slugs = getAllBlogSlugs();
-  // Import locally to avoid issues
   const { locales } = await import("@/i18n/config");
+  const allPosts = await import("@/lib/blog-admin");
+  const paths: { slug: string; locale: string }[] = [];
   for (const locale of locales) {
+    const slugs = allPosts.getAllSlugs(locale);
     for (const slug of slugs) {
       paths.push({ locale, slug });
     }
@@ -27,7 +27,7 @@ export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug, locale } = await params;
-  const post = getBlogPost(slug);
+  const post = getBlogPost(slug, locale);
   const t = await getTranslations({ locale, namespace: "Blog" });
   if (!post) return { title: t("notFound") };
   return {
@@ -44,12 +44,12 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug, locale } = await params;
-  const post = getBlogPost(slug);
+  const post = getBlogPost(slug, locale);
   const t = await getTranslations({ locale, namespace: "Blog" });
 
   if (!post) notFound();
 
-  const related = getRelatedPosts(slug, 3);
+  const related = getRelatedPosts(slug, locale, 3);
 
   return (
     <div className="container-main py-16">
@@ -63,7 +63,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div className="flex items-center gap-3 mb-4">
           <span className="text-xs font-medium px-2 py-1 bg-primary-50 dark:bg-primary-950 text-primary-600 dark:text-primary-400 rounded-full">
-            {post.category}
+            {t(`categories.${post.category}`)}
           </span>
           <span className="text-sm text-gray-400">{post.date}</span>
         </div>

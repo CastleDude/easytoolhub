@@ -10,7 +10,7 @@ export default async function BlogPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Blog" });
-  const posts = getBlogPosts();
+  const posts = getBlogPosts(locale);
 
   return (
     <div className="container-main py-16">
@@ -29,7 +29,7 @@ export default async function BlogPage({
           >
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xs font-medium px-2 py-1 bg-primary-50 dark:bg-primary-950 text-primary-600 dark:text-primary-400 rounded-full">
-                {post.category}
+                {t(`categories.${post.category}`)}
               </span>
               <span className="text-xs text-gray-400">{post.date}</span>
             </div>

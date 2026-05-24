@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import ToolCard from "@/components/ToolCard";
+import ToolsGrid from "@/components/ToolsGrid";
+import { toolDefs } from "@/lib/tool-defs";
 
 export default async function ToolsPage({
   params,
@@ -9,29 +10,13 @@ export default async function ToolsPage({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Tools" });
 
-  const toolKeys = [
-    { key: "percentage", icon: "📊", slug: "percentage" },
-    { key: "bmi", icon: "⚖️", slug: "bmi" },
-    { key: "wordCounter", icon: "📝", slug: "word-counter" },
-    { key: "ageCalculator", icon: "🎂", slug: "age-calculator" },
-    { key: "unitConverter", icon: "🔄", slug: "unit-converter" },
-    { key: "discount", icon: "🏷️", slug: "discount" },
-    { key: "tipCalculator", icon: "💰", slug: "tip-calculator" },
-    { key: "loanCalculator", icon: "🏦", slug: "loan-calculator" },
-    { key: "averageCalculator", icon: "📈", slug: "average-calculator" },
-    { key: "timeZoneConverter", icon: "🕐", slug: "time-zone-converter" },
-    { key: "currencyConverter", icon: "💱", slug: "currency-converter" },
-    { key: "romanNumeral", icon: "🏛️", slug: "roman-numeral-converter" },
-    { key: "numberBase", icon: "🔢", slug: "number-base-converter" },
-    { key: "passwordGenerator", icon: "🔐", slug: "password-generator" },
-    { key: "loremIpsum", icon: "📄", slug: "lorem-ipsum" },
-    { key: "caseConverter", icon: "🔤", slug: "case-converter" },
-    { key: "urlEncoder", icon: "🔗", slug: "url-encoder" },
-    { key: "calorieCalculator", icon: "🔥", slug: "calorie-calculator" },
-    { key: "dueDateCalculator", icon: "👶", slug: "due-date-calculator" },
-    { key: "dateDifference", icon: "📅", slug: "date-difference" },
-    { key: "whatToEat", icon: "🍽️", slug: "what-to-eat" },
-  ];
+  const tools = toolDefs.map(({ key, icon, slug }) => ({
+    key,
+    icon,
+    slug,
+    title: t(`${key}.title`),
+    description: t(`${key}.description`),
+  }));
 
   return (
     <div className="container-main py-16">
@@ -41,17 +26,12 @@ export default async function ToolsPage({
           {t("subtitle")}
         </p>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {toolKeys.map(({ key, icon, slug }) => (
-          <ToolCard
-            key={key}
-            title={t(`${key}.title`)}
-            description={t(`${key}.description`)}
-            href={`/${locale}/tools/${slug}`}
-            icon={icon}
-          />
-        ))}
-      </div>
+      <ToolsGrid
+        tools={tools}
+        locale={locale}
+        pinLabel={t("pin")}
+        unpinLabel={t("unpin")}
+      />
     </div>
   );
 }

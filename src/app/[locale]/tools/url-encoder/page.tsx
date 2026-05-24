@@ -1,6 +1,7 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
+import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
@@ -108,6 +109,7 @@ export default function UrlEncoderPage() {
       )}
       <ToolClickTracker toolSlug="url-encoder" />
       <FeedbackWidget toolSlug="url-encoder" />
+      <FavoritedTools />
     </div>
   );
 }

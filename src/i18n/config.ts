@@ -1,4 +1,4 @@
-export const locales = ["en", "zh", "es", "fr", "de", "ja", "ko"] as const;
+export const locales = ["en", "zh", "es", "fr", "de", "ja", "ko", "ru"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
 
@@ -10,6 +10,7 @@ export const localeNames: Record<Locale, string> = {
   de: "Deutsch",
   ja: "日本語",
   ko: "한국어",
+  ru: "Русский",
 };
 
 // Country code to default locale mapping (for Vercel geo-IP)
@@ -21,6 +22,7 @@ export const countryLocaleMap: Record<string, Locale> = {
   DE: "de", AT: "de", LI: "de",
   JP: "ja",
   KR: "ko",
+  RU: "ru", BY: "ru", KZ: "ru", UA: "ru",
 };
 
 export const localesWithHreflang: Record<Locale, string> = {
@@ -31,4 +33,5 @@ export const localesWithHreflang: Record<Locale, string> = {
   de: "de",
   ja: "ja",
   ko: "ko",
+  ru: "ru",
 };

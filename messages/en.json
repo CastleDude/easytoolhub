@@ -51,13 +51,16 @@
     "ctaDesc": "Browse our full collection of free tools and expert product reviews.",
     "ctaButton": "View All Tools →",
     "viewAllTools": "View All 21 Tools ↓",
-    "favAdd": "Add to favorites",
-    "favRemove": "Remove from favorites"
+    "favAdd": "Pin to top",
+    "favRemove": "Unpin"
   },
   "Tools": {
     "title": "All Tools",
     "description": "Browse our complete collection of free online calculators, converters, and text tools.",
     "subtitle": "Free online tools that work right in your browser. No sign-up required.",
+    "pin": "Pin to top",
+    "unpin": "Unpin",
+    "pinnedShortcuts": "Your Shortcuts",
     "percentage": {
       "title": "Percentage Calculator",
       "description": "Calculate percentages, percentage change, and find what percent one number is of another.",
@@ -212,7 +215,33 @@
       "toTimezone": "To Timezone",
       "convert": "Convert",
       "result": "Converted Time",
-      "now": "Use Current Time"
+      "now": "Use Current Time",
+      "swap": "Swap timezones",
+      "timeDiff": "Time Difference",
+      "timeDiffAhead": "<blue>{from}</blue> is {hours}h {minutes}m ahead of <blue>{to}</blue>",
+      "timeDiffBehind": "<blue>{from}</blue> is {hours}h {minutes}m behind <blue>{to}</blue>",
+      "timeDiffSame": "<blue>{from}</blue> and <blue>{to}</blue> are in the same time zone",
+      "timezones": {
+        "UTC-12": "Baker Island (UTC-12)",
+        "UTC-11": "American Samoa (UTC-11)",
+        "UTC-10": "Hawaii (UTC-10)",
+        "UTC-9": "Alaska (UTC-9)",
+        "UTC-8": "Pacific Time (UTC-8)",
+        "UTC-7": "Mountain Time (UTC-7)",
+        "UTC-6": "Central Time (UTC-6)",
+        "UTC-5": "Eastern Time (UTC-5)",
+        "UTC-4": "Atlantic Time (UTC-4)",
+        "UTC-3": "Brazil (UTC-3)",
+        "UTC+0": "London (UTC+0)",
+        "UTC+1": "Berlin/Paris (UTC+1)",
+        "UTC+2": "Eastern Europe (UTC+2)",
+        "UTC+3": "Moscow (UTC+3)",
+        "UTC+5:30": "India (UTC+5:30)",
+        "UTC+8": "China/Beijing (UTC+8)",
+        "UTC+9": "Japan/Korea (UTC+9)",
+        "UTC+10": "Sydney (UTC+10)",
+        "UTC+12": "New Zealand (UTC+12)"
+      }
     },
     "currencyConverter": {
       "title": "Currency Converter",
@@ -224,7 +253,24 @@
       "convert": "Convert",
       "result": "Converted Amount",
       "placeholder": "Enter amount",
-      "disclaimer": "Exchange rates are for demonstration only. Use a live API for real rates."
+      "rateDate": "Reference date (latest available)",
+      "exchangeRate": "Exchange Rate",
+      "swap": "Swap currencies",
+      "disclaimer": "Exchange rates sourced from European Central Bank reference rates, updated daily.",
+      "currencies": {
+        "USD": "US Dollar ($)",
+        "EUR": "Euro (€)",
+        "GBP": "British Pound (£)",
+        "JPY": "Japanese Yen (¥)",
+        "CNY": "Chinese Yuan (¥)",
+        "KRW": "Korean Won (₩)",
+        "INR": "Indian Rupee (₹)",
+        "CAD": "Canadian Dollar (C$)",
+        "AUD": "Australian Dollar (A$)",
+        "CHF": "Swiss Franc (Fr)",
+        "MXN": "Mexican Peso (MX$)",
+        "BRL": "Brazilian Real (R$)"
+      }
     },
     "romanNumeral": {
       "title": "Roman Numeral Converter",
@@ -433,7 +479,14 @@
     "subtitle": "Honest, in-depth reviews of the best tools and products to boost your productivity.",
     "back": "← Back to all reviews",
     "related": "Related Articles",
-    "notFound": "Post Not Found"
+    "notFound": "Post Not Found",
+    "categories": {
+      "Software": "Software",
+      "Equipment": "Equipment",
+      "Guide": "Guide",
+      "Comparison": "Comparison",
+      "General": "General"
+    }
   },
   "About": {
     "title": "About Us",

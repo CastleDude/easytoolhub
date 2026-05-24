@@ -51,13 +51,16 @@
     "ctaDesc": "Durchsuchen Sie unsere vollständige Sammlung kostenloser Tools und Expertenbewertungen.",
     "ctaButton": "Alle Tools anzeigen →",
     "viewAllTools": "Alle 21 Tools anzeigen ↓",
-    "favAdd": "Zu Favoriten hinzufügen",
-    "favRemove": "Aus Favoriten entfernen"
+    "favAdd": "Anheften",
+    "favRemove": "Lösen"
   },
   "Tools": {
     "title": "Alle Tools",
     "description": "Durchsuchen Sie unsere Sammlung kostenloser Online-Rechner, Konverter und Texttools.",
     "subtitle": "Kostenlose Tools, die direkt in Ihrem Browser funktionieren. Keine Anmeldung erforderlich.",
+    "pin": "Anheften",
+    "unpin": "Lösen",
+    "pinnedShortcuts": "Deine Schnellzugriffe",
     "percentage": {
       "title": "Prozentrechner",
       "description": "Berechnen Sie Prozentsätze, prozentuale Änderungen und finden Sie heraus, wie viel Prozent eine Zahl von einer anderen ist.",
@@ -212,7 +215,33 @@
       "toTimezone": "Nach Zeitzone",
       "convert": "Umrechnen",
       "result": "Umgerechnete Zeit",
-      "now": "Aktuelle Zeit verwenden"
+      "now": "Aktuelle Zeit verwenden",
+      "swap": "Zeitzonen tauschen",
+      "timeDiff": "Zeitunterschied",
+      "timeDiffAhead": "<blue>{from}</blue> ist {hours} Std. {minutes} Min. vor <blue>{to}</blue>",
+      "timeDiffBehind": "<blue>{from}</blue> ist {hours} Std. {minutes} Min. hinter <blue>{to}</blue>",
+      "timeDiffSame": "<blue>{from}</blue> und <blue>{to}</blue> sind in derselben Zeitzone",
+      "timezones": {
+        "UTC-12": "Bakerinsel (UTC-12)",
+        "UTC-11": "Amerikanisch-Samoa (UTC-11)",
+        "UTC-10": "Hawaii (UTC-10)",
+        "UTC-9": "Alaska (UTC-9)",
+        "UTC-8": "Pazifikzeit (UTC-8)",
+        "UTC-7": "Mountain-Zeit (UTC-7)",
+        "UTC-6": "Zentralzeit (UTC-6)",
+        "UTC-5": "Ostküstenzeit (UTC-5)",
+        "UTC-4": "Atlantikzeit (UTC-4)",
+        "UTC-3": "Brasilien (UTC-3)",
+        "UTC+0": "London (UTC+0)",
+        "UTC+1": "Berlin/Paris (UTC+1)",
+        "UTC+2": "Osteuropa (UTC+2)",
+        "UTC+3": "Moskau (UTC+3)",
+        "UTC+5:30": "Indien (UTC+5:30)",
+        "UTC+8": "China/Peking (UTC+8)",
+        "UTC+9": "Japan/Korea (UTC+9)",
+        "UTC+10": "Sydney (UTC+10)",
+        "UTC+12": "Neuseeland (UTC+12)"
+      }
     },
     "currencyConverter": {
       "title": "Währungsrechner",
@@ -224,7 +253,24 @@
       "convert": "Umrechnen",
       "result": "Umgerechneter Betrag",
       "placeholder": "Betrag eingeben",
-      "disclaimer": "Wechselkurse dienen nur zur Demonstration. Verwenden Sie eine Live-API für echte Kurse."
+      "rateDate": "Kursdatum",
+      "exchangeRate": "Wechselkurs",
+      "swap": "Tauschen",
+      "disclaimer": "Wechselkurse der Europäischen Zentralbank, täglich aktualisiert.",
+      "currencies": {
+        "USD": "US-Dollar ($)",
+        "EUR": "Euro (€)",
+        "GBP": "Britisches Pfund (£)",
+        "JPY": "Japanischer Yen (¥)",
+        "CNY": "Chinesischer Yuan (¥)",
+        "KRW": "Koreanischer Won (₩)",
+        "INR": "Indische Rupie (₹)",
+        "CAD": "Kanadischer Dollar (C$)",
+        "AUD": "Australischer Dollar (A$)",
+        "CHF": "Schweizer Franken (Fr)",
+        "MXN": "Mexikanischer Peso (MX$)",
+        "BRL": "Brasilianischer Real (R$)"
+      }
     },
     "romanNumeral": {
       "title": "Römische-Zahlen-Umrechner",
@@ -429,7 +475,14 @@
     "subtitle": "Ehrliche, ausführliche Bewertungen der besten Tools zur Steigerung Ihrer Produktivität.",
     "back": "← Zurück zu allen Bewertungen",
     "related": "Verwandte Artikel",
-    "notFound": "Beitrag Nicht Gefunden"
+    "notFound": "Beitrag Nicht Gefunden",
+    "categories": {
+      "Software": "Software",
+      "Equipment": "Ausrüstung",
+      "Guide": "Anleitung",
+      "Comparison": "Vergleich",
+      "General": "Allgemein"
+    }
   },
   "About": {
     "title": "Über Uns",

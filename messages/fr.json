@@ -51,13 +51,16 @@
     "ctaDesc": "Parcourez notre collection complète d'outils gratuits et d'avis d'experts.",
     "ctaButton": "Voir Tous les Outils →",
     "viewAllTools": "Voir les 21 Outils ↓",
-    "favAdd": "Ajouter aux favoris",
-    "favRemove": "Retirer des favoris"
+    "favAdd": "Épingler",
+    "favRemove": "Désépingler"
   },
   "Tools": {
     "title": "Tous les Outils",
     "description": "Parcourez notre collection complète de calculatrices, convertisseurs et outils de texte en ligne gratuits.",
     "subtitle": "Des outils gratuits qui fonctionnent directement dans votre navigateur. Sans inscription.",
+    "pin": "Épingler",
+    "unpin": "Désépingler",
+    "pinnedShortcuts": "Vos raccourcis",
     "percentage": {
       "title": "Calculateur de Pourcentage",
       "description": "Calculez des pourcentages, des variations en pourcentage et trouvez quel pourcentage un nombre représente d'un autre.",
@@ -212,7 +215,33 @@
       "toTimezone": "Vers le Fuseau Horaire",
       "convert": "Convertir",
       "result": "Heure Convertie",
-      "now": "Utiliser l'Heure Actuelle"
+      "now": "Utiliser l'Heure Actuelle",
+      "swap": "Échanger les fuseaux",
+      "timeDiff": "Décalage horaire",
+      "timeDiffAhead": "<blue>{from}</blue> a {hours}h {minutes}min d'avance sur <blue>{to}</blue>",
+      "timeDiffBehind": "<blue>{from}</blue> a {hours}h {minutes}min de retard sur <blue>{to}</blue>",
+      "timeDiffSame": "<blue>{from}</blue> et <blue>{to}</blue> sont dans le même fuseau horaire",
+      "timezones": {
+        "UTC-12": "Île Baker (UTC-12)",
+        "UTC-11": "Samoa américaines (UTC-11)",
+        "UTC-10": "Hawaï (UTC-10)",
+        "UTC-9": "Alaska (UTC-9)",
+        "UTC-8": "Heure du Pacifique (UTC-8)",
+        "UTC-7": "Heure des Rocheuses (UTC-7)",
+        "UTC-6": "Heure du Centre (UTC-6)",
+        "UTC-5": "Heure de l'Est (UTC-5)",
+        "UTC-4": "Heure de l'Atlantique (UTC-4)",
+        "UTC-3": "Brésil (UTC-3)",
+        "UTC+0": "Londres (UTC+0)",
+        "UTC+1": "Berlin/Paris (UTC+1)",
+        "UTC+2": "Europe de l'Est (UTC+2)",
+        "UTC+3": "Moscou (UTC+3)",
+        "UTC+5:30": "Inde (UTC+5:30)",
+        "UTC+8": "Chine/Pékin (UTC+8)",
+        "UTC+9": "Japon/Corée (UTC+9)",
+        "UTC+10": "Sydney (UTC+10)",
+        "UTC+12": "Nouvelle-Zélande (UTC+12)"
+      }
     },
     "currencyConverter": {
       "title": "Convertisseur de Devises",
@@ -224,7 +253,24 @@
       "convert": "Convertir",
       "result": "Montant Converti",
       "placeholder": "Entrer un montant",
-      "disclaimer": "Les taux de change sont donnés à titre indicatif. Utilisez une API en direct pour des taux réels."
+      "rateDate": "Date du taux",
+      "exchangeRate": "Taux de change",
+      "swap": "Intervertir",
+      "disclaimer": "Taux de la Banque Centrale Européenne, mis à jour quotidiennement.",
+      "currencies": {
+        "USD": "Dollar américain ($)",
+        "EUR": "Euro (€)",
+        "GBP": "Livre sterling (£)",
+        "JPY": "Yen japonais (¥)",
+        "CNY": "Yuan chinois (¥)",
+        "KRW": "Won coréen (₩)",
+        "INR": "Roupie indienne (₹)",
+        "CAD": "Dollar canadien (C$)",
+        "AUD": "Dollar australien (A$)",
+        "CHF": "Franc suisse (Fr)",
+        "MXN": "Peso mexicain (MX$)",
+        "BRL": "Real brésilien (R$)"
+      }
     },
     "romanNumeral": {
       "title": "Convertisseur de Chiffres Romains",
@@ -429,7 +475,14 @@
     "subtitle": "Des avis honnêtes et détaillés sur les meilleurs outils et produits pour booster votre productivité.",
     "back": "← Retour aux avis",
     "related": "Articles Connexes",
-    "notFound": "Article Non Trouvé"
+    "notFound": "Article Non Trouvé",
+    "categories": {
+      "Software": "Logiciel",
+      "Equipment": "Équipement",
+      "Guide": "Guide",
+      "Comparison": "Comparaison",
+      "General": "Général"
+    }
   },
   "About": {
     "title": "À Propos",

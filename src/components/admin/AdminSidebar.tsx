@@ -8,6 +8,7 @@ const links = [
   { href: "/admin/blog", label: "博客", icon: "📝" },
   { href: "/admin/analytics", label: "数据分析", icon: "📈" },
   { href: "/admin/feedback", label: "用户反馈", icon: "💬" },
+  { href: "/admin/api-test", label: "接口测试", icon: "🔌" },
 ];
 
 function ThemeToggle() {

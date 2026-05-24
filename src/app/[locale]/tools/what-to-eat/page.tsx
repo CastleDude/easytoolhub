@@ -1,6 +1,7 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
+import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState, useCallback, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -146,6 +147,7 @@ export default function WhatToEatPage() {
       )}
       <ToolClickTracker toolSlug="what-to-eat" />
       <FeedbackWidget toolSlug="what-to-eat" />
+      <FavoritedTools />
     </div>
   );
 }
