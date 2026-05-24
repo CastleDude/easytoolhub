@@ -49,7 +49,8 @@ export default function CurrencyConverterPage() {
     : CURRENCY_CODES.filter((k) => k !== "USD");
 
   function currencyName(code: string) {
-    return t(`currencies.${code}` as any);
+    const name = t(`currencies.${code}` as any);
+    return name.startsWith("Tools.currencyConverter.currencies.") ? code : name;
   }
 
   const formatDate = (dateStr: string) => {
