@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const links = [
@@ -85,7 +86,7 @@ export default function AdminSidebar() {
             const isActive = pathname === link.href ||
               (link.href !== "/admin" && pathname.startsWith(link.href));
             return (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
@@ -96,7 +97,7 @@ export default function AdminSidebar() {
               >
                 <span>{link.icon}</span>
                 <span>{link.label}</span>
-              </a>
+              </Link>
             );
           })}
         </nav>
