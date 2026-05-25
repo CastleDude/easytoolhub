@@ -5,11 +5,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const links = [
-  { href: "/admin", label: "仪表盘", icon: "📊" },
-  { href: "/admin/blog", label: "博客", icon: "📝" },
-  { href: "/admin/analytics", label: "数据分析", icon: "📈" },
-  { href: "/admin/feedback", label: "用户反馈", icon: "💬" },
-  { href: "/admin/api-test", label: "接口测试", icon: "🔌" },
+  { href: "/admin", label: "📊 仪表盘", icon: "" },
+  { href: "/admin/blog", label: "📝 博客", icon: "" },
+  { href: "/admin/analytics", label: "📈 数据分析", icon: "" },
+  { href: "/admin/feedback", label: "💬 用户反馈", icon: "" },
+  { href: "/admin/api-test", label: "🔌 接口测试", icon: "" },
 ];
 
 function ThemeToggle() {
@@ -89,14 +89,14 @@ export default function AdminSidebar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                prefetch={true}
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-primary-50 dark:bg-primary-950 text-primary-700 dark:text-primary-300"
                     : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
               >
-                <span>{link.icon}</span>
-                <span>{link.label}</span>
+                {link.label}
               </Link>
             );
           })}
