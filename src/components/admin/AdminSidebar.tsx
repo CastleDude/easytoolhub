@@ -1,16 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-
-const links = [
-  { href: "/admin", label: "📊 仪表盘", icon: "" },
-  { href: "/admin/blog", label: "📝 博客", icon: "" },
-  { href: "/admin/analytics", label: "📈 数据分析", icon: "" },
-  { href: "/admin/feedback", label: "💬 用户反馈", icon: "" },
-  { href: "/admin/api-test", label: "🔌 接口测试", icon: "" },
-];
+import { useRouter } from "next/navigation";
 
 function ThemeToggle() {
   const [dark, setDark] = useState(false);
@@ -43,8 +34,24 @@ function ThemeToggle() {
   );
 }
 
+interface NavLinkProps {
+  href: string;
+  children: React.ReactNode;
+}
+
+function NavLink({ href, children }: NavLinkProps) {
+  const router = useRouter();
+  return (
+    <div
+      onClick={() => router.push(href)}
+      className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function AdminSidebar() {
-  const pathname = usePathname();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
 
@@ -56,7 +63,6 @@ export default function AdminSidebar() {
 
   return (
     <>
-      {/* Mobile toggle */}
       <button
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700"
         onClick={() => setCollapsed(!collapsed)}
@@ -66,7 +72,6 @@ export default function AdminSidebar() {
         </svg>
       </button>
 
-      {/* Overlay */}
       {!collapsed && (
         <div className="lg:hidden fixed inset-0 z-40 bg-black/30" onClick={() => setCollapsed(true)} />
       )}
@@ -82,24 +87,11 @@ export default function AdminSidebar() {
         </div>
 
         <nav className="flex-1 p-3 space-y-1">
-          {links.map((link) => {
-            const isActive = pathname === link.href ||
-              (link.href !== "/admin" && pathname.startsWith(link.href));
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                prefetch={true}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-primary-50 dark:bg-primary-950 text-primary-700 dark:text-primary-300"
-                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          <NavLink href="/admin">📊 仪表盘</NavLink>
+          <NavLink href="/admin/blog">📝 博客</NavLink>
+          <NavLink href="/admin/analytics">📈 数据分析</NavLink>
+          <NavLink href="/admin/feedback">💬 用户反馈</NavLink>
+          <NavLink href="/admin/api-test">🔌 接口测试</NavLink>
         </nav>
 
         <div className="p-3 border-t border-gray-200 dark:border-gray-800 space-y-1">
