@@ -17,10 +17,10 @@ export default async function ContactPage({
         <h2 className="text-xl font-semibold mb-4">{t("emailTitle")}</h2>
         <p className="text-gray-600 dark:text-gray-400 mb-6">{t("emailText")}</p>
         <a
-          href="mailto:contact@easytoolhub.com"
+          href="mailto:postmaster@easytoolhub.top"
           className="text-primary-600 dark:text-primary-400 text-lg font-medium hover:underline"
         >
-          contact@easytoolhub.com
+          postmaster@easytoolhub.top
         </a>
       </div>
 
@@ -28,15 +28,15 @@ export default async function ContactPage({
         <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-6">
           <h3 className="font-semibold mb-2">{t("adTitle")}</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{t("adDesc")}</p>
-          <a href="mailto:ads@easytoolhub.com" className="text-sm text-primary-600 dark:text-primary-400 hover:underline">
-            ads@easytoolhub.com
+          <a href="mailto:postmaster@easytoolhub.top" className="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+            postmaster@easytoolhub.top
           </a>
         </div>
         <div className="border border-gray-200 dark:border-gray-800 rounded-xl p-6">
           <h3 className="font-semibold mb-2">{t("contentTitle")}</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{t("contentDesc")}</p>
-          <a href="mailto:content@easytoolhub.com" className="text-sm text-primary-600 dark:text-primary-400 hover:underline">
-            content@easytoolhub.com
+          <a href="mailto:postmaster@easytoolhub.top" className="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+            postmaster@easytoolhub.top
           </a>
         </div>
       </div>
