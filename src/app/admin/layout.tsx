@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 import AdminLayoutClient from "@/components/admin/AdminLayoutClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "管理后台 - EasyToolHub",
   robots: { index: false, follow: false },
