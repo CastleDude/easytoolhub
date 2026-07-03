@@ -30,7 +30,10 @@ yarn-error.log*
 
 # database
 *.db
-src/data/*.json
+src/data/feedback.json
+src/data/tool_clicks.json
+src/data/currency-rate-cache.json
+src/data/api-test-results.json
 
 # typescript
 *.tsbuildinfo
