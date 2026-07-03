@@ -1,7 +1,6 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState, useCallback, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
@@ -68,7 +67,7 @@ export default function WhatToEatPage() {
   const likeCount = dishI18n ? likes[dishI18n.id] || 0 : 0;
 
   return (
-    <div className="container-main py-16 max-w-2xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
@@ -147,7 +146,6 @@ export default function WhatToEatPage() {
       )}
       <ToolClickTracker toolSlug="what-to-eat" />
       <FeedbackWidget toolSlug="what-to-eat" />
-      <FavoritedTools />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -17,6 +16,7 @@ export default function AverageCalculatorPage() {
     setError("");
     const nums = input
       .split(/[,\s\n]+/)
+      .filter((s) => s.trim() !== "")
       .map(Number)
       .filter((n) => !isNaN(n));
     if (nums.length === 0) {
@@ -28,7 +28,7 @@ export default function AverageCalculatorPage() {
   }
 
   return (
-    <div className="container-main py-16 max-w-2xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
@@ -71,7 +71,6 @@ export default function AverageCalculatorPage() {
       )}
       <ToolClickTracker toolSlug="average-calculator" />
       <FeedbackWidget toolSlug="average-calculator" />
-      <FavoritedTools />
     </div>
   );
 }

@@ -12,7 +12,8 @@
     "contact": "Contacto",
     "toggleMenu": "Alternar menú",
     "toggleDark": "Alternar modo oscuro",
-    "switchLanguage": "Cambiar idioma"
+    "switchLanguage": "Cambiar idioma",
+    "home": "Inicio"
   },
   "Footer": {
     "tools": "Herramientas",
@@ -140,7 +141,8 @@
       "totalDays": "Total de Días",
       "howTitle": "Cómo se Calcula la Edad",
       "howDesc1": "Nuestra calculadora determina tu edad exacta contando los años, meses y días completos entre tu fecha de nacimiento y hoy. Tiene en cuenta los años bisiestos y las diferentes duraciones de los meses.",
-      "howDesc2": "Esta herramienta es útil para verificación de edad, seguimiento de salud y fitness, ¡o simplemente para satisfacer tu curiosidad sobre exactamente cuántos años tienes!"
+      "howDesc2": "Esta herramienta es útil para verificación de edad, seguimiento de salud y fitness, ¡o simplemente para satisfacer tu curiosidad sobre exactamente cuántos años tienes!",
+      "placeholder": "Selecciona tu fecha de nacimiento"
     },
     "unitConverter": {
       "title": "Conversor de Unidades",
@@ -270,24 +272,24 @@
         "CHF": "Franco suizo (Fr)",
         "MXN": "Peso mexicano (MX$)",
         "BRL": "Real brasileño (R$)",
-      "CZK": "Corona checa (Kč)",
-      "DKK": "Corona danesa (kr)",
-      "HKD": "Dólar de Hong Kong (HK$)",
-      "HUF": "Florín húngaro (Ft)",
-      "IDR": "Rupia indonesia (Rp)",
-      "ILS": "Nuevo shéquel israelí (₪)",
-      "ISK": "Corona islandesa (kr)",
-      "MYR": "Ringgit malayo (RM)",
-      "NOK": "Corona noruega (kr)",
-      "NZD": "Dólar neozelandés (NZ$)",
-      "PHP": "Peso filipino (₱)",
-      "PLN": "Złoty polaco (zł)",
-      "RON": "Leu rumano (lei)",
-      "SEK": "Corona sueca (kr)",
-      "SGD": "Dólar de Singapur (S$)",
-      "THB": "Baht tailandés (฿)",
-      "TRY": "Lira turca (₺)",
-      "ZAR": "Rand sudafricano (R)"
+        "CZK": "Corona checa (Kč)",
+        "DKK": "Corona danesa (kr)",
+        "HKD": "Dólar de Hong Kong (HK$)",
+        "HUF": "Florín húngaro (Ft)",
+        "IDR": "Rupia indonesia (Rp)",
+        "ILS": "Nuevo shéquel israelí (₪)",
+        "ISK": "Corona islandesa (kr)",
+        "MYR": "Ringgit malayo (RM)",
+        "NOK": "Corona noruega (kr)",
+        "NZD": "Dólar neozelandés (NZ$)",
+        "PHP": "Peso filipino (₱)",
+        "PLN": "Złoty polaco (zł)",
+        "RON": "Leu rumano (lei)",
+        "SEK": "Corona sueca (kr)",
+        "SGD": "Dólar de Singapur (S$)",
+        "THB": "Baht tailandés (฿)",
+        "TRY": "Lira turca (₺)",
+        "ZAR": "Rand sudafricano (R)"
       }
     },
     "romanNumeral": {
@@ -345,7 +347,7 @@
       "copied": "¡Copiado!"
     },
     "caseConverter": {
-      "title": "Conversor de Mayúsculas/Minúsculas",
+      "title": "Formato Título",
       "description": "Convierte texto entre mayúsculas, minúsculas, formato título, camelCase y más.",
       "subtitle": "Transforma texto entre diferentes formatos de letra.",
       "inputLabel": "Ingresa tu texto",
@@ -356,7 +358,6 @@
       "copied": "¡Copiado!",
       "upper": "MAYÚSCULAS",
       "lower": "minúsculas",
-      "title": "Formato Título",
       "sentence": "Formato oración.",
       "camel": "camelCase",
       "kebab": "kebab-case",
@@ -409,7 +410,8 @@
       "first": "Primer Trimestre",
       "second": "Segundo Trimestre",
       "third": "Tercer Trimestre",
-      "disclaimer": "Esta es una estimación basada en la regla de Naegele. Consulta siempre a tu profesional de salud para consejo médico."
+      "disclaimer": "Esta es una estimación basada en la regla de Naegele. Consulta siempre a tu profesional de salud para consejo médico.",
+      "placeholder": "Selecciona la fecha de la última regla"
     },
     "dateDifference": {
       "title": "Calculadora de Diferencia de Fechas",
@@ -421,7 +423,8 @@
       "days": "Días",
       "weeks": "Semanas",
       "months": "Meses",
-      "years": "Años"
+      "years": "Años",
+      "placeholder": "Selecciona una fecha"
     },
     "whatToEat": {
       "title": "¿Qué Comer?",
@@ -479,14 +482,18 @@
     "acre": "Acre",
     "hectare": "Hectárea (ha)"
   },
-  "Ad": { "advertisement": "Anuncio" },
+  "Ad": {
+    "advertisement": "Anuncio"
+  },
   "ProductCard": {
     "bestFor": "Ideal para:",
     "pros": "Ventajas",
     "cons": "Desventajas",
     "checkPrice": "Ver Mejor Precio →"
   },
-  "StarRating": { "rating": "Calificación: {rating} de {max}" },
+  "StarRating": {
+    "rating": "Calificación: {rating} de {max}"
+  },
   "Blog": {
     "title": "Reseñas y Guías",
     "description": "Reseñas y guías expertas sobre las mejores herramientas de productividad, software y equipamiento.",
@@ -498,27 +505,30 @@
       "Software": "Software",
       "Equipment": "Equipo",
       "Guide": "Guía",
-      "Comparison": "Comparativa",
+      "Comparison": "Comparación",
       "General": "General",
-    "CZK": "Corona checa (Kč)",
-    "DKK": "Corona danesa (kr)",
-    "HKD": "Dólar de Hong Kong (HK$)",
-    "HUF": "Florín húngaro (Ft)",
-    "IDR": "Rupia indonesia (Rp)",
-    "ILS": "Nuevo shéquel israelí (₪)",
-    "ISK": "Corona islandesa (kr)",
-    "MYR": "Ringgit malayo (RM)",
-    "NOK": "Corona noruega (kr)",
-    "NZD": "Dólar neozelandés (NZ$)",
-    "PHP": "Peso filipino (₱)",
-    "PLN": "Złoty polaco (zł)",
-    "RON": "Leu rumano (lei)",
-    "SEK": "Corona sueca (kr)",
-    "SGD": "Dólar de Singapur (S$)",
-    "THB": "Baht tailandés (฿)",
-    "TRY": "Lira turca (₺)",
-    "ZAR": "Rand sudafricano (R)"
-    }
+      "CZK": "Corona checa (Kč)",
+      "DKK": "Corona danesa (kr)",
+      "HKD": "Dólar de Hong Kong (HK$)",
+      "HUF": "Florín húngaro (Ft)",
+      "IDR": "Rupia indonesia (Rp)",
+      "ILS": "Nuevo shéquel israelí (₪)",
+      "ISK": "Corona islandesa (kr)",
+      "MYR": "Ringgit malayo (RM)",
+      "NOK": "Corona noruega (kr)",
+      "NZD": "Dólar neozelandés (NZ$)",
+      "PHP": "Peso filipino (₱)",
+      "PLN": "Złoty polaco (zł)",
+      "RON": "Leu rumano (lei)",
+      "SEK": "Corona sueca (kr)",
+      "SGD": "Dólar de Singapur (S$)",
+      "THB": "Baht tailandés (฿)",
+      "TRY": "Lira turca (₺)",
+      "ZAR": "Rand sudafricano (R)"
+    },
+    "all": "Todo",
+    "categoriesTitle": "Categorías",
+    "popular": "Reseñas Populares"
   },
   "About": {
     "title": "Sobre Nosotros",

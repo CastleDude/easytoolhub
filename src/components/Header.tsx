@@ -38,6 +38,12 @@ export default function Header() {
 
         <nav className="hidden md:flex items-center gap-6">
           <a
+            href={`/${locale}`}
+            className="text-sm font-medium text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors"
+          >
+            {t("home")}
+          </a>
+          <a
             href={`/${locale}/tools`}
             className="text-sm font-medium text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors"
           >
@@ -94,6 +100,7 @@ export default function Header() {
       {open && (
         <nav className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
           <div className="container-main py-3 flex flex-col gap-2">
+            <a href={`/${locale}`} className="py-2 text-sm font-medium" onClick={() => setOpen(false)}>{t("home")}</a>
             <a href={`/${locale}/tools`} className="py-2 text-sm font-medium" onClick={() => setOpen(false)}>{t("tools")}</a>
             <a href={`/${locale}/blog`} className="py-2 text-sm font-medium" onClick={() => setOpen(false)}>{t("reviews")}</a>
             <a href={`/${locale}/about`} className="py-2 text-sm font-medium" onClick={() => setOpen(false)}>{t("about")}</a>

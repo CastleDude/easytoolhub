@@ -1,7 +1,6 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -21,7 +20,7 @@ export default function NumberBasePage() {
   }
 
   return (
-    <div className="container-main py-16 max-w-2xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
@@ -71,7 +70,7 @@ export default function NumberBasePage() {
         {t("convert")}
       </button>
 
-      {result && (
+      {result !== "" && (
         <div className="mt-8 p-6 bg-primary-50 dark:bg-primary-950 rounded-xl text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{t("result")}</p>
           <p className="text-2xl font-bold text-primary-600 dark:text-primary-400 font-mono break-all">{result}</p>
@@ -79,7 +78,6 @@ export default function NumberBasePage() {
       )}
       <ToolClickTracker toolSlug="number-base-converter" />
       <FeedbackWidget toolSlug="number-base-converter" />
-      <FavoritedTools />
     </div>
   );
 }

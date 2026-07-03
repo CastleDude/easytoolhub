@@ -26,6 +26,36 @@
 }
 
 /* ====== Animated Banner Background ====== */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 50% 0%; }
+  50% { background-position: 100% 50%; }
+  75% { background-position: 50% 100%; }
+  100% { background-position: 0% 50%; }
+}
+.banner-gradient {
+  background: linear-gradient(135deg,
+    rgba(238,242,255,0.6) 0%,
+    rgba(224,231,255,0.4) 20%,
+    rgba(255,255,255,0.8) 40%,
+    rgba(243,232,255,0.4) 60%,
+    rgba(224,231,255,0.5) 80%,
+    rgba(238,242,255,0.6) 100%
+  );
+  background-size: 300% 300%;
+  animation: gradient-shift 18s ease-in-out infinite;
+}
+.dark .banner-gradient {
+  background: linear-gradient(135deg,
+    rgba(17,24,39,1) 0%,
+    rgba(30,27,75,0.8) 25%,
+    rgba(17,24,39,1) 50%,
+    rgba(49,22,55,0.8) 75%,
+    rgba(17,24,39,1) 100%
+  );
+  background-size: 300% 300%;
+}
+
 @keyframes float-1 {
   0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
   25% { transform: translate(30px, -40px) rotate(5deg) scale(1.05); }
@@ -127,4 +157,69 @@
 }
 .animate-fade-in-up {
   animation: fade-in-up 0.5s ease-out;
+}
+
+/* ====== React DayPicker Overrides ====== */
+.dark .rdp-root {
+  --rdp-accent-color: #6366f1;
+  --rdp-accent-background-color: #e0e7ff;
+  --rdp-day-color: #e5e7eb;
+  --rdp-day-width: 36px;
+  --rdp-day-height: 36px;
+  --rdp-nav-button-color: #9ca3af;
+  --rdp-outside-opacity: 0.3;
+  --rdp-selected-color: #fff;
+}
+.rdp-root {
+  --rdp-accent-color: #6366f1;
+  --rdp-accent-background-color: #e0e7ff;
+  --rdp-day-width: 36px;
+  --rdp-day-height: 36px;
+  --rdp-nav-button-color: #6b7280;
+}
+.rdp-caption_label {
+  @apply text-sm font-medium;
+}
+.rdp-chevron {
+  @apply fill-gray-500 dark:fill-gray-400;
+}
+.rdp-weekday {
+  @apply text-xs text-gray-400 dark:text-gray-500;
+}
+.dark .rdp-day_button {
+  @apply text-gray-200;
+}
+.dark .rdp-day_button:hover {
+  @apply bg-gray-700;
+}
+.dark .rdp-selected .rdp-day_button {
+  @apply bg-primary-500 text-white;
+}
+
+/* ====== Sidebar scrollbar: hidden by default, show on hover ====== */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.sidebar-scroll:hover {
+  scrollbar-color: #d1d5db transparent;
+}
+.dark .sidebar-scroll:hover {
+  scrollbar-color: #4b5563 transparent;
+}
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+}
+.sidebar-scroll:hover::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+}
+.dark .sidebar-scroll:hover::-webkit-scrollbar-thumb {
+  background: #4b5563;
 }

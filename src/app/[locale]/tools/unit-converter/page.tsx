@@ -1,7 +1,6 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -45,7 +44,7 @@ export default function UnitConverterPage() {
   const toUnitDisplay = tu(toUnit as any);
 
   return (
-    <div className="container-main py-16 max-w-2xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
@@ -148,7 +147,6 @@ export default function UnitConverterPage() {
       </div>
       <ToolClickTracker toolSlug="unit-converter" />
       <FeedbackWidget toolSlug="unit-converter" />
-      <FavoritedTools />
     </div>
   );
 }
@@ -169,10 +167,10 @@ function ConversionTable({ category, tu }: { category: UnitCategory; tu: Functio
       `1 ${tu("stone")} = 6.35029 ${tu("kilogram")}`,
     ],
     temperature: [
-      `0${tu("celsius").split(" ")[0].slice(0, 2)} = 32${tu("fahrenheit").split(" ")[0].slice(0, 2)}`,
-      `100${tu("celsius").split(" ")[0].slice(0, 2)} = 212${tu("fahrenheit").split(" ")[0].slice(0, 2)}`,
-      `37${tu("celsius").split(" ")[0].slice(0, 2)} = 98.6${tu("fahrenheit").split(" ")[0].slice(0, 2)}`,
-      `0${tu("kelvin").split(" ")[0].slice(0, 2)} = -273.15${tu("celsius").split(" ")[0].slice(0, 2)}`,
+      `0°C = 32°F`,
+      `100°C = 212°F`,
+      `37°C = 98.6°F`,
+      `0K = -273.15°C`,
     ],
     volume: [
       `1 ${tu("gallon")} = 3.78541 ${tu("liter")}`,

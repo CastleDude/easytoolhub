@@ -1,37 +1,36 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { calcAge } from "@/lib/tools";
+import DatePickerInput from "@/components/DatePickerInput";
 
 export default function AgeCalculatorPage() {
   const t = useTranslations("Tools.ageCalculator");
-  const [birthDate, setBirthDate] = useState("");
+  const locale = useLocale();
+  const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
   const [result, setResult] = useState<ReturnType<typeof calcAge> | null>(null);
 
   function calculate() {
     if (!birthDate) return;
-    const date = new Date(birthDate);
-    if (isNaN(date.getTime())) return;
-    setResult(calcAge(date));
+    setResult(calcAge(birthDate));
   }
 
   return (
-    <div className="container-main py-16 max-w-2xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
       <div className="mb-6">
         <label className="block text-sm font-medium mb-2">{t("dateOfBirth")}</label>
-        <input
-          type="date"
+        <DatePickerInput
           value={birthDate}
-          onChange={(e) => setBirthDate(e.target.value)}
-          max={new Date().toISOString().split("T")[0]}
-          className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+          onChange={setBirthDate}
+          locale={locale}
+          max={new Date()}
+          placeholder={t("placeholder")}
         />
       </div>
 
@@ -57,7 +56,7 @@ export default function AgeCalculatorPage() {
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t("days")}</p>
           </div>
           <div className="p-4 bg-primary-50 dark:bg-primary-950 rounded-xl text-center border border-primary-100 dark:border-primary-900">
-            <p className="text-3xl font-bold text-primary-600 dark:text-primary-400">{result.totalDays.toLocaleString()}</p>
+            <p className="text-3xl font-bold text-primary-600 dark:text-primary-400">{result.totalDays.toLocaleString(locale)}</p>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t("totalDays")}</p>
           </div>
         </div>
@@ -70,7 +69,6 @@ export default function AgeCalculatorPage() {
       </div>
       <ToolClickTracker toolSlug="age-calculator" />
       <FeedbackWidget toolSlug="age-calculator" />
-      <FavoritedTools />
     </div>
   );
 }

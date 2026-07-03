@@ -1,45 +1,46 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { dateDiff } from "@/lib/tools";
+import DatePickerInput from "@/components/DatePickerInput";
 
 export default function DateDifferencePage() {
   const t = useTranslations("Tools.dateDifference");
-  const [date1, setDate1] = useState("");
-  const [date2, setDate2] = useState("");
+  const locale = useLocale();
+  const [date1, setDate1] = useState<Date | undefined>(undefined);
+  const [date2, setDate2] = useState<Date | undefined>(undefined);
   const [result, setResult] = useState<ReturnType<typeof dateDiff> | null>(null);
 
   function handleCalculate() {
     if (!date1 || !date2) return;
-    setResult(dateDiff(new Date(date1), new Date(date2)));
+    setResult(dateDiff(date1, date2));
   }
 
   return (
-    <div className="container-main py-16 max-w-2xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <div className="flex-1">
           <label className="block text-sm font-medium mb-1">{t("dateFrom")}</label>
-          <input
-            type="date"
+          <DatePickerInput
             value={date1}
-            onChange={(e) => setDate1(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+            onChange={setDate1}
+            locale={locale}
+            placeholder={t("placeholder")}
           />
         </div>
         <div className="flex-1">
           <label className="block text-sm font-medium mb-1">{t("dateTo")}</label>
-          <input
-            type="date"
+          <DatePickerInput
             value={date2}
-            onChange={(e) => setDate2(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+            onChange={setDate2}
+            locale={locale}
+            placeholder={t("placeholder")}
           />
         </div>
       </div>
@@ -68,7 +69,6 @@ export default function DateDifferencePage() {
       )}
       <ToolClickTracker toolSlug="date-difference" />
       <FeedbackWidget toolSlug="date-difference" />
-      <FavoritedTools />
     </div>
   );
 }

@@ -1,19 +1,19 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { countWords } from "@/lib/tools";
 
 export default function WordCounterPage() {
   const t = useTranslations("Tools.wordCounter");
+  const locale = useLocale();
   const [text, setText] = useState("");
   const stats = countWords(text);
 
   return (
-    <div className="container-main py-16 max-w-3xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
@@ -26,11 +26,11 @@ export default function WordCounterPage() {
       />
 
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mt-6">
-        <StatCard label={t("words")} value={stats.words} />
-        <StatCard label={t("characters")} value={stats.chars} />
-        <StatCard label={t("charsNoSpaces")} value={stats.charsNoSpaces} />
-        <StatCard label={t("sentences")} value={stats.sentences} />
-        <StatCard label={t("paragraphs")} value={stats.paragraphs} />
+        <StatCard label={t("words")} value={stats.words} locale={locale} />
+        <StatCard label={t("characters")} value={stats.chars} locale={locale} />
+        <StatCard label={t("charsNoSpaces")} value={stats.charsNoSpaces} locale={locale} />
+        <StatCard label={t("sentences")} value={stats.sentences} locale={locale} />
+        <StatCard label={t("paragraphs")} value={stats.paragraphs} locale={locale} />
       </div>
 
       <div className="mt-16 prose dark:prose-invert max-w-none">
@@ -46,15 +46,14 @@ export default function WordCounterPage() {
       </div>
       <ToolClickTracker toolSlug="word-counter" />
       <FeedbackWidget toolSlug="word-counter" />
-      <FavoritedTools />
     </div>
   );
 }
 
-function StatCard({ label, value }: { label: string; value: number }) {
+function StatCard({ label, value, locale }: { label: string; value: number; locale: string }) {
   return (
     <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-xl text-center border border-gray-200 dark:border-gray-800">
-      <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">{value.toLocaleString()}</p>
+      <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">{value.toLocaleString(locale)}</p>
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{label}</p>
     </div>
   );

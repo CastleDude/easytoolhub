@@ -1,34 +1,35 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { calcDueDate } from "@/lib/tools";
+import DatePickerInput from "@/components/DatePickerInput";
 
 export default function DueDateCalculatorPage() {
   const t = useTranslations("Tools.dueDateCalculator");
-  const [lmp, setLmp] = useState("");
+  const locale = useLocale();
+  const [lmp, setLmp] = useState<Date | undefined>(undefined);
   const [result, setResult] = useState<ReturnType<typeof calcDueDate> | null>(null);
 
   function handleCalculate() {
     if (!lmp) return;
-    setResult(calcDueDate(new Date(lmp)));
+    setResult(calcDueDate(lmp));
   }
 
   return (
-    <div className="container-main py-16 max-w-2xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
       <div className="mb-6">
         <label className="block text-sm font-medium mb-1">{t("lmpDate")}</label>
-        <input
-          type="date"
+        <DatePickerInput
           value={lmp}
-          onChange={(e) => setLmp(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+          onChange={setLmp}
+          locale={locale}
+          placeholder={t("placeholder")}
         />
       </div>
 
@@ -44,7 +45,7 @@ export default function DueDateCalculatorPage() {
           <div className="p-6 bg-primary-50 dark:bg-primary-950 rounded-xl text-center">
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{t("dueDate")}</p>
             <p className="text-xl font-bold text-primary-600 dark:text-primary-400">
-              {result.dueDate.toLocaleDateString()}
+              {result.dueDate.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
             </p>
           </div>
           <div className="p-6 bg-primary-50 dark:bg-primary-950 rounded-xl text-center">
@@ -63,7 +64,6 @@ export default function DueDateCalculatorPage() {
       <p className="mt-8 text-xs text-gray-400 dark:text-gray-500 text-center">{t("disclaimer")}</p>
       <ToolClickTracker toolSlug="due-date-calculator" />
       <FeedbackWidget toolSlug="due-date-calculator" />
-      <FavoritedTools />
     </div>
   );
 }

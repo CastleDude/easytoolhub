@@ -1,10 +1,9 @@
 "use client";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
-import FavoritedTools from "@/components/FavoritedTools";
 
 import { useState, useEffect, useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 interface RatesData {
   date: string;
@@ -16,6 +15,7 @@ const CURRENCY_CODES = ["USD", "EUR", "GBP", "JPY", "CNY", "KRW", "INR", "CAD", 
 
 export default function CurrencyConverterPage() {
   const t = useTranslations("Tools.currencyConverter");
+  const locale = useLocale();
   const [amount, setAmount] = useState("1");
   const [fromCur, setFromCur] = useState("USD");
   const [toCur, setToCur] = useState("CNY");
@@ -55,7 +55,7 @@ export default function CurrencyConverterPage() {
 
   const formatDate = (dateStr: string) => {
     try {
-      return new Date(dateStr).toLocaleDateString(undefined, {
+      return new Date(dateStr).toLocaleDateString(locale, {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -66,7 +66,7 @@ export default function CurrencyConverterPage() {
   };
 
   return (
-    <div className="container-main py-16 max-w-2xl mx-auto">
+    <div className="py-4">
       <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
       <p className="text-gray-500 dark:text-gray-400 mb-8">{t("subtitle")}</p>
 
@@ -164,7 +164,6 @@ export default function CurrencyConverterPage() {
       <p className="mt-6 text-xs text-gray-400 dark:text-gray-500 text-center">{t("disclaimer")}</p>
       <ToolClickTracker toolSlug="currency-converter" />
       <FeedbackWidget toolSlug="currency-converter" />
-      <FavoritedTools />
     </div>
   );
 }

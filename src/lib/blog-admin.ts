@@ -9,6 +9,7 @@ export interface BlogPost {
   date: string;
   category: string;
   content: string;
+  image?: string;
   created_at: string;
   updated_at: string;
 }

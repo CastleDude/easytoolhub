@@ -12,7 +12,8 @@
     "contact": "Contact",
     "toggleMenu": "Toggle menu",
     "toggleDark": "Toggle dark mode",
-    "switchLanguage": "Switch language"
+    "switchLanguage": "Switch language",
+    "home": "Home"
   },
   "Footer": {
     "tools": "Tools",
@@ -140,7 +141,8 @@
       "totalDays": "Total Days",
       "howTitle": "How Age Is Calculated",
       "howDesc1": "Our age calculator determines your exact age by counting the full years, months, and days between your date of birth and today. It accounts for leap years and varying month lengths to give you a precise result.",
-      "howDesc2": "This tool is helpful for age verification, health and fitness tracking, or just satisfying your curiosity about exactly how old you are!"
+      "howDesc2": "This tool is helpful for age verification, health and fitness tracking, or just satisfying your curiosity about exactly how old you are!",
+      "placeholder": "Select your birth date"
     },
     "unitConverter": {
       "title": "Unit Converter",
@@ -270,24 +272,24 @@
         "CHF": "Swiss Franc (Fr)",
         "MXN": "Mexican Peso (MX$)",
         "BRL": "Brazilian Real (R$)",
-      "CZK": "Czech Koruna (Kč)",
-      "DKK": "Danish Krone (kr)",
-      "HKD": "Hong Kong Dollar (HK$)",
-      "HUF": "Hungarian Forint (Ft)",
-      "IDR": "Indonesian Rupiah (Rp)",
-      "ILS": "Israeli New Shekel (₪)",
-      "ISK": "Icelandic Króna (kr)",
-      "MYR": "Malaysian Ringgit (RM)",
-      "NOK": "Norwegian Krone (kr)",
-      "NZD": "New Zealand Dollar (NZ$)",
-      "PHP": "Philippine Peso (₱)",
-      "PLN": "Polish Złoty (zł)",
-      "RON": "Romanian Leu (lei)",
-      "SEK": "Swedish Krona (kr)",
-      "SGD": "Singapore Dollar (S$)",
-      "THB": "Thai Baht (฿)",
-      "TRY": "Turkish Lira (₺)",
-      "ZAR": "South African Rand (R)"
+        "CZK": "Czech Koruna (Kč)",
+        "DKK": "Danish Krone (kr)",
+        "HKD": "Hong Kong Dollar (HK$)",
+        "HUF": "Hungarian Forint (Ft)",
+        "IDR": "Indonesian Rupiah (Rp)",
+        "ILS": "Israeli New Shekel (₪)",
+        "ISK": "Icelandic Króna (kr)",
+        "MYR": "Malaysian Ringgit (RM)",
+        "NOK": "Norwegian Krone (kr)",
+        "NZD": "New Zealand Dollar (NZ$)",
+        "PHP": "Philippine Peso (₱)",
+        "PLN": "Polish Złoty (zł)",
+        "RON": "Romanian Leu (lei)",
+        "SEK": "Swedish Krona (kr)",
+        "SGD": "Singapore Dollar (S$)",
+        "THB": "Thai Baht (฿)",
+        "TRY": "Turkish Lira (₺)",
+        "ZAR": "South African Rand (R)"
       }
     },
     "romanNumeral": {
@@ -345,7 +347,7 @@
       "copied": "Copied!"
     },
     "caseConverter": {
-      "title": "Case Converter",
+      "title": "Title Case",
       "description": "Convert text between uppercase, lowercase, title case, camelCase, and more.",
       "subtitle": "Transform text between different letter cases.",
       "inputLabel": "Enter your text",
@@ -356,7 +358,6 @@
       "copied": "Copied!",
       "upper": "UPPERCASE",
       "lower": "lowercase",
-      "title": "Title Case",
       "sentence": "Sentence case.",
       "camel": "camelCase",
       "kebab": "kebab-case",
@@ -409,7 +410,8 @@
       "first": "First Trimester",
       "second": "Second Trimester",
       "third": "Third Trimester",
-      "disclaimer": "This is an estimate based on Naegele's rule. Always consult your healthcare provider for medical advice."
+      "disclaimer": "This is an estimate based on Naegele's rule. Always consult your healthcare provider for medical advice.",
+      "placeholder": "Select LMP date"
     },
     "dateDifference": {
       "title": "Date Difference Calculator",
@@ -421,7 +423,8 @@
       "days": "Days",
       "weeks": "Weeks",
       "months": "Months",
-      "years": "Years"
+      "years": "Years",
+      "placeholder": "Select a date"
     },
     "whatToEat": {
       "title": "What to Eat",
@@ -504,25 +507,28 @@
       "Guide": "Guide",
       "Comparison": "Comparison",
       "General": "General",
-    "CZK": "Czech Koruna (Kč)",
-    "DKK": "Danish Krone (kr)",
-    "HKD": "Hong Kong Dollar (HK$)",
-    "HUF": "Hungarian Forint (Ft)",
-    "IDR": "Indonesian Rupiah (Rp)",
-    "ILS": "Israeli New Shekel (₪)",
-    "ISK": "Icelandic Króna (kr)",
-    "MYR": "Malaysian Ringgit (RM)",
-    "NOK": "Norwegian Krone (kr)",
-    "NZD": "New Zealand Dollar (NZ$)",
-    "PHP": "Philippine Peso (₱)",
-    "PLN": "Polish Złoty (zł)",
-    "RON": "Romanian Leu (lei)",
-    "SEK": "Swedish Krona (kr)",
-    "SGD": "Singapore Dollar (S$)",
-    "THB": "Thai Baht (฿)",
-    "TRY": "Turkish Lira (₺)",
-    "ZAR": "South African Rand (R)"
-    }
+      "CZK": "Czech Koruna (Kč)",
+      "DKK": "Danish Krone (kr)",
+      "HKD": "Hong Kong Dollar (HK$)",
+      "HUF": "Hungarian Forint (Ft)",
+      "IDR": "Indonesian Rupiah (Rp)",
+      "ILS": "Israeli New Shekel (₪)",
+      "ISK": "Icelandic Króna (kr)",
+      "MYR": "Malaysian Ringgit (RM)",
+      "NOK": "Norwegian Krone (kr)",
+      "NZD": "New Zealand Dollar (NZ$)",
+      "PHP": "Philippine Peso (₱)",
+      "PLN": "Polish Złoty (zł)",
+      "RON": "Romanian Leu (lei)",
+      "SEK": "Swedish Krona (kr)",
+      "SGD": "Singapore Dollar (S$)",
+      "THB": "Thai Baht (฿)",
+      "TRY": "Turkish Lira (₺)",
+      "ZAR": "South African Rand (R)"
+    },
+    "all": "All",
+    "categoriesTitle": "Categories",
+    "popular": "Popular Reviews"
   },
   "About": {
     "title": "About Us",
