@@ -1,4 +1,5 @@
 "use client";
+import { getTranslations } from "next-intl/server";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
@@ -71,4 +72,32 @@ export default function DateDifferencePage() {
       <FeedbackWidget toolSlug="date-difference" />
     </div>
   );
+}
+
+// ---- SEO metadata (server-side) ----
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Tools" });
+  const th = await getTranslations({ locale, namespace: "Metadata" });
+  const title = t("dateDifference.title");
+  const description = t("dateDifference.description");
+  const url = `/${locale}/tools/date-difference`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+
+  return {
+    title,
+    description,
+    keywords: ["date difference", "online tool", "free calculator", "EasyToolHub", "time"],
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl + url,
+      siteName: th("siteName"),
+    },
+  };
 }

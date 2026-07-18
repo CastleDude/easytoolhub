@@ -1,4 +1,5 @@
 "use client";
+import { getTranslations } from "next-intl/server";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
@@ -101,4 +102,32 @@ export default function TipCalculatorPage() {
       <FeedbackWidget toolSlug="tip-calculator" />
     </div>
   );
+}
+
+// ---- SEO metadata (server-side) ----
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Tools" });
+  const th = await getTranslations({ locale, namespace: "Metadata" });
+  const title = t("tipCalculator.title");
+  const description = t("tipCalculator.description");
+  const url = `/${locale}/tools/tip-calculator`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+
+  return {
+    title,
+    description,
+    keywords: ["tip calculator", "online tool", "free calculator", "EasyToolHub", "finance"],
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl + url,
+      siteName: th("siteName"),
+    },
+  };
 }

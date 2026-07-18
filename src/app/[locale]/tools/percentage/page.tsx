@@ -1,4 +1,5 @@
 "use client";
+import { getTranslations } from "next-intl/server";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
@@ -111,4 +112,32 @@ export default function PercentagePage() {
       <FeedbackWidget toolSlug="percentage" />
     </div>
   );
+}
+
+// ---- SEO metadata (server-side) ----
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Tools" });
+  const th = await getTranslations({ locale, namespace: "Metadata" });
+  const title = t("percentage.title");
+  const description = t("percentage.description");
+  const url = `/${locale}/tools/percentage`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+
+  return {
+    title,
+    description,
+    keywords: ["percentage", "online tool", "free calculator", "EasyToolHub", "math"],
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl + url,
+      siteName: th("siteName"),
+    },
+  };
 }

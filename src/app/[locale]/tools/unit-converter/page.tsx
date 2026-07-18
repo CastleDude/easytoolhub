@@ -1,4 +1,5 @@
 "use client";
+import { getTranslations } from "next-intl/server";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
@@ -193,4 +194,32 @@ function ConversionTable({ category, tu }: { category: UnitCategory; tu: Functio
       ))}
     </ul>
   );
+}
+
+// ---- SEO metadata (server-side) ----
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Tools" });
+  const th = await getTranslations({ locale, namespace: "Metadata" });
+  const title = t("unitConverter.title");
+  const description = t("unitConverter.description");
+  const url = `/${locale}/tools/unit-converter`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+
+  return {
+    title,
+    description,
+    keywords: ["unit converter", "online tool", "free calculator", "EasyToolHub", "converter"],
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl + url,
+      siteName: th("siteName"),
+    },
+  };
 }

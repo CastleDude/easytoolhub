@@ -1,4 +1,5 @@
 "use client";
+import { getTranslations } from "next-intl/server";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
@@ -95,4 +96,32 @@ export default function PasswordGeneratorPage() {
       <FeedbackWidget toolSlug="password-generator" />
     </div>
   );
+}
+
+// ---- SEO metadata (server-side) ----
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Tools" });
+  const th = await getTranslations({ locale, namespace: "Metadata" });
+  const title = t("passwordGenerator.title");
+  const description = t("passwordGenerator.description");
+  const url = `/${locale}/tools/password-generator`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+
+  return {
+    title,
+    description,
+    keywords: ["password generator", "online tool", "free calculator", "EasyToolHub", "security"],
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl + url,
+      siteName: th("siteName"),
+    },
+  };
 }
