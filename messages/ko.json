@@ -53,7 +53,17 @@
     "ctaButton": "모든 도구 보기 →",
     "viewAllTools": "21개 도구 모두 보기 ↓",
     "favAdd": "상단 고정",
-    "favRemove": "고정 해제"
+    "favRemove": "고정 해제",
+    "whySubtitle": "가입 불필요. 다운로드 불필요. 성가신 광고 없음. 빠르고 무료인 도구만.",
+    "statTools": "무료 도구",
+    "statLanguages": "언어",
+    "statReviews": "전문 리뷰",
+    "statFree": "영원히 무료",
+    "reviewsTitle": "전문 리뷰 & 가이드",
+    "reviewsDesc": "최고의 도구를 선택하는 데 도움이 되는 심층 비교 및 구매 가이드.",
+    "reviewsButton": "리뷰 보기",
+    "bookmarkTitle": "북마크",
+    "bookmarkHint": "Ctrl+D 로 북마크"
   },
   "Tools": {
     "title": "모든 도구",

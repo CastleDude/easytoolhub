@@ -1,13 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import AnimatedBanner from "@/components/AnimatedBanner";
 import ExpandableToolsGrid from "@/components/ExpandableToolsGrid";
+import BookmarkButton from "@/components/BookmarkButton";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
 }
 
 function getToolKeys() {
-  // Ordered by global search volume (highest first)
   return [
     { key: "percentage", icon: "📊", slug: "percentage" },
     { key: "loanCalculator", icon: "🏦", slug: "loan-calculator" },
@@ -52,6 +52,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <>
+      {/* ===== Hero ===== */}
       <AnimatedBanner>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">
           {t("heroTitle1")}
@@ -76,9 +77,28 @@ export default async function HomePage({ params }: HomePageProps) {
           >
             {t("readReviews")}
           </a>
+          <BookmarkButton />
+        </div>
+
+        {/* Stats bar */}
+        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+          {[
+            { num: "21+", label: t("statTools") },
+            { num: "8", label: t("statLanguages") },
+            { num: "16", label: t("statReviews") },
+            { num: "∞", label: t("statFree") },
+          ].map(({ num, label }) => (
+            <div key={label} className="text-center">
+              <div className="text-2xl md:text-3xl font-bold text-primary-600 dark:text-primary-400">
+                {num}
+              </div>
+              <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">{label}</div>
+            </div>
+          ))}
         </div>
       </AnimatedBanner>
 
+      {/* ===== Popular Tools ===== */}
       <section className="py-16 md:py-20">
         <div className="container-main">
           <div className="text-center mb-12">
@@ -100,18 +120,22 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
       </section>
 
+      {/* ===== Why Us ===== */}
       <section className="py-16 md:py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container-main">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
               {t("whyTitle")}
             </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-lg mx-auto">
+              {t("whySubtitle")}
+            </p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[1, 2, 3].map((n) => (
               <div key={n} className="text-center">
                 <div className="text-3xl mb-3">
-                  {n === 1 ? "⚡" : n === 2 ? "📱" : "🔒"}
+                  {n === 1 ? "⚡" : n === 2 ? "🌍" : "🛡️"}
                 </div>
                 <h3 className="font-semibold text-lg mb-2">
                   {t(`why${n}Title`)}
@@ -125,7 +149,29 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
       </section>
 
+      {/* ===== Reviews Preview ===== */}
       <section className="py-16 md:py-20">
+        <div className="container-main text-center">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+            {t("reviewsTitle")}
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-lg mx-auto">
+            {t("reviewsDesc")}
+          </p>
+          <a
+            href={`/${locale}/blog`}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors"
+          >
+            {t("reviewsButton")}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4-4 4M21 12H3" />
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      {/* ===== CTA ===== */}
+      <section className="py-16 md:py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container-main text-center">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">
             {t("ctaTitle")}
@@ -135,7 +181,7 @@ export default async function HomePage({ params }: HomePageProps) {
           </p>
           <a
             href={`/${locale}/tools`}
-            className="inline-block px-8 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
+            className="inline-block px-8 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors shadow-sm"
           >
             {t("ctaButton")}
           </a>

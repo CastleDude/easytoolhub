@@ -53,7 +53,17 @@
     "ctaButton": "すべてのツールを見る →",
     "viewAllTools": "21個のツールをすべて見る ↓",
     "favAdd": "ピン留め",
-    "favRemove": "ピン解除"
+    "favRemove": "ピン解除",
+    "whySubtitle": "登録不要。ダウンロード不要。邪魔な広告なし。高速で無料のツールだけ。",
+    "statTools": "無料ツール",
+    "statLanguages": "言語",
+    "statReviews": "専門レビュー",
+    "statFree": "永久無料",
+    "reviewsTitle": "専門レビュー＆ガイド",
+    "reviewsDesc": "最適なツールを選ぶための詳細な比較と購入ガイド。",
+    "reviewsButton": "レビューを見る",
+    "bookmarkTitle": "ブックマーク",
+    "bookmarkHint": "Ctrl+D でブックマーク"
   },
   "Tools": {
     "title": "すべてのツール",

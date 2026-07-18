@@ -53,7 +53,17 @@
     "ctaButton": "View All Tools →",
     "viewAllTools": "View All 21 Tools ↓",
     "favAdd": "Pin to top",
-    "favRemove": "Unpin"
+    "favRemove": "Unpin",
+    "whySubtitle": "No sign-ups. No downloads. No ads that ruin your experience. Just fast, free tools that work.",
+    "statTools": "Free Tools",
+    "statLanguages": "Languages",
+    "statReviews": "Expert Reviews",
+    "statFree": "Free Forever",
+    "reviewsTitle": "Expert Reviews & Guides",
+    "reviewsDesc": "In-depth comparisons and buying guides to help you choose the best tools and gear.",
+    "reviewsButton": "Browse Reviews",
+    "bookmarkTitle": "Bookmark This Site",
+    "bookmarkHint": "Press Ctrl+D to bookmark"
   },
   "Tools": {
     "title": "All Tools",

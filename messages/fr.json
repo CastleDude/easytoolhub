@@ -53,7 +53,17 @@
     "ctaButton": "Voir Tous les Outils →",
     "viewAllTools": "Voir les 21 Outils ↓",
     "favAdd": "Épingler",
-    "favRemove": "Désépingler"
+    "favRemove": "Désépingler",
+    "whySubtitle": "Pas d'inscription. Pas de téléchargement. Pas de pubs gênantes. Juste des outils rapides et gratuits.",
+    "statTools": "Outils",
+    "statLanguages": "Langues",
+    "statReviews": "Avis",
+    "statFree": "Gratuit Pour Toujours",
+    "reviewsTitle": "Avis et Guides",
+    "reviewsDesc": "Comparatifs détaillés pour choisir les meilleurs outils.",
+    "reviewsButton": "Voir les Avis",
+    "bookmarkTitle": "Ajouter aux Favoris",
+    "bookmarkHint": "Appuyez sur Ctrl+D"
   },
   "Tools": {
     "title": "Tous les Outils",

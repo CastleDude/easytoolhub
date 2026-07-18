@@ -53,7 +53,17 @@
     "ctaButton": "Ver Todas las Herramientas →",
     "viewAllTools": "Ver las 21 Herramientas ↓",
     "favAdd": "Fijar",
-    "favRemove": "Desfijar"
+    "favRemove": "Desfijar",
+    "whySubtitle": "Sin registros. Sin descargas. Sin anuncios molestos. Solo herramientas rápidas y gratuitas.",
+    "statTools": "Herramientas",
+    "statLanguages": "Idiomas",
+    "statReviews": "Reseñas",
+    "statFree": "Gratis Siempre",
+    "reviewsTitle": "Reseñas y Guías",
+    "reviewsDesc": "Comparaciones detalladas para elegir las mejores herramientas.",
+    "reviewsButton": "Ver Reseñas",
+    "bookmarkTitle": "Marcar como Favorito",
+    "bookmarkHint": "Presiona Ctrl+D"
   },
   "Tools": {
     "title": "Todas las Herramientas",

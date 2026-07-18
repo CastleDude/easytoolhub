@@ -53,7 +53,17 @@
     "ctaButton": "查看所有工具 →",
     "viewAllTools": "查看全部 21 个工具 ↓",
     "favAdd": "置顶",
-    "favRemove": "取消置顶"
+    "favRemove": "取消置顶",
+    "whySubtitle": "无需注册。无需下载。没有烦人广告。只是快速、免费、好用的工具。",
+    "statTools": "免费工具",
+    "statLanguages": "语言支持",
+    "statReviews": "专业测评",
+    "statFree": "永久免费",
+    "reviewsTitle": "专业测评与指南",
+    "reviewsDesc": "深度对比和购买指南，帮你选择最好的工具和装备。",
+    "reviewsButton": "浏览测评",
+    "bookmarkTitle": "收藏本站",
+    "bookmarkHint": "按 Ctrl+D 收藏本站"
   },
   "Tools": {
     "title": "所有工具",

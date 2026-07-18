@@ -53,7 +53,17 @@
     "ctaButton": "Alle Tools anzeigen →",
     "viewAllTools": "Alle 21 Tools anzeigen ↓",
     "favAdd": "Anheften",
-    "favRemove": "Lösen"
+    "favRemove": "Lösen",
+    "whySubtitle": "Keine Anmeldung. Keine Downloads. Keine nervige Werbung. Nur schnelle, kostenlose Tools.",
+    "statTools": "Kostenlose Tools",
+    "statLanguages": "Sprachen",
+    "statReviews": "Bewertungen",
+    "statFree": "Für immer kostenlos",
+    "reviewsTitle": "Bewertungen & Anleitungen",
+    "reviewsDesc": "Detaillierte Vergleiche für die beste Wahl.",
+    "reviewsButton": "Bewertungen ansehen",
+    "bookmarkTitle": "Lesezeichen setzen",
+    "bookmarkHint": "Drücke Strg+D"
   },
   "Tools": {
     "title": "Alle Tools",
