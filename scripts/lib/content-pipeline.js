@@ -140,7 +140,7 @@ async function runPipeline() {
     }
 
     // Step 4: Generate images
-    console.log("\n[Step 4/4] Generating cover images...");
+    console.log("\n[Step 4/5] Generating cover images...");
     for (const article of articles) {
       try {
         article.image = await generateArticleImage(article.slug, article.title);
@@ -161,8 +161,40 @@ async function runPipeline() {
     // Save all posts
     savePosts(posts);
 
+    // Step 5: Submit to search engines
+    console.log("\n[Step 5/5] Submitting to search engines...");
+    try {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+      const sitemapUrl = `${siteUrl}/sitemap.xml`;
+
+      // Ping Google
+      const googleRes = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`);
+      console.log(`  Google: ${googleRes.ok ? "OK" : googleRes.status}`);
+
+      // Ping Bing
+      const bingRes = await fetch(`https://www.bing.com/indexnow?url=${encodeURIComponent(sitemapUrl)}&key=easytoolhub`);
+      console.log(`  Bing: ${bingRes.ok ? "OK" : bingRes.status}`);
+
+      // IndexNow — submit new article URLs
+      const newUrls = articleSlugs.map((s) => `${siteUrl}/en/blog/${s}`);
+      const indexNowRes = await fetch("https://api.indexnow.org/indexnow", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          host: new URL(siteUrl).hostname,
+          key: "easytoolhub2026indexnowkey",
+          keyLocation: `${siteUrl}/easytoolhub2026indexnowkey.txt`,
+          urlList: newUrls,
+        }),
+      });
+      console.log(`  IndexNow: ${indexNowRes.ok ? "OK" : indexNowRes.status} (${newUrls.length} URLs)`);
+    } catch (e) {
+      console.error(`  Search engine submission failed: ${e.message}`);
+      errors.push(`SEO: ${e.message}`);
+    }
+
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-    console.log(`\n[Pipeline] Complete! ${articles.length} articles, ${errors.length} errors, ${elapsed}s`);
+    console.log(`\n[Pipeline] Complete! ${articles.length} articles, ${errors.length} errors, ${elapsed}s (auto-submitted to Google/Bing/IndexNow)`);
 
     logRun(errors.length === 0, topics, articleSlugs, errors);
     return { success: true, articles: articleSlugs, errors };
