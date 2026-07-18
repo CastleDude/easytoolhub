@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import ToolSidebar from "@/components/ToolSidebar";
+import PopularPosts from "@/components/PopularPosts";
 
 export default function ToolsLayoutClient({
   locale,
@@ -21,7 +22,10 @@ export default function ToolsLayoutClient({
     <div className="container-main py-8">
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
         <ToolSidebar locale={locale} />
-        <main className="min-w-0">{children}</main>
+        <main className="min-w-0">
+          {children}
+          <PopularPosts />
+        </main>
       </div>
     </div>
   );
