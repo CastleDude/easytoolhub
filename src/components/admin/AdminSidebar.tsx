@@ -91,6 +91,7 @@ export default function AdminSidebar() {
           <NavLink href="/admin/blog">📝 博客</NavLink>
           <NavLink href="/admin/analytics">📈 数据分析</NavLink>
           <NavLink href="/admin/feedback">💬 用户反馈</NavLink>
+          <NavLink href="/admin/visitors">👥 访客记录</NavLink>
           <NavLink href="/admin/api-test">🔌 接口测试</NavLink>
         </nav>
 
