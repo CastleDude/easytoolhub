@@ -538,7 +538,8 @@
     },
     "all": "Todo",
     "categoriesTitle": "Categorías",
-    "popular": "Reseñas Populares"
+    "popular": "Reseñas Populares",
+    "home": "Inicio"
   },
   "About": {
     "title": "Sobre Nosotros",

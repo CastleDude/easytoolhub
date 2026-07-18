@@ -2,6 +2,9 @@ import { getTranslations } from "next-intl/server";
 import AnimatedBanner from "@/components/AnimatedBanner";
 import ExpandableToolsGrid from "@/components/ExpandableToolsGrid";
 import BookmarkButton from "@/components/BookmarkButton";
+import { OrganizationJsonLd, WebSiteJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -37,6 +40,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Home" });
   const tt = await getTranslations({ locale, namespace: "Tools" });
+  const td = await getTranslations({ locale, namespace: "Metadata" });
 
   const tools = getToolKeys();
   const topTools = tools.slice(0, 6).map((t) => ({
@@ -52,6 +56,10 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <>
+      <OrganizationJsonLd name="EasyToolHub" url={siteUrl} logo="/images/easytoolhubicon.png" description={td("homeDescription")} />
+      <WebSiteJsonLd name="EasyToolHub" url={siteUrl} description={td("homeDescription")} />
+      <BreadcrumbJsonLd items={[{ name: t("title"), href: `/${locale}` }]} />
+
       {/* ===== Hero ===== */}
       <AnimatedBanner>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">

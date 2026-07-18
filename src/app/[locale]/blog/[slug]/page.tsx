@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getBlogPost, getAllBlogSlugs, getRelatedPosts, getBlogPosts } from "@/lib/blog";
 import BlogDetailSidebar from "@/components/BlogDetailSidebar";
 import { BlogStatsBar, BlogLikeButton } from "@/components/BlogEngagement";
+import { ArticleJsonLd, BreadcrumbJsonLd, FAQJsonLd } from "@/components/JsonLd";
 
 import type { Metadata } from "next";
 
@@ -32,14 +33,26 @@ export async function generateMetadata({
   const post = getBlogPost(slug, locale);
   const t = await getTranslations({ locale, namespace: "Blog" });
   if (!post) return { title: t("notFound") };
+  const ogImage = post.image
+    ? [{ url: post.image.startsWith("http") ? post.image : `${process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com"}${post.image}`, width: 1024, height: 1024 }]
+    : undefined;
+
   return {
     title: post.title,
     description: post.excerpt,
+    keywords: [post.category, "review", "guide", "comparison", "EasyToolHub"],
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
       publishedTime: post.date,
+      images: ogImage,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: ogImage,
     },
   };
 }
@@ -51,10 +64,28 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   if (!post) notFound();
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
   const related = getRelatedPosts(slug, locale, 3);
   const allPosts = getBlogPosts(locale);
 
   return (
+    <>
+      <ArticleJsonLd
+        headline={post.title}
+        description={post.excerpt}
+        image={post.image || "/images/easytoolhubicon.png"}
+        datePublished={post.date}
+        dateModified={post.updated_at || post.date}
+        author="EasyToolHub"
+        url={`/${locale}/blog/${slug}`}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: t("home"), href: `/${locale}` },
+          { name: t("title"), href: `/${locale}/blog` },
+          { name: post.title, href: `/${locale}/blog/${slug}` },
+        ]}
+      />
     <div className="container-main py-8">
       <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
         {/* Left sidebar */}
@@ -166,5 +197,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </div>
     </div>
+  </>
   );
 }
