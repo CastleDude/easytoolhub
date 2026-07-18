@@ -541,7 +541,8 @@
     "all": "전체",
     "categoriesTitle": "카테고리",
     "popular": "인기 리뷰",
-    "home": "홈"
+    "home": "홈",
+    "viewsCount": "회 읽기"
   },
   "About": {
     "title": "회사 소개",

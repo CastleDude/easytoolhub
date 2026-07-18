@@ -541,7 +541,8 @@
     "all": "Tout",
     "categoriesTitle": "Catégories",
     "popular": "Avis Populaires",
-    "home": "Accueil"
+    "home": "Accueil",
+    "viewsCount": "vues"
   },
   "About": {
     "title": "À Propos",

@@ -541,7 +541,8 @@
     "all": "All",
     "categoriesTitle": "Categories",
     "popular": "Popular Reviews",
-    "home": "Home"
+    "home": "Home",
+    "viewsCount": "views"
   },
   "About": {
     "title": "About Us",

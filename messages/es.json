@@ -541,7 +541,8 @@
     "all": "Todo",
     "categoriesTitle": "Categorías",
     "popular": "Reseñas Populares",
-    "home": "Inicio"
+    "home": "Inicio",
+    "viewsCount": "vistas"
   },
   "About": {
     "title": "Sobre Nosotros",

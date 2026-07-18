@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 
 interface PostItem {
@@ -13,6 +13,7 @@ interface PostItem {
 
 export default function PopularPosts() {
   const locale = useLocale();
+  const t = useTranslations("Blog");
   const [posts, setPosts] = useState<PostItem[]>([]);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function PopularPosts() {
   return (
     <div className="mt-16 pt-12 border-t border-gray-200 dark:border-gray-800">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6 text-center">
-        🔥 热门测评推荐
+        🔥 {t("popular")}
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {posts.map((post) => (
@@ -64,7 +65,7 @@ export default function PopularPosts() {
               <p className="text-sm font-medium text-gray-900 dark:text-gray-200 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                 {post.title}
               </p>
-              <p className="text-xs text-gray-400 mt-1">👁 {post.views} 次阅读</p>
+              <p className="text-xs text-gray-400 mt-1">👁 {post.views} {t("viewsCount")}</p>
             </div>
           </Link>
         ))}

@@ -541,7 +541,8 @@
     "all": "すべて",
     "categoriesTitle": "カテゴリ",
     "popular": "人気のレビュー",
-    "home": "ホーム"
+    "home": "ホーム",
+    "viewsCount": "回閲覧"
   },
   "About": {
     "title": "私たちについて",
