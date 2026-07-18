@@ -13,7 +13,8 @@
     "toggleMenu": "Меню",
     "toggleDark": "Тёмная тема",
     "switchLanguage": "Сменить язык",
-    "home": "Главная"
+    "home": "Главная",
+    "starBookmark": "Добавить в закладки"
   },
   "Footer": {
     "tools": "Инструменты",

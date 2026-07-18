@@ -13,7 +13,8 @@
     "toggleMenu": "Basculer le menu",
     "toggleDark": "Mode sombre",
     "switchLanguage": "Changer de langue",
-    "home": "Accueil"
+    "home": "Accueil",
+    "starBookmark": "Ajouter aux Favoris"
   },
   "Footer": {
     "tools": "Outils",

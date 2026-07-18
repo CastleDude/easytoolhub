@@ -13,7 +13,8 @@
     "toggleMenu": "メニュー切り替え",
     "toggleDark": "ダークモード切替",
     "switchLanguage": "言語切替",
-    "home": "ホーム"
+    "home": "ホーム",
+    "starBookmark": "サイトをブックマーク"
   },
   "Footer": {
     "tools": "ツール",

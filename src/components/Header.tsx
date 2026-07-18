@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { locales, localeNames, type Locale } from "@/i18n/config";
+import StarBookmark from "@/components/StarBookmark";
 
 export default function Header() {
   const t = useTranslations("Header");
@@ -68,6 +69,7 @@ export default function Header() {
             {t("contact")}
           </a>
           <ThemeToggle />
+          <StarBookmark />
           <LanguageSwitcher
             locale={locale as Locale}
             langOpen={langOpen}
@@ -76,6 +78,8 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
+          <StarBookmark />
           <LanguageSwitcher
             locale={locale as Locale}
             langOpen={langOpen}

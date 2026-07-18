@@ -13,7 +13,8 @@
     "toggleMenu": "Menü umschalten",
     "toggleDark": "Dark Mode umschalten",
     "switchLanguage": "Sprache wechseln",
-    "home": "Start"
+    "home": "Start",
+    "starBookmark": "Lesezeichen setzen"
   },
   "Footer": {
     "tools": "Tools",
