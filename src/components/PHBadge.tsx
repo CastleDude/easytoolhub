@@ -1,14 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PHBadge() {
   const [dismissed, setDismissed] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setDismissed(localStorage.getItem("ph_badge_dismissed") === "1");
+    }
+  }, []);
+
+  function handleDismiss() {
+    localStorage.setItem("ph_badge_dismissed", "1");
+    setDismissed(true);
+  }
+
   if (dismissed) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-start gap-2">
+    <div className="fixed bottom-6 right-6 z-50 flex items-start gap-1">
       <a
         href="https://www.producthunt.com"
         target="_blank"
@@ -29,8 +40,9 @@ export default function PHBadge() {
         </svg>
       </a>
       <button
-        onClick={() => setDismissed(true)}
-        className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xs transition-colors"
+        onClick={handleDismiss}
+        className="-mt-1 -mr-1 w-7 h-7 flex items-center justify-center rounded-full bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-400 dark:hover:bg-gray-500 hover:text-white transition-colors text-sm font-bold leading-none"
+        title="关闭"
       >
         ✕
       </button>
