@@ -21,7 +21,7 @@ export default function PHBadge() {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-start gap-1">
       <a
-        href="https://www.producthunt.com"
+        href="https://www.producthunt.com/products/easytoolhub?launch=easytoolhub"
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-3 px-5 py-3 bg-white dark:bg-gray-800 rounded-2xl border border-orange-200 dark:border-orange-900 shadow-lg hover:shadow-xl hover:border-orange-400 dark:hover:border-orange-600 transition-all group"
