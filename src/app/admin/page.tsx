@@ -106,10 +106,27 @@ export default function AdminDashboard() {
             <a href="/admin/feedback" className="block p-3 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
               💬 查看用户反馈
             </a>
+              <button
+                onClick={async () => {
+                  const btn = document.getElementById("seo-index-btn") as HTMLButtonElement;
+                  if (btn) { btn.disabled = true; btn.textContent = "⏳ 提交中..."; }
+                  try {
+                    const res = await fetch("/api/admin/index-now", { method: "POST" });
+                    const data = await res.json();
+                    const msg = data.results?.map((r: any) => `${r.engine}: ${r.ok ? "✅" : "❌"}`).join("\n");
+                    alert(data.success ? "✅ 提交成功!\n" + msg : "⚠️ 部分成功\n" + msg);
+                  } catch { alert("❌ 提交失败，请稍后重试"); }
+                  if (btn) { btn.disabled = false; btn.textContent = "📡 通知搜索引擎"; }
+                }}
+                id="seo-index-btn"
+                className="block w-full text-left p-3 rounded-lg bg-primary-50 dark:bg-primary-950 text-primary-700 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors font-medium"
+              >
+                📡 提交搜索引擎索引
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5">
+          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5">
           <h3 className="font-semibold text-gray-900 dark:text-white mb-3">使用指南</h3>
           <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-2 list-disc pl-4">
             <li>在博客板块中创建或编辑文章</li>
