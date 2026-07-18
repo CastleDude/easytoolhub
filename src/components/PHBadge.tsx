@@ -7,7 +7,7 @@ export default function PHBadge() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setDismissed(localStorage.getItem("ph_badge_dismissed") === "1");
+      setDismissed(localStorage.getItem("ph_badge_v2") === "1");
     }
   }, []);
 
