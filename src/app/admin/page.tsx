@@ -128,7 +128,6 @@ export default function AdminDashboard() {
 
           <BlogRanking />
         </div>
-      </div>
 
       {/* API Health Status */}
       <div className="mt-6">
