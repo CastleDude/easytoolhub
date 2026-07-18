@@ -87,7 +87,11 @@ async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
       });
 
       const json = await res.json();
-      const text = json.content?.[0]?.text || json.choices?.[0]?.message?.content || "";
+
+      // DeepSeek: text is in content[].text, may have thinking blocks first
+      const contentBlocks = json.content || [];
+      const textBlock = contentBlocks.find((c) => c.type === "text");
+      const text = textBlock?.text || json.choices?.[0]?.message?.content || "";
 
       // Extract JSON from response (may have markdown wrapping)
       const jsonMatch = text.match(/\{[\s\S]*\}/);
