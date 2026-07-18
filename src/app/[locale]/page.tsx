@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import AnimatedBanner from "@/components/AnimatedBanner";
 import ExpandableToolsGrid from "@/components/ExpandableToolsGrid";
 import BookmarkButton from "@/components/BookmarkButton";
+import PHBadge from "@/components/PHBadge";
 import { OrganizationJsonLd, WebSiteJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
@@ -195,6 +196,8 @@ export default async function HomePage({ params }: HomePageProps) {
           </a>
         </div>
       </section>
+
+      <PHBadge />
     </>
   );
 }
