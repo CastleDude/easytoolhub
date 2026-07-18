@@ -126,14 +126,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-3">使用指南</h3>
-          <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-2 list-disc pl-4">
-            <li>在博客板块中创建或编辑文章</li>
-            <li>用户访问工具页面时自动记录点击数据</li>
-            <li>通过工具页面上的小部件收集用户反馈</li>
-            <li>使用数据分析页面查看详细的点击统计</li>
-          </ul>
+          <BlogRanking />
         </div>
       </div>
 
@@ -194,6 +187,60 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+function BlogRanking() {
+  const [ranking, setRanking] = useState<{ slug: string; title: string; views: number; likes: number }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/admin/blog")
+      .then((r) => r.json())
+      .then(async (posts: any[]) => {
+        const enPosts = (posts || []).filter((p: any) => p.locale === "en");
+        const withStats = await Promise.all(
+          enPosts.slice(0, 20).map((p: any) =>
+            fetch(`/api/blog/stats?slug=${p.slug}`)
+              .then((r) => r.json())
+              .then((d) => ({ slug: p.slug, title: p.title, views: d.data?.views || 0, likes: d.data?.likes || 0 }))
+              .catch(() => ({ slug: p.slug, title: p.title, views: 0, likes: 0 }))
+          )
+        );
+        const sorted = withStats.sort((a, b) => b.views - a.views).slice(0, 10);
+        setRanking(sorted);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5">
+      <h3 className="font-semibold text-gray-900 dark:text-white mb-3">🔥 博客浏览量排行</h3>
+      {loading ? (
+        <p className="text-sm text-gray-400">加载中...</p>
+      ) : ranking.length === 0 ? (
+        <p className="text-sm text-gray-400">暂无数据</p>
+      ) : (
+        <div className="space-y-1.5">
+          {ranking.map((item, i) => (
+            <div key={item.slug} className="flex items-center gap-2 text-sm">
+              <span className={`w-5 text-center font-bold text-xs ${
+                i < 3 ? "text-yellow-500" : "text-gray-400"
+              }`}>
+                {i < 3 ? ["🥇", "🥈", "🥉"][i] : `${i + 1}`}
+              </span>
+              <span className="flex-1 truncate text-gray-700 dark:text-gray-300" title={item.title}>
+                {item.title}
+              </span>
+              <span className="shrink-0 text-xs text-gray-400">
+                👁 {item.views} ❤ {item.likes}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
