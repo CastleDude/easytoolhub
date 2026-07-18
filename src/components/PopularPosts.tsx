@@ -17,7 +17,7 @@ export default function PopularPosts() {
   const [posts, setPosts] = useState<PostItem[]>([]);
 
   useEffect(() => {
-    fetch("/api/admin/blog")
+    fetch(`/api/blog/posts?locale=${locale}`)
       .then((r) => r.json())
       .then(async (allPosts: any[]) => {
         const enPosts = (allPosts || []).filter((p: any) => p.locale === locale);
