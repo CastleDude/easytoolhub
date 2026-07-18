@@ -14,7 +14,8 @@
     "toggleDark": "Mode sombre",
     "switchLanguage": "Changer de langue",
     "home": "Accueil",
-    "starBookmark": "Ajouter aux Favoris"
+    "starBookmark": "Ajouter aux Favoris",
+    "starBookmarkHint": "pour ajouter aux favoris"
   },
   "Footer": {
     "tools": "Outils",

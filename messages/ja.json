@@ -14,7 +14,8 @@
     "toggleDark": "ダークモード切替",
     "switchLanguage": "言語切替",
     "home": "ホーム",
-    "starBookmark": "サイトをブックマーク"
+    "starBookmark": "サイトをブックマーク",
+    "starBookmarkHint": "このサイトをブックマーク"
   },
   "Footer": {
     "tools": "ツール",

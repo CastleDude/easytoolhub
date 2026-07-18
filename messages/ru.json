@@ -14,7 +14,8 @@
     "toggleDark": "Тёмная тема",
     "switchLanguage": "Сменить язык",
     "home": "Главная",
-    "starBookmark": "Добавить в закладки"
+    "starBookmark": "Добавить в закладки",
+    "starBookmarkHint": "добавить в закладки"
   },
   "Footer": {
     "tools": "Инструменты",

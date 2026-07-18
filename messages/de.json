@@ -14,7 +14,8 @@
     "toggleDark": "Dark Mode umschalten",
     "switchLanguage": "Sprache wechseln",
     "home": "Start",
-    "starBookmark": "Lesezeichen setzen"
+    "starBookmark": "Lesezeichen setzen",
+    "starBookmarkHint": "um Lesezeichen zu setzen"
   },
   "Footer": {
     "tools": "Tools",

@@ -14,7 +14,8 @@
     "toggleDark": "다크 모드 전환",
     "switchLanguage": "언어 전환",
     "home": "홈",
-    "starBookmark": "사이트 북마크"
+    "starBookmark": "사이트 북마크",
+    "starBookmarkHint": "이 사이트 북마크"
   },
   "Footer": {
     "tools": "도구",

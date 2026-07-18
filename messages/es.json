@@ -14,7 +14,8 @@
     "toggleDark": "Alternar modo oscuro",
     "switchLanguage": "Cambiar idioma",
     "home": "Inicio",
-    "starBookmark": "Marcar Sitio"
+    "starBookmark": "Marcar Sitio",
+    "starBookmarkHint": "para marcar este sitio"
   },
   "Footer": {
     "tools": "Herramientas",

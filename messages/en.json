@@ -14,7 +14,8 @@
     "toggleDark": "Toggle dark mode",
     "switchLanguage": "Switch language",
     "home": "Home",
-    "starBookmark": "Bookmark This Site"
+    "starBookmark": "Bookmark This Site",
+    "starBookmarkHint": "to bookmark this site"
   },
   "Footer": {
     "tools": "Tools",

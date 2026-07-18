@@ -14,7 +14,8 @@
     "toggleDark": "切换深色模式",
     "switchLanguage": "切换语言",
     "home": "首页",
-    "starBookmark": "收藏本站"
+    "starBookmark": "收藏本站",
+    "starBookmarkHint": "收藏本站"
   },
   "Footer": {
     "tools": "工具",
