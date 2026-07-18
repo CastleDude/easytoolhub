@@ -1,5 +1,4 @@
 "use client";
-import { getTranslations } from "next-intl/server";
 import ToolClickTracker from "@/components/admin/ToolClickTracker";
 import FeedbackWidget from "@/components/feedback/FeedbackWidget";
 
@@ -58,32 +57,4 @@ function StatCard({ label, value, locale }: { label: string; value: number; loca
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{label}</p>
     </div>
   );
-}
-
-// ---- SEO metadata (server-side) ----
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Tools" });
-  const th = await getTranslations({ locale, namespace: "Metadata" });
-  const title = t("wordCounter.title");
-  const description = t("wordCounter.description");
-  const url = `/${locale}/tools/word-counter`;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
-
-  return {
-    title,
-    description,
-    keywords: ["word counter", "online tool", "free calculator", "EasyToolHub", "text"],
-    alternates: { canonical: url },
-    openGraph: {
-      title,
-      description,
-      url: siteUrl + url,
-      siteName: th("siteName"),
-    },
-  };
 }
