@@ -20,7 +20,9 @@ export async function POST(req: NextRequest) {
       req.headers.get("cf-ipcountry") ||
       null;
 
-    const session = recordVisit(sessionId, ip, country, pageCount || 1);
+    const userAgent = req.headers.get("user-agent") || "";
+
+    const session = recordVisit(sessionId, ip, country, pageCount || 1, userAgent);
 
     return NextResponse.json({ success: true, data: session });
   } catch {

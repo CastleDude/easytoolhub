@@ -7,6 +7,7 @@ export interface VisitorSession {
   id: string;
   ip: string;
   country: string;
+  device: string;       // Mobile / Tablet / Desktop
   firstVisit: string;  // Beijing time ISO
   lastVisit: string;   // Beijing time ISO
   duration: number;     // seconds
@@ -43,11 +44,20 @@ function countryFromIP(ip: string): string {
   return "Unknown";
 }
 
+function detectDevice(userAgent: string): string {
+  if (!userAgent) return "Unknown";
+  const ua = userAgent.toLowerCase();
+  if (/iphone|android.*mobile|webos|blackberry|iemobile|opera mini/.test(ua)) return "Mobile";
+  if (/ipad|android(?!.*mobile)|tablet/.test(ua)) return "Tablet";
+  return "Desktop";
+}
+
 export function recordVisit(
   sessionId: string,
   ip: string,
   countryHeader: string | null,
-  pageCount: number
+  pageCount: number,
+  userAgent: string
 ): VisitorSession {
   const sessions = readStore();
   const now = beijingTime();
@@ -72,6 +82,7 @@ export function recordVisit(
     id: sessionId,
     ip,
     country,
+    device: detectDevice(userAgent),
     firstVisit: now,
     lastVisit: now,
     duration: 0,

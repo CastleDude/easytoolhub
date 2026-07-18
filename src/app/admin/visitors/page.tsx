@@ -6,6 +6,7 @@ interface Visitor {
   id: string;
   ip: string;
   country: string;
+  device: string;
   firstVisit: string;
   lastVisit: string;
   duration: number;
@@ -107,6 +108,7 @@ export default function VisitorsPage() {
               <tr className="border-b border-gray-200 dark:border-gray-800">
                 <th className="text-left py-3 px-4 font-medium text-gray-500 dark:text-gray-400">IP 地址</th>
                 <th className="text-left py-3 px-4 font-medium text-gray-500 dark:text-gray-400">国家</th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 dark:text-gray-400">设备</th>
                 <th className="text-left py-3 px-4 font-medium text-gray-500 dark:text-gray-400">首次访问</th>
                 <th className="text-left py-3 px-4 font-medium text-gray-500 dark:text-gray-400">最后访问</th>
                 <th className="text-left py-3 px-4 font-medium text-gray-500 dark:text-gray-400">停留时长</th>
@@ -123,6 +125,15 @@ export default function VisitorsPage() {
                   <td className="py-3 px-4">
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                       {v.country}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs ${
+                      v.device === "Mobile" ? "bg-green-50 dark:bg-green-950 text-green-600 dark:text-green-400" :
+                      v.device === "Tablet" ? "bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400" :
+                      "bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400"
+                    }`}>
+                      {v.device === "Mobile" ? "📱" : v.device === "Tablet" ? "📋" : "💻"} {v.device}
                     </span>
                   </td>
                   <td className="py-3 px-4 text-gray-600 dark:text-gray-400 whitespace-nowrap">
