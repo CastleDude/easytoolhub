@@ -8,7 +8,7 @@ export default function StarBookmark() {
   const [bookmarked, setBookmarked] = useState(false);
   const [showTip, setShowTip] = useState(false);
   const tipRef = useRef<HTMLDivElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
