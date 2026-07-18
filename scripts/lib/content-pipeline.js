@@ -161,21 +161,12 @@ async function runPipeline() {
     // Save all posts
     savePosts(posts);
 
-    // Step 5: Submit to search engines
-    console.log("\n[Step 5/5] Submitting to search engines...");
+    // Step 5: Submit new article URLs to search engines
+    console.log("\n[Step 5/5] Submitting new URLs to IndexNow...");
     try {
       const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
-      const sitemapUrl = `${siteUrl}/sitemap.xml`;
 
-      // Ping Google
-      const googleRes = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`);
-      console.log(`  Google: ${googleRes.ok ? "OK" : googleRes.status}`);
-
-      // Ping Bing
-      const bingRes = await fetch(`https://www.bing.com/indexnow?url=${encodeURIComponent(sitemapUrl)}&key=easytoolhub`);
-      console.log(`  Bing: ${bingRes.ok ? "OK" : bingRes.status}`);
-
-      // IndexNow — submit new article URLs
+      // Only submit the NEW articles to IndexNow (not full sitemap every day)
       const newUrls = articleSlugs.map((s) => `${siteUrl}/en/blog/${s}`);
       const indexNowRes = await fetch("https://api.indexnow.org/indexnow", {
         method: "POST",
@@ -187,14 +178,14 @@ async function runPipeline() {
           urlList: newUrls,
         }),
       });
-      console.log(`  IndexNow: ${indexNowRes.ok ? "OK" : indexNowRes.status} (${newUrls.length} URLs)`);
+      console.log(`  IndexNow: ${indexNowRes.ok ? "OK" : indexNowRes.status} — submitted ${newUrls.length} new URLs`);
     } catch (e) {
-      console.error(`  Search engine submission failed: ${e.message}`);
+      console.error(`  IndexNow submission failed: ${e.message}`);
       errors.push(`SEO: ${e.message}`);
     }
 
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-    console.log(`\n[Pipeline] Complete! ${articles.length} articles, ${errors.length} errors, ${elapsed}s (auto-submitted to Google/Bing/IndexNow)`);
+    console.log(`\n[Pipeline] Complete! ${articles.length} articles, ${errors.length} errors, ${elapsed}s (auto-submitted to IndexNow)`);
 
     logRun(errors.length === 0, topics, articleSlugs, errors);
     return { success: true, articles: articleSlugs, errors };
