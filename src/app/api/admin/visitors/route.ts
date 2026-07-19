@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { recordVisit, getAggregatedVisitors, getVisitorStats, clearVisitors } from "@/lib/visitor-tracker";
+import { recordVisit, getAggregatedVisitors, getVisitorStats, clearVisitors, ipToCountry } from "@/lib/visitor-tracker";
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
       req.headers.get("x-real-ip") ||
       "127.0.0.1";
     const country = req.headers.get("x-vercel-ip-country") ||
-      req.headers.get("cf-ipcountry") || null;
+      req.headers.get("cf-ipcountry") || ipToCountry(ip);
     const referrer = req.headers.get("referer") || null;
     const ua = userAgent || req.headers.get("user-agent") || "";
 

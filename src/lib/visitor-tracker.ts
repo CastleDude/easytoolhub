@@ -48,6 +48,28 @@ function beijingTime(): string {
 const BOT_PATTERNS = /bot|crawler|spider|scraper|curl|wget|python|go-http|java/i;
 const CHROME_LINUX_BOT = /Chrome\/\d+.*Linux.*(?!.*Android)/i;
 
+// Simple offline IP-to-country lookup for common IP ranges
+// Falls back to "Unknown" for unrecognized IPs
+export function ipToCountry(ip: string): string {
+  if (!ip || ip === "127.0.0.1" || ip === "::1" || ip.startsWith("192.168.") || ip.startsWith("10.")) return "本地";
+  // Parse first octet for rough geo estimation (not precise but better than Unknown)
+  const octet = parseInt(ip.split(".")[0], 10);
+  if (octet >= 1 && octet <= 14) return "US";
+  if (octet >= 27 && octet <= 31) return "US";
+  if (octet >= 36 && octet <= 45) return "CN";
+  if (octet >= 46 && octet <= 51) return "EU";
+  if (octet >= 58 && octet <= 61) return "CN";
+  if (octet >= 77 && octet <= 82) return "EU";
+  if (octet >= 85 && octet <= 91) return "EU";
+  if (octet >= 101 && octet <= 103) return "CN";
+  if (octet >= 110 && octet <= 126) return "CN";
+  if (octet >= 171 && octet <= 175) return "CN";
+  if (octet >= 180 && octet <= 183) return "CN";
+  if (octet >= 202 && octet <= 203) return "CN";
+  if (octet >= 210 && octet <= 222) return "CN";
+  return "Unknown";
+}
+
 function isBot(ua: string): boolean {
   if (!ua) return false;
   return BOT_PATTERNS.test(ua) || CHROME_LINUX_BOT.test(ua);
