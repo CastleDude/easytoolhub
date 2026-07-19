@@ -136,15 +136,6 @@ export default function VisitorsPage() {
             北京时间 UTC+8 · 30秒自动刷新
           </p>
         </div>
-        <button
-          onClick={() => {
-            if (!confirm("确定清空？")) return;
-            fetch("/api/admin/visitors?action=clear").then(() => { setData([]); setTotal(0); });
-          }}
-          className="px-4 py-2 text-sm bg-red-50 dark:bg-red-950 text-red-600 rounded-lg hover:bg-red-100"
-        >
-          🗑 清空
-        </button>
       </div>
 
       {/* Stats cards */}

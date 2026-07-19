@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "ip": "::1",
+    "country": "Unknown",
+    "page": "/",
+    "referrer": "http://localhost:3000/en",
+    "referrerSource": "localhost",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+    "browser": "Chrome",
+    "device": "Desktop",
+    "visitType": "new",
+    "firstVisit": "2026-07-19T17:23:44.685+08:00",
+    "lastVisit": "2026-07-19T17:23:50.148+08:00",
+    "pageCount": 2,
+    "visitCount": 1,
+    "duration": 5
+  },
+  {
+    "id": 2,
+    "ip": "::1",
+    "country": "Local",
+    "page": "/",
+    "referrer": "",
+    "referrerSource": "直接访问",
+    "userAgent": "",
+    "browser": "Desktop",
+    "device": "Desktop",
+    "visitType": "returning",
+    "firstVisit": "2026-07-18T18:57:05.384+08:00",
+    "lastVisit": "2026-07-18T21:13:41.340+08:00",
+    "pageCount": 30,
+    "visitCount": 1,
+    "duration": 8195
+  },
+  {
+    "id": 3,
+    "ip": "::1",
+    "country": "Local",
+    "page": "/",
+    "referrer": "",
+    "referrerSource": "直接访问",
+    "userAgent": "",
+    "browser": "Desktop",
+    "device": "Desktop",
+    "visitType": "returning",
+    "firstVisit": "2026-07-18T21:41:17.605+08:00",
+    "lastVisit": "2026-07-18T22:32:29.619+08:00",
+    "pageCount": 9,
+    "visitCount": 1,
+    "duration": 3072
+  }
+]
