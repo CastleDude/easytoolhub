@@ -105,12 +105,26 @@ async function runPipeline() {
     }
     console.log(`  Generated ${articles.length}/${foundTopics.length} articles\n`);
 
-    // Step 3: Translate
-    console.log("[Step 3/4] Translating to 8 languages...");
+    // Save immediately so data isn't lost if translation crashes
     const posts = loadPosts();
     const maxId = Math.max(...posts.map((p) => p.id), 0);
     let nextId = maxId + 1;
     const today = new Date().toISOString().split("T")[0];
+
+    // Save English versions first
+    for (const article of articles) {
+      posts.push({
+        id: nextId++, slug: article.slug, locale: "en",
+        title: article.title, excerpt: article.excerpt, date: today,
+        category: article.category, content: article.content,
+        image: article.image, created_at: today, updated_at: today,
+      });
+    }
+    savePosts(posts);
+    console.log("  Saved", articles.length, "English articles (safe)\n");
+
+    // Step 3: Translate
+    console.log("[Step 3/4] Translating to 8 languages...");
 
     for (const article of articles) {
       try {
