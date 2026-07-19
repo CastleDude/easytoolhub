@@ -27,6 +27,38 @@ interface Stats {
   totalVisitors: number;
 }
 
+const COUNTRY_TZ: Record<string, string> = {
+  "US": "America/New_York", "CN": "Asia/Shanghai", "JP": "Asia/Tokyo",
+  "KR": "Asia/Seoul", "IN": "Asia/Kolkata", "RU": "Europe/Moscow",
+  "GB": "Europe/London", "DE": "Europe/Berlin", "FR": "Europe/Paris",
+  "ES": "Europe/Madrid", "IT": "Europe/Rome", "BR": "America/Sao_Paulo",
+  "AU": "Australia/Sydney", "CA": "America/Toronto", "MX": "America/Mexico_City",
+  "SG": "Asia/Singapore", "TW": "Asia/Taipei", "HK": "Asia/Hong_Kong",
+  "TH": "Asia/Bangkok", "VN": "Asia/Ho_Chi_Minh", "MY": "Asia/Kuala_Lumpur",
+  "PH": "Asia/Manila", "ID": "Asia/Jakarta", "NZ": "Pacific/Auckland",
+  "AE": "Asia/Dubai", "SA": "Asia/Riyadh", "TR": "Europe/Istanbul",
+  "ZA": "Africa/Johannesburg", "NG": "Africa/Lagos", "EG": "Africa/Cairo",
+  "AR": "America/Argentina/Buenos_Aires", "CL": "America/Santiago",
+  "PK": "Asia/Karachi", "BD": "Asia/Dhaka", "UA": "Europe/Kyiv",
+  "PL": "Europe/Warsaw", "NL": "Europe/Amsterdam", "SE": "Europe/Stockholm",
+  "CH": "Europe/Zurich", "AT": "Europe/Vienna", "BE": "Europe/Brussels",
+  "PT": "Europe/Lisbon", "GR": "Europe/Athens", "CZ": "Europe/Prague",
+  "RO": "Europe/Bucharest", "HU": "Europe/Budapest", "IE": "Europe/Dublin",
+  "DK": "Europe/Copenhagen", "NO": "Europe/Oslo", "FI": "Europe/Helsinki",
+  "IL": "Asia/Jerusalem", "IR": "Asia/Tehran", "IQ": "Asia/Baghdad",
+  "CO": "America/Bogota", "PE": "America/Lima", "VE": "America/Caracas",
+  "Local": "Asia/Shanghai", "Unknown": "UTC",
+};
+
+function toLocalTime(iso: string, country: string): string {
+  try {
+    const d = new Date(iso.replace("+08:00", "Z"));
+    const tz = COUNTRY_TZ[country] || "UTC";
+    return d.toLocaleString("zh-CN", { timeZone: tz, hour12: false,
+      month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+  } catch { return iso; }
+}
+
 function formatTime(iso: string): string {
   try {
     const d = new Date(iso.replace("+08:00", "+08:00"));
@@ -232,14 +264,15 @@ export default function VisitorsPage() {
               <th className="text-right py-2 px-2 cursor-pointer select-none" onClick={() => toggleSort("pageCount")}>浏览页{sortArrow("pageCount")}</th>
               <th className="text-right py-2 px-2 cursor-pointer select-none" onClick={() => toggleSort("visitCount")}>访问次{sortArrow("visitCount")}</th>
               <th className="text-right py-2 px-2 cursor-pointer select-none" onClick={() => toggleSort("duration")}>时长{sortArrow("duration")}</th>
-              <th className="text-right py-2 px-2 cursor-pointer select-none" onClick={() => toggleSort("lastVisit")}>最后访问{sortArrow("lastVisit")}</th>
+              <th className="text-right py-2 px-2 cursor-pointer select-none" onClick={() => toggleSort("lastVisit")}>北京{sortArrow("lastVisit")}</th>
+              <th className="text-right py-2 px-2">当地时间</th>
             </tr>
           </thead>
           <tbody>
             {loading && data.length === 0 ? (
-              <tr><td colSpan={10} className="text-center py-16 text-gray-400">加载中...</td></tr>
+              <tr><td colSpan={11} className="text-center py-16 text-gray-400">加载中...</td></tr>
             ) : data.length === 0 ? (
-              <tr><td colSpan={10} className="text-center py-16 text-gray-400">暂无数据</td></tr>
+              <tr><td colSpan={11} className="text-center py-16 text-gray-400">暂无数据</td></tr>
             ) : (
               data.map((v) => (
                 <tr key={v.id} className="border-b border-gray-100 dark:border-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-900/50">
@@ -257,6 +290,7 @@ export default function VisitorsPage() {
                   <td className="py-2 px-2 text-right text-gray-700 dark:text-gray-300">{v.visitCount}</td>
                   <td className="py-2 px-2 text-right text-gray-500">{formatDuration(v.duration)}</td>
                   <td className="py-2 px-2 text-right text-gray-500 whitespace-nowrap">{formatTime(v.lastVisit)}</td>
+                  <td className="py-2 px-2 text-right text-xs text-gray-400 whitespace-nowrap">{toLocalTime(v.lastVisit, v.country)}</td>
                 </tr>
               ))
             )}
