@@ -1,16 +1,24 @@
 #!/usr/bin/env node
 /**
  * Daily Content Fetcher
- *
- * Usage:
- *   node scripts/daily-fetch.js              # Run once
- *   node scripts/daily-fetch.js --daemon     # Run as service (daily at 08:00 Beijing)
- *
- * Env vars (from .env.local or ~/.claude/settings.json):
- *   ANTHROPIC_BASE_URL - LLM API endpoint
- *   ANTHROPIC_AUTH_TOKEN - LLM API key
- *   DASHSCOPE_API_KEY - Bailian image gen key
  */
+
+// Load env from .env.local
+const fs = require("fs");
+const path = require("path");
+const envPath = path.join(process.cwd(), ".env.local");
+if (fs.existsSync(envPath)) {
+  const lines = fs.readFileSync(envPath, "utf8").split("\n");
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq === -1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    const val = trimmed.slice(eq + 1).trim();
+    if (!process.env[key]) process.env[key] = val;
+  }
+}
 
 const { runPipeline } = require("./lib/content-pipeline");
 
