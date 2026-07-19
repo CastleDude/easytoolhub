@@ -34,6 +34,7 @@ src/data/feedback.json
 src/data/tool_clicks.json
 src/data/currency-rate-cache.json
 src/data/visitors.json
+src/data/visitor-logs.json
 src/data/fetch-log.json
 src/data/api-test-results.json
 

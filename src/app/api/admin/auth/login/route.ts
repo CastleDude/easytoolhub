@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyPassword, signToken, setTokenCookie } from "@/lib/admin-auth";
+import { readStore } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => ({}));
@@ -9,7 +10,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Password is required" }, { status: 400 });
   }
 
-  const hash = process.env.ADMIN_PASSWORD_HASH;
+  // Read hash from admin-config.json (avoids $ escaping issues in env vars)
+  let hash = process.env.ADMIN_PASSWORD_HASH;
+  if (!hash) {
+    try {
+      const config = readStore<any>("admin-config")?.[0];
+      hash = config?.passwordHash;
+    } catch {}
+  }
+
   if (!hash) {
     return NextResponse.json({ error: "Server not configured" }, { status: 500 });
   }
