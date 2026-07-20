@@ -14,6 +14,24 @@ const POSTS_PATH = path.join(process.cwd(), "src/data/posts.json");
 const LOG_PATH = path.join(process.cwd(), "src/data/fetch-log.json");
 const MAX_POSTS = 500; // Keep total posts manageable
 
+const KNOWN_CATEGORIES = ["Software", "Equipment", "Guide", "Comparison", "General", "Laptops", "Audio", "Accessories", "Security"];
+
+function normalizeCategory(cat) {
+  if (!cat) return "General";
+  const c = cat.trim();
+  for (const k of KNOWN_CATEGORIES) {
+    if (k.toLowerCase() === c.toLowerCase()) return k;
+  }
+  const lower = c.toLowerCase();
+  if (lower.includes("softwar") || lower.includes("app") || lower.includes("tool")) return "Software";
+  if (lower.includes("hardwar") || lower.includes("gadget") || lower.includes("gear") || lower.includes("device")) return "Equipment";
+  if (lower.includes("guide") || lower.includes("tutorial") || lower.includes("how")) return "Guide";
+  if (lower.includes("compar") || lower.includes("vs") || lower.includes("versus")) return "Comparison";
+  if (lower.includes("laptop") || lower.includes("notebook")) return "Laptops";
+  if (lower.includes("audio") || lower.includes("sound") || lower.includes("headphone")) return "Audio";
+  return "General";
+}
+
 function slugify(text) {
   return text
     .toLowerCase()
@@ -94,6 +112,8 @@ async function runPipeline() {
         const article = await generateArticle(topic);
         article.slug = slugify(article.title);
         article.date = new Date().toISOString().split("T")[0];
+        // Normalize category to known values
+        article.category = normalizeCategory(article.category);
         article.image = `/images/blog/${article.slug}.png`;
         articles.push(article);
         articleSlugs.push(article.slug);
