@@ -536,7 +536,10 @@
       "SGD": "Dólar de Singapur (S$)",
       "THB": "Baht tailandés (฿)",
       "TRY": "Lira turca (₺)",
-      "ZAR": "Rand sudafricano (R)"
+      "ZAR": "Rand sudafricano (R)",
+      "Tech Review": "Reseña Tech",
+      "Smart Home": "Hogar Inteligente",
+      "AR Glasses": "Gafas AR"
     },
     "all": "Todo",
     "categoriesTitle": "Categorías",

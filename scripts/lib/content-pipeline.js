@@ -14,7 +14,7 @@ const POSTS_PATH = path.join(process.cwd(), "src/data/posts.json");
 const LOG_PATH = path.join(process.cwd(), "src/data/fetch-log.json");
 const MAX_POSTS = 500; // Keep total posts manageable
 
-const KNOWN_CATEGORIES = ["Software", "Equipment", "Guide", "Comparison", "General", "Laptops", "Audio", "Accessories", "Security"];
+const KNOWN_CATEGORIES = ["Software", "Equipment", "Guide", "Comparison", "General", "Laptops", "Audio", "Accessories", "Security", "Tech Review", "Smart Home", "AR Glasses"];
 
 function normalizeCategory(cat) {
   if (!cat) return "General";

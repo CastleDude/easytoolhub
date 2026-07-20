@@ -536,7 +536,10 @@
       "SGD": "싱가포르 달러 (S$)",
       "THB": "태국 바트 (฿)",
       "TRY": "터키 리라 (₺)",
-      "ZAR": "남아공 랜드 (R)"
+      "ZAR": "남아공 랜드 (R)",
+      "Tech Review": "테크 리뷰",
+      "Smart Home": "스마트홈",
+      "AR Glasses": "AR 안경"
     },
     "all": "전체",
     "categoriesTitle": "카테고리",

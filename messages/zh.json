@@ -536,7 +536,10 @@
       "SGD": "新加坡元 (S$)",
       "THB": "泰铢 (฿)",
       "TRY": "土耳其里拉 (₺)",
-      "ZAR": "南非兰特 (R)"
+      "ZAR": "南非兰特 (R)",
+      "Tech Review": "科技评测",
+      "Smart Home": "智能家居",
+      "AR Glasses": "AR眼镜"
     },
     "all": "全部",
     "categoriesTitle": "分类",
