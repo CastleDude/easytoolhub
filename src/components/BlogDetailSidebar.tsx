@@ -49,7 +49,8 @@ export default function BlogDetailSidebar({
   const t = useTranslations("Blog");
   const searchParams = useSearchParams();
   const allLabel = categoryLabel || "All";
-  const categories = ["Software", "Equipment", "Guide", "Comparison", "General"];
+  // Dynamic category list from actual post data — stays in sync with pipeline-managed categories
+  const categories = Array.from(new Set(posts.map((p) => p.category))).sort();
   const activeCat = searchParams?.get("category") || "all";
 
   // Popular: top 5 posts, exclude current

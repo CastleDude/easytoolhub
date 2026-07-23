@@ -1,72 +1,65 @@
 /**
  * Image Generator — Generate article cover images
- * Uses: Runware MCP > Bailian API fallback
+ * Uses: Runware REST API (FLUX.1 Schnell) > SVG placeholder fallback
  */
 
 const https = require("https");
+const crypto = require("crypto");
 
-function generateWithBailian(prompt) {
-  const apiKey = process.env.DASHSCOPE_API_KEY;
-  if (!apiKey) throw new Error("DASHSCOPE_API_KEY not set");
+function generateUUID() {
+  return crypto.randomUUID();
+}
 
-  const body = JSON.stringify({
-    model: "wanx-v1",
-    input: { prompt: prompt.substring(0, 200) },
-    parameters: { size: "1024*1024" },
-  });
+function generateWithRunware(prompt) {
+  const apiKey = process.env.RUNWARE_API_KEY;
+  if (!apiKey) throw new Error("RUNWARE_API_KEY not set");
+
+  const task = {
+    taskType: "imageInference",
+    taskUUID: generateUUID(),
+    model: "runware:400@1",           // FLUX.1 Schnell — fast & cheap (~$0.0006/img)
+    positivePrompt: prompt.substring(0, 1000),
+    width: 1024,
+    height: 1024,
+    outputType: "URL",
+    outputFormat: "PNG",
+  };
+
+  const body = JSON.stringify([task]);
 
   return new Promise((resolve, reject) => {
     const req = https.request({
-      hostname: "dashscope.aliyuncs.com",
-      path: "/api/v1/services/aigc/text2image/image-synthesis",
+      hostname: "api.runware.ai",
+      path: "/v1",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + apiKey,
-        "X-DashScope-Async": "enable",
       },
     }, (res) => {
       let data = "";
       res.on("data", (d) => (data += d));
       res.on("end", () => {
-        const j = JSON.parse(data);
-        if (j.output?.task_id) {
-          pollTask(j.output.task_id, apiKey).then(resolve).catch(reject);
-        } else {
-          reject(new Error("No task_id: " + JSON.stringify(j).substring(0, 200)));
+        try {
+          const results = JSON.parse(data);
+          if (results.errors && results.errors.length > 0) {
+            reject(new Error(results.errors[0].message || "Runware API error"));
+            return;
+          }
+          const imageResult = results.data?.[0] || (Array.isArray(results) ? results[0] : results);
+          if (imageResult.imageURL) {
+            resolve(imageResult.imageURL);
+          } else {
+            reject(new Error("No imageURL in response: " + JSON.stringify(imageResult).substring(0, 200)));
+          }
+        } catch (e) {
+          reject(new Error("Failed to parse Runware response: " + e.message));
         }
       });
     });
     req.on("error", reject);
     req.write(body);
     req.end();
-  });
-}
-
-function pollTask(taskId, apiKey) {
-  return new Promise((resolve, reject) => {
-    let attempts = 0;
-    const interval = setInterval(() => {
-      attempts++;
-      https.get({
-        hostname: "dashscope.aliyuncs.com",
-        path: `/api/v1/tasks/${taskId}`,
-        headers: { Authorization: "Bearer " + apiKey },
-      }, (res) => {
-        let data = "";
-        res.on("data", (d) => (data += d));
-        res.on("end", () => {
-          const j = JSON.parse(data);
-          if (j.output?.task_status === "SUCCEEDED") {
-            clearInterval(interval);
-            resolve(j.output.results.map((r) => r.url));
-          } else if (j.output?.task_status === "FAILED" || attempts > 30) {
-            clearInterval(interval);
-            reject(new Error("Image generation failed or timeout"));
-          }
-        });
-      }).on("error", () => {});
-    }, 2000);
   });
 }
 
@@ -89,6 +82,32 @@ function downloadImage(url, filePath) {
   });
 }
 
+function generatePlaceholderSVG(title) {
+  // Deterministic color from title
+  let hash = 0;
+  for (let i = 0; i < title.length; i++) {
+    hash = title.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const hue1 = Math.abs(hash % 360);
+  const hue2 = (hue1 + 40) % 360;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:hsl(${hue1},60%,50%)"/>
+      <stop offset="100%" style="stop-color:hsl(${hue2},60%,40%)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <text x="512" y="480" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="48" font-family="system-ui,sans-serif" font-weight="bold">${escapeXml(title.substring(0, 60))}</text>
+  <text x="512" y="540" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="28" font-family="system-ui,sans-serif">EasyToolHub</text>
+</svg>`;
+}
+
+function escapeXml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 async function generateArticleImage(slug, title) {
   const fs = require("fs");
   const path = require("path");
@@ -104,14 +123,23 @@ async function generateArticleImage(slug, title) {
   console.log(`  [ImageGen] Generating for: ${slug}`);
 
   try {
-    const urls = await generateWithBailian(prompt);
-    await downloadImage(urls[0], outputPath);
+    const imageUrl = await generateWithRunware(prompt);
+    await downloadImage(imageUrl, outputPath);
     console.log(`  [ImageGen] Saved: ${slug}.png`);
     return `/images/blog/${slug}.png`;
   } catch (e) {
-    console.error(`  [ImageGen] Failed for ${slug}:`, e.message);
-    // Return a placeholder or null
-    return null;
+    console.error(`  [ImageGen] Runware failed for ${slug}:`, e.message);
+    // Fallback: save a generated SVG placeholder so images never show as broken
+    try {
+      const svgContent = generatePlaceholderSVG(title);
+      const svgPath = outputPath.replace(/\.png$/, ".svg");
+      fs.writeFileSync(svgPath, svgContent, "utf-8");
+      console.log(`  [ImageGen] Fallback SVG saved: ${slug}.svg`);
+      return `/images/blog/${slug}.svg`;
+    } catch (svgErr) {
+      console.error(`  [ImageGen] SVG fallback also failed:`, svgErr.message);
+      return null;
+    }
   }
 }
 

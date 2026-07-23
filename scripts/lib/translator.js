@@ -22,7 +22,8 @@ async function translateArticle(enArticle) {
         title: translated.title || `[${locale}] ${enArticle.title}`,
         excerpt: translated.excerpt || `[${locale}] ${enArticle.excerpt}`,
         content: translated.content || `[${locale}]\n\n${enArticle.content}`,
-        category: translated.category || enArticle.category,
+        // Always use the English category — AI translations can return wrong values
+        category: enArticle.category,
       };
     } catch (e) {
       console.error(`  [Translator] Failed for ${locale}:`, e.message);

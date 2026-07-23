@@ -23,12 +23,17 @@ function normalizeCategory(cat) {
     if (k.toLowerCase() === c.toLowerCase()) return k;
   }
   const lower = c.toLowerCase();
-  if (lower.includes("softwar") || lower.includes("app") || lower.includes("tool")) return "Software";
+  if (lower.includes("softwar") || lower.includes("app") || lower.includes("tool") || lower.includes("productiv")) return "Software";
   if (lower.includes("hardwar") || lower.includes("gadget") || lower.includes("gear") || lower.includes("device")) return "Equipment";
   if (lower.includes("guide") || lower.includes("tutorial") || lower.includes("how")) return "Guide";
   if (lower.includes("compar") || lower.includes("vs") || lower.includes("versus")) return "Comparison";
   if (lower.includes("laptop") || lower.includes("notebook")) return "Laptops";
   if (lower.includes("audio") || lower.includes("sound") || lower.includes("headphone")) return "Audio";
+  if (lower.includes("review") || lower.includes("tech")) return "Tech Review";
+  if (lower.includes("smart") || lower.includes("home")) return "Smart Home";
+  if (lower.includes("ar ") || lower.includes("glass")) return "AR Glasses";
+  if (lower.includes("secur") || lower.includes("protect")) return "Security";
+  if (lower.includes("accessor")) return "Accessories";
   return "General";
 }
 
@@ -160,7 +165,8 @@ async function runPipeline() {
             title: trans.title,
             excerpt: trans.excerpt,
             date: today,
-            category: trans.category || article.category,
+            // Normalize category for translations too — prevents raw keys like "tech"
+            category: normalizeCategory(trans.category || article.category),
             content: trans.content,
             image: article.image,
             created_at: today,
@@ -177,18 +183,32 @@ async function runPipeline() {
     console.log("\n[Step 4/5] Generating cover images...");
     for (const article of articles) {
       try {
-        article.image = await generateArticleImage(article.slug, article.title);
+        const generatedImage = await generateArticleImage(article.slug, article.title);
         // Update image path in all locale entries for this article
-        if (article.image) {
+        if (generatedImage) {
           for (const post of posts) {
             if (post.slug === article.slug) {
-              post.image = article.image;
+              post.image = generatedImage;
+            }
+          }
+        } else {
+          // Image generation completely failed — remove speculative path to avoid broken images
+          console.log(`  [Pipeline] No image for "${article.slug}" — clearing image field`);
+          for (const post of posts) {
+            if (post.slug === article.slug) {
+              post.image = null;
             }
           }
         }
       } catch (e) {
         console.error(`  Image failed for "${article.slug}":`, e.message);
         errors.push(`Image: ${article.slug}: ${e.message}`);
+        // Clear broken image path on error
+        for (const post of posts) {
+          if (post.slug === article.slug) {
+            post.image = null;
+          }
+        }
       }
     }
 

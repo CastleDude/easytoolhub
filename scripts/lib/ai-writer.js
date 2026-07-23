@@ -27,7 +27,7 @@ Requirements:
 - Title: Engaging, SEO-friendly, under 80 characters
 - Excerpt: Compelling 1-2 sentence summary under 160 characters
 - Content: 350-500 words with ## sections, comparison points, and a verdict
-- Category: Choose ONE from [Software, Equipment, Guide, Comparison, General] based on the topic
+- Category: Choose ONE from [Software, Equipment, Guide, Comparison, General, Laptops, Audio, Accessories, Security, Tech Review, Smart Home, AR Glasses] based on the topic
 - Format: JSON only, no markdown wrapping
 
 Output this exact JSON structure:
