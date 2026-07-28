@@ -1,10 +1,11 @@
 /**
  * Image Generator — Generate article cover images
- * Uses: Runware REST API (FLUX.1 Schnell) > SVG placeholder fallback
+ * Uses: Runware REST API (FLUX.1 Schnell) → sharp → WebP > SVG placeholder fallback
  */
 
 const https = require("https");
 const crypto = require("crypto");
+const sharp = require("sharp");
 
 function generateUUID() {
   return crypto.randomUUID();
@@ -17,7 +18,7 @@ function generateWithRunware(prompt) {
   const task = {
     taskType: "imageInference",
     taskUUID: generateUUID(),
-    model: "runware:400@1",           // FLUX.1 Schnell — fast & cheap (~$0.0006/img)
+    model: "runware:400@1",
     positivePrompt: prompt.substring(0, 1000),
     width: 1024,
     height: 1024,
@@ -63,27 +64,37 @@ function generateWithRunware(prompt) {
   });
 }
 
-function downloadImage(url, filePath) {
+function downloadAndConvertToWebP(url, outputPath) {
   const fs = require("fs");
   const path = require("path");
-  const dir = path.dirname(filePath);
+  const dir = path.dirname(outputPath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
   return new Promise((resolve, reject) => {
     const protocol = url.startsWith("https") ? require("https") : require("http");
     protocol.get(url, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return downloadImage(res.headers.location, filePath).then(resolve).catch(reject);
+        return downloadAndConvertToWebP(res.headers.location, outputPath).then(resolve).catch(reject);
       }
-      const file = fs.createWriteStream(filePath);
-      res.pipe(file);
-      file.on("finish", () => { file.close(); resolve(filePath); });
+      const chunks = [];
+      res.on("data", (chunk) => chunks.push(chunk));
+      res.on("end", async () => {
+        try {
+          const buffer = Buffer.concat(chunks);
+          const webp = await sharp(buffer)
+            .webp({ quality: 80 })
+            .toBuffer();
+          fs.writeFileSync(outputPath, webp);
+          resolve(outputPath);
+        } catch (e) {
+          reject(new Error("WebP conversion failed: " + e.message));
+        }
+      });
     }).on("error", reject);
   });
 }
 
 function generatePlaceholderSVG(title) {
-  // Deterministic color from title
   let hash = 0;
   for (let i = 0; i < title.length; i++) {
     hash = title.charCodeAt(i) + ((hash << 5) - hash);
@@ -111,11 +122,17 @@ function escapeXml(s) {
 async function generateArticleImage(slug, title) {
   const fs = require("fs");
   const path = require("path");
-  const outputPath = path.join(process.cwd(), "public/images/blog", `${slug}.png`);
 
-  // Skip if image already exists
-  if (fs.existsSync(outputPath)) {
-    console.log(`  [ImageGen] Image exists: ${slug}.png`);
+  // Check both .webp and legacy .png
+  const webpPath = path.join(process.cwd(), "public/images/blog", `${slug}.webp`);
+  const pngPath = path.join(process.cwd(), "public/images/blog", `${slug}.png`);
+
+  if (fs.existsSync(webpPath)) {
+    console.log(`  [ImageGen] Image exists: ${slug}.webp`);
+    return `/images/blog/${slug}.webp`;
+  }
+  if (fs.existsSync(pngPath)) {
+    console.log(`  [ImageGen] Legacy PNG exists: ${slug}.png`);
     return `/images/blog/${slug}.png`;
   }
 
@@ -124,15 +141,14 @@ async function generateArticleImage(slug, title) {
 
   try {
     const imageUrl = await generateWithRunware(prompt);
-    await downloadImage(imageUrl, outputPath);
-    console.log(`  [ImageGen] Saved: ${slug}.png`);
-    return `/images/blog/${slug}.png`;
+    await downloadAndConvertToWebP(imageUrl, webpPath);
+    console.log(`  [ImageGen] Saved: ${slug}.webp`);
+    return `/images/blog/${slug}.webp`;
   } catch (e) {
     console.error(`  [ImageGen] Runware failed for ${slug}:`, e.message);
-    // Fallback: save a generated SVG placeholder so images never show as broken
     try {
       const svgContent = generatePlaceholderSVG(title);
-      const svgPath = outputPath.replace(/\.png$/, ".svg");
+      const svgPath = webpPath.replace(/\.webp$/, ".svg");
       fs.writeFileSync(svgPath, svgContent, "utf-8");
       console.log(`  [ImageGen] Fallback SVG saved: ${slug}.svg`);
       return `/images/blog/${slug}.svg`;
