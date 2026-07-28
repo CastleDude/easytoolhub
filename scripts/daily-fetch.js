@@ -34,7 +34,7 @@ async function main() {
     function scheduleNext() {
       const now = new Date();
       const next = new Date(now);
-      next.setUTCHours(24, 0, 0, 0); // Next midnight UTC
+      next.setUTCHours(24, 12, 0, 0); // Next 12:00 UTC = 20:00 Beijing
 
       const msUntilNext = next.getTime() - now.getTime();
       const hours = Math.floor(msUntilNext / 3600000);
