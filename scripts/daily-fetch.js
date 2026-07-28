@@ -30,9 +30,6 @@ async function main() {
     console.log("[DailyFetch] Starting daemon mode...");
     console.log("[DailyFetch] Will run every day at 08:00 Beijing time (00:00 UTC)\n");
 
-    // Run immediately on start
-    await runPipeline();
-
     // Calculate time until next 00:00 UTC
     function scheduleNext() {
       const now = new Date();
