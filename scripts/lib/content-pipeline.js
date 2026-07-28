@@ -238,6 +238,45 @@ async function runPipeline() {
       errors.push(`SEO: ${e.message}`);
     }
 
+    // Step 6: Auto-fix any failed translations (locale-prefixed titles)
+    console.log("\n[Step 6/6] Checking for translation failures...");
+    const LOCALE_PREFIXES = ["[ZH]", "[ES]", "[FR]", "[DE]", "[JA]", "[KO]", "[RU]"];
+    let failedTranslations = posts.filter(p =>
+      p.locale !== "en" && LOCALE_PREFIXES.some(pref => p.title.startsWith(pref))
+    );
+    if (failedTranslations.length > 0) {
+      console.log(`  Found ${failedTranslations.length} failed translations, retrying...`);
+      const { translateArticle } = require("./translator");
+      const enMap = {};
+      posts.forEach(p => { if (p.locale === "en") enMap[p.slug] = p; });
+      const brokenSlugs = [...new Set(failedTranslations.map(p => p.slug))];
+      for (const slug of brokenSlugs) {
+        const en = enMap[slug];
+        if (!en) continue;
+        try {
+          const translations = await translateArticle({
+            title: en.title, excerpt: en.excerpt, content: en.content, category: en.category,
+          });
+          const broken = failedTranslations.filter(p => p.slug === slug);
+          broken.forEach(p => {
+            const trans = translations[p.locale];
+            if (trans && !LOCALE_PREFIXES.some(pref => trans.title.startsWith(pref))) {
+              p.title = trans.title;
+              p.excerpt = trans.excerpt;
+              p.content = trans.content;
+              p.category = en.category;
+            }
+          });
+          console.log(`    ${slug.substring(0,30)}... ✓`);
+        } catch (e) {
+          console.error(`    ${slug.substring(0,30)}... ✗`);
+        }
+      }
+      savePosts(posts);
+    } else {
+      console.log("  All translations OK");
+    }
+
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
     console.log(`\n[Pipeline] Complete! ${articles.length} articles, ${errors.length} errors, ${elapsed}s (auto-submitted to IndexNow)`);
 
