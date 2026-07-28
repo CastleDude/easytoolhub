@@ -148,69 +148,58 @@ async function runPipeline() {
     savePosts(posts);
     console.log("  Saved", articles.length, "English articles (safe)\n");
 
-    // Step 3: Translate
-    console.log("[Step 3/4] Translating to 8 languages...");
+    // Step 3 & 4: Run translation and image generation in PARALLEL
+    console.log("[Step 3+4] Translating & generating images in parallel...\n");
 
-    for (const article of articles) {
-      try {
-        const translations = await translateArticle(article);
-        console.log(`  "${article.title.substring(0, 40)}..." -> 8 locales`);
-
-        // Add all locale versions to posts
-        for (const [locale, trans] of Object.entries(translations)) {
-          posts.push({
-            id: nextId++,
-            slug: article.slug,
-            locale,
-            title: trans.title,
-            excerpt: trans.excerpt,
-            date: today,
-            // Normalize category for translations too — prevents raw keys like "tech"
-            category: normalizeCategory(trans.category || article.category),
-            content: trans.content,
-            image: article.image,
-            created_at: today,
-            updated_at: today,
-          });
+    const translateAll = (async () => {
+      console.log("  [Translate] Starting...");
+      for (const article of articles) {
+        try {
+          const translations = await translateArticle(article);
+          console.log(`    "${article.title.substring(0, 40)}..." -> 8 locales`);
+          for (const [locale, trans] of Object.entries(translations)) {
+            posts.push({
+              id: nextId++, slug: article.slug, locale,
+              title: trans.title, excerpt: trans.excerpt, date: today,
+              category: normalizeCategory(trans.category || article.category),
+              content: trans.content, image: article.image,
+              created_at: today, updated_at: today,
+            });
+          }
+        } catch (e) {
+          console.error(`    Translation failed for "${article.slug}":`, e.message);
+          errors.push(`Translate: ${article.slug}: ${e.message}`);
         }
-      } catch (e) {
-        console.error(`  Translation failed for "${article.slug}":`, e.message);
-        errors.push(`Translate: ${article.slug}: ${e.message}`);
       }
-    }
+      console.log("  [Translate] Done");
+    })();
 
-    // Step 4: Generate images
-    console.log("\n[Step 4/5] Generating cover images...");
-    for (const article of articles) {
-      try {
-        const generatedImage = await generateArticleImage(article.slug, article.title);
-        // Update image path in all locale entries for this article
-        if (generatedImage) {
+    const imagesAll = (async () => {
+      console.log("  [Images] Starting...");
+      for (const article of articles) {
+        try {
+          const generatedImage = await generateArticleImage(article.slug, article.title);
+          // Update article ref so parallel translate picks up correct path
+          article.image = generatedImage || null;
           for (const post of posts) {
-            if (post.slug === article.slug) {
-              post.image = generatedImage;
-            }
+            if (post.slug === article.slug) post.image = article.image;
           }
-        } else {
-          // Image generation completely failed — remove speculative path to avoid broken images
-          console.log(`  [Pipeline] No image for "${article.slug}" — clearing image field`);
+          if (!generatedImage) console.log(`    No image for "${article.slug}" — clearing`);
+        } catch (e) {
+          console.error(`    Image failed for "${article.slug}":`, e.message);
+          errors.push(`Image: ${article.slug}: ${e.message}`);
+          article.image = null;
           for (const post of posts) {
-            if (post.slug === article.slug) {
-              post.image = null;
-            }
-          }
-        }
-      } catch (e) {
-        console.error(`  Image failed for "${article.slug}":`, e.message);
-        errors.push(`Image: ${article.slug}: ${e.message}`);
-        // Clear broken image path on error
-        for (const post of posts) {
-          if (post.slug === article.slug) {
-            post.image = null;
+            if (post.slug === article.slug) post.image = null;
           }
         }
       }
-    }
+      console.log("  [Images] Done");
+    })();
+
+    // Wait for both to complete
+    await Promise.all([translateAll, imagesAll]);
+    console.log("  Translation & images complete\n");
 
     // Save all posts
     savePosts(posts);
