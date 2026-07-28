@@ -104,7 +104,7 @@ async function runPipeline() {
   try {
     // Step 1: Find topics
     console.log("[Step 1/4] Finding trending topics...");
-    const foundTopics = await findTopics(5);
+    const foundTopics = await findTopics(2);
     topics.push(...foundTopics.map((t) => t.query));
     console.log(`  Found ${foundTopics.length} topics\n`);
 
