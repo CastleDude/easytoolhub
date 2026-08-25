@@ -186,7 +186,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     className="block p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-300 dark:hover:border-primary-700 transition-colors"
                   >
                     <p className="text-xs text-primary-600 dark:text-primary-400 mb-1">
-                      {p.category}
+                      {t(`categories.${p.category}`)}
                     </p>
                     <p className="text-sm font-medium line-clamp-2">{p.title}</p>
                   </a>

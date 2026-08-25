@@ -13,7 +13,7 @@
 cd /www/easytoolhub && git pull && npm install && rm -rf .next && npm run build && pm2 restart easytoolhub && pm2 restart daily-fetch
 ```
 
-> **注意**: `posts.json` 和 `blog-stats.json` 已从 git 跟踪中移除（`.gitignore`），`git pull` 不会再覆盖这些数据文件。
+> **⚠️ 数据保护规则（强制）**: `src/data/posts.json`、`src/data/blog-stats.json`、`src/data/fetch-log.json` 等数据文件已从 git 跟踪移除（见 `.gitignore`）。**`git pull` / 任何更新部署操作都不会覆盖线上自动生成的文章数据**。更新代码时不要手动 `git reset`/`git checkout` 这些文件，否则会丢数据。需要备份数据请用 `scripts/backup-data.sh`。
 
 ## 备份数据
 
@@ -41,7 +41,7 @@ cd /www/easytoolhub && git pull && npm install && rm -rf .next && npm run build 
 - **时间**: 北京时间每晚 20:00 (12:00 UTC)
 - **篇数**: 每天 2 篇
 - **语言**: 8 种 (en, zh, es, fr, de, ja, ko, ru)
-- **类目**: 自动规范化，不会出现 `Blog.categories.xxx` 原始 key
+- **类目**: 固定 5 类 (Software 软件 / Equipment 设备 / Guide 指南 / Comparison 对比 / General 综合)，历史数据已归并，不会生成其它类目
 - **图片**: Runware API → sharp 转 WebP → 失败则 SVG 占位
 - **翻译**: 失败自动重试一次，仍失败则保留带 `[XX]` 前缀的版本
 

@@ -14,26 +14,45 @@ const POSTS_PATH = path.join(process.cwd(), "src/data/posts.json");
 const LOG_PATH = path.join(process.cwd(), "src/data/fetch-log.json");
 const MAX_POSTS = 500; // Keep total posts manageable
 
-const KNOWN_CATEGORIES = ["Software", "Equipment", "Guide", "Comparison", "General", "Laptops", "Audio", "Accessories", "Security", "Tech Review", "Smart Home", "AR Glasses"];
+const KNOWN_CATEGORIES = ["Software", "Equipment", "Guide", "Comparison", "General"];
 
 function normalizeCategory(cat) {
   if (!cat) return "General";
-  const c = cat.trim();
-  for (const k of KNOWN_CATEGORIES) {
-    if (k.toLowerCase() === c.toLowerCase()) return k;
-  }
+  const c = String(cat).trim();
   const lower = c.toLowerCase();
-  if (lower.includes("softwar") || lower.includes("app") || lower.includes("tool") || lower.includes("productiv")) return "Software";
-  if (lower.includes("hardwar") || lower.includes("gadget") || lower.includes("gear") || lower.includes("device")) return "Equipment";
-  if (lower.includes("guide") || lower.includes("tutorial") || lower.includes("how")) return "Guide";
-  if (lower.includes("compar") || lower.includes("vs") || lower.includes("versus")) return "Comparison";
-  if (lower.includes("laptop") || lower.includes("notebook")) return "Laptops";
-  if (lower.includes("audio") || lower.includes("sound") || lower.includes("headphone")) return "Audio";
-  if (lower.includes("review") || lower.includes("tech")) return "Tech Review";
-  if (lower.includes("smart") || lower.includes("home")) return "Smart Home";
-  if (lower.includes("ar ") || lower.includes("glass")) return "AR Glasses";
-  if (lower.includes("secur") || lower.includes("protect")) return "Security";
-  if (lower.includes("accessor")) return "Accessories";
+
+  // Canonical match
+  for (const k of KNOWN_CATEGORIES) {
+    if (k.toLowerCase() === lower) return k;
+  }
+
+  // Map legacy & freeform values onto the 5 canonical categories
+  // Software: apps, tools, productivity, platforms, security software
+  if (
+    lower.includes("softwar") || lower.includes("app") || lower.includes("tool")
+    || lower.includes("productiv") || lower.includes("platform") || lower.includes("secur")
+  ) return "Software";
+  // Equipment: hardware, gadgets, laptops, audio, accessories, smart home, AR glasses, peripherals
+  if (
+    lower.includes("hardwar") || lower.includes("gadget") || lower.includes("gear")
+    || lower.includes("device") || lower.includes("laptop") || lower.includes("notebook")
+    || lower.includes("audio") || lower.includes("sound") || lower.includes("headphone")
+    || lower.includes("earbud") || lower.includes("accessor") || lower.includes("smart")
+    || lower.includes("glass") || lower.includes("monitor") || lower.includes("keyboard")
+    || lower.includes("charger") || lower.includes("speaker") || lower.includes("camera")
+    || lower.includes("router") || lower.includes("webcam")
+  ) return "Equipment";
+  // Guide: tutorials, how-tos, tips
+  if (
+    lower.includes("guide") || lower.includes("tutorial") || lower.includes("how")
+    || lower.includes("tips")
+  ) return "Guide";
+  // Comparison: reviews, best-of, vs, rankings
+  if (
+    lower.includes("compar") || lower.includes("versus") || lower.includes(" vs")
+    || lower.includes("review") || lower.includes("best") || lower.includes("top")
+    || lower.includes("tested") || lower.includes("rank")
+  ) return "Comparison";
   return "General";
 }
 
@@ -278,4 +297,4 @@ async function runPipeline() {
   }
 }
 
-module.exports = { runPipeline };
+module.exports = { runPipeline, normalizeCategory };
