@@ -1,19 +1,74 @@
 /**
  * Image Generator — Generate article cover images
- * Uses: Runware REST API (FLUX.1 Schnell) → sharp → WebP (1024×576, 16:9 ratio = 252:142) > SVG placeholder fallback
+ * Uses: Runware REST API (FLUX.1 Schnell) → sharp → WebP (1024×576, 16:9) > SVG placeholder fallback
  *
  * Output rules:
  * - Size: 1024×576 (16:9 — same ratio as 252×142), width 1024
+ * - Style: photorealistic, content-aware (LLM distills title + content into the prompt)
  * - No text / watermark / letters
- * - Flat single-layer composition (no object-on-photo, no shadow/layered effect)
+ * - No layered composition / double exposure / reflection
  */
 
 const https = require("https");
 const crypto = require("crypto");
 const sharp = require("sharp");
 
+// Fixed style & constraint suffix appended to every image prompt
+const STYLE_SUFFIX =
+  "Photorealistic photo, professional commercial photography, soft even lighting, sharp focus, high detail, 16:9 landscape. No text, no watermark, no letters, no caption, no logo, no labels. No double exposure, no reflection, no layered composition, no object-on-photo-background effect.";
+
 function generateUUID() {
   return crypto.randomUUID();
+}
+
+/**
+ * Use the LLM (deepseek via Anthropic-compatible API) to distill the article
+ * title + content into a short visual description for image generation.
+ * Returns null on any failure so the caller can fall back to a title-based prompt.
+ */
+async function buildImagePrompt(title, content) {
+  const baseUrl = process.env.ANTHROPIC_BASE_URL || "https://api.deepseek.com/anthropic";
+  const apiKey = process.env.ANTHROPIC_AUTH_TOKEN || "";
+  const model = process.env.ANTHROPIC_DEFAULT_SONNET_MODEL || "deepseek-v4-pro";
+  if (!apiKey) return null;
+
+  // Strip markdown symbols and keep a compact excerpt of the article body
+  const excerpt = String(content || "")
+    .replace(/[#*`|[\]()>-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .substring(0, 300);
+
+  const prompt = `You are an expert image prompt designer. Based on the article title and content below, write ONE image-generation prompt (English, max 60 words) describing a photorealistic image that best represents the article's subject. Describe ONE main subject, its setting/background, and the mood. Do NOT mention text, words, letters, captions, watermarks, or logos. Output ONLY the prompt text — no quotes, no explanation.
+
+Article title: ${title}
+Article content excerpt: ${excerpt}`;
+
+  try {
+    const res = await fetch(`${baseUrl}/messages`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: 200,
+        temperature: 0.7,
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+    const json = await res.json();
+    const textBlock = (json.content || []).find((c) => c.type === "text");
+    const text = (textBlock?.text || json.choices?.[0]?.message?.content || "").trim();
+    if (!text) return null;
+    // Strip wrapping quotes
+    return text.replace(/^["']|["']$/g, "").substring(0, 300);
+  } catch (e) {
+    console.error(`  [ImageGen] LLM prompt build failed:`, e.message);
+    return null;
+  }
 }
 
 function generateWithRunware(prompt) {
@@ -121,7 +176,7 @@ function generatePlaceholderSVG() {
 </svg>`;
 }
 
-async function generateArticleImage(slug, title) {
+async function generateArticleImage(slug, title, content) {
   const fs = require("fs");
   const path = require("path");
 
@@ -138,9 +193,13 @@ async function generateArticleImage(slug, title) {
     return `/images/blog/${slug}.png`;
   }
 
-  // Flat single-layer, no text, 16:9
-  const prompt = `Minimal flat tech product illustration for ${title}. One single object centered on a solid plain background, clean flat vector style, 16:9 landscape. No text, no watermark, no letters, no caption, no logo. No shadow, no reflection, no layered composition, no object-on-photo-background effect.`;
+  // Content-aware prompt: LLM distills title+content; fall back to title-based
+  const description = await buildImagePrompt(title, content);
+  const prompt = description
+    ? `${description}. ${STYLE_SUFFIX}`
+    : `Realistic tech product photo related to: ${title}. ${STYLE_SUFFIX}`;
   console.log(`  [ImageGen] Generating for: ${slug}`);
+  console.log(`  [ImageGen]   prompt: ${prompt.substring(0, 160)}...`);
 
   try {
     const imageUrl = await generateWithRunware(prompt);

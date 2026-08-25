@@ -49,7 +49,7 @@ async function main() {
       continue;
     }
     try {
-      const img = await generateArticleImage(a.slug, a.title);
+      const img = await generateArticleImage(a.slug, a.title, a.content);
       if (img) {
         posts.forEach((p) => {
           if (p.slug === a.slug) p.image = img;

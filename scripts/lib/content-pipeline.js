@@ -199,7 +199,7 @@ async function runPipeline() {
       console.log("  [Images] Starting...");
       for (const article of articles) {
         try {
-          const generatedImage = await generateArticleImage(article.slug, article.title);
+          const generatedImage = await generateArticleImage(article.slug, article.title, article.content);
           // Update article ref so parallel translate picks up correct path
           article.image = generatedImage || null;
           for (const post of posts) {
