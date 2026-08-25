@@ -71,6 +71,9 @@ Output this JSON structure:
 async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
+      // 180s timeout so a hung upstream call can't block the script forever
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 180000);
       const res = await fetch(`${baseUrl}/messages`, {
         method: "POST",
         headers: {
@@ -84,7 +87,9 @@ async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
           temperature: 0.7,
           messages: [{ role: "user", content: prompt }],
         }),
+        signal: controller.signal,
       });
+      clearTimeout(timer);
 
       const json = await res.json();
 
