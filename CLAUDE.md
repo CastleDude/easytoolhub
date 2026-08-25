@@ -33,8 +33,16 @@ cd /www/easytoolhub && git pull && npm install && rm -rf .next && npm run build 
 | 查看 pipeline 日志 | `pm2 logs daily-fetch` |
 | 查看应用日志 | `pm2 logs easytoolhub` |
 | 修复翻译失败 | `cd /www/easytoolhub && node scripts/fix-translations.js` |
-| 补生成缺失图片 | `cd /www/easytoolhub && node /tmp/gen-all-missing.js` |
+| 补生成缺失图片 | `cd /www/easytoolhub && node scripts/gen-missing-images.js` |
+| 续期 SSL 证书 | `cd /www/easytoolhub && certbot renew --force-renewal && nginx -s reload` |
 | 转换 PNG → WebP | `cd /www/easytoolhub && node scripts/convert-webp.js` |
+
+## SSL 证书
+
+- 使用 Let's Encrypt，已配置**自动续期**（crontab：每天 3:17 / 15:17 跑 `certbot renew`，续期成功自动 reload nginx）
+- 手动续期: `cd /www/easytoolhub && certbot renew --force-renewal && nginx -s reload`
+- 证书路径: `/etc/letsencrypt/live/easytoolhub.top/`
+- **⚠️ 续期验证走 HTTP-01**，由 nginx 的 `^~ /.well-known/acme-challenge/` location 直接服务 `/www/wwwroot/easytoolhub.top`。**不要把 challenge 文件放 Next.js 的 `public/`** —— Next.js 生产模式忽略以点开头的路径，会 404 导致续期失败
 
 ## 自动生成文章机制
 

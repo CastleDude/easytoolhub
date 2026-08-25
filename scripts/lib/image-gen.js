@@ -1,6 +1,11 @@
 /**
  * Image Generator — Generate article cover images
- * Uses: Runware REST API (FLUX.1 Schnell) → sharp → WebP > SVG placeholder fallback
+ * Uses: Runware REST API (FLUX.1 Schnell) → sharp → WebP (252×142, 16:9) > SVG placeholder fallback
+ *
+ * Output rules:
+ * - Size: 252×142 (16:9)
+ * - No text / watermark / letters
+ * - Flat single-layer composition (no object-on-photo, no shadow/layered effect)
  */
 
 const https = require("https");
@@ -21,7 +26,7 @@ function generateWithRunware(prompt) {
     model: "runware:400@1",
     positivePrompt: prompt.substring(0, 1000),
     width: 1024,
-    height: 1024,
+    height: 576, // 16:9
     outputType: "URL",
     outputFormat: "PNG",
   };
@@ -81,7 +86,9 @@ function downloadAndConvertToWebP(url, outputPath) {
       res.on("end", async () => {
         try {
           const buffer = Buffer.concat(chunks);
+          // 252×142 (16:9) cover crop → WebP
           const webp = await sharp(buffer)
+            .resize(252, 142, { fit: "cover" })
             .webp({ quality: 80 })
             .toBuffer();
           fs.writeFileSync(outputPath, webp);
@@ -94,29 +101,24 @@ function downloadAndConvertToWebP(url, outputPath) {
   });
 }
 
-function generatePlaceholderSVG(title) {
+function generatePlaceholderSVG() {
   let hash = 0;
-  for (let i = 0; i < title.length; i++) {
-    hash = title.charCodeAt(i) + ((hash << 5) - hash);
+  const seed = "EasyToolHub";
+  for (let i = 0; i < seed.length; i++) {
+    hash = seed.charCodeAt(i) + ((hash << 5) - hash);
   }
   const hue1 = Math.abs(hash % 360);
   const hue2 = (hue1 + 40) % 360;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="252" height="142" viewBox="0 0 252 142">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:hsl(${hue1},60%,50%)"/>
       <stop offset="100%" style="stop-color:hsl(${hue2},60%,40%)"/>
     </linearGradient>
   </defs>
-  <rect width="1024" height="1024" fill="url(#bg)"/>
-  <text x="512" y="480" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="48" font-family="system-ui,sans-serif" font-weight="bold">${escapeXml(title.substring(0, 60))}</text>
-  <text x="512" y="540" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="28" font-family="system-ui,sans-serif">EasyToolHub</text>
+  <rect width="252" height="142" fill="url(#bg)"/>
 </svg>`;
-}
-
-function escapeXml(s) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 async function generateArticleImage(slug, title) {
@@ -136,7 +138,8 @@ async function generateArticleImage(slug, title) {
     return `/images/blog/${slug}.png`;
   }
 
-  const prompt = `Professional tech review cover image: ${title}. Modern clean design, tech aesthetic, product photography style.`;
+  // Flat single-layer, no text, 16:9
+  const prompt = `Minimal flat tech product illustration for ${title}. One single object centered on a solid plain background, clean flat vector style, 16:9 landscape. No text, no watermark, no letters, no caption, no logo. No shadow, no reflection, no layered composition, no object-on-photo-background effect.`;
   console.log(`  [ImageGen] Generating for: ${slug}`);
 
   try {
@@ -147,7 +150,7 @@ async function generateArticleImage(slug, title) {
   } catch (e) {
     console.error(`  [ImageGen] Runware failed for ${slug}:`, e.message);
     try {
-      const svgContent = generatePlaceholderSVG(title);
+      const svgContent = generatePlaceholderSVG();
       const svgPath = webpPath.replace(/\.webp$/, ".svg");
       fs.writeFileSync(svgPath, svgContent, "utf-8");
       console.log(`  [ImageGen] Fallback SVG saved: ${slug}.svg`);
