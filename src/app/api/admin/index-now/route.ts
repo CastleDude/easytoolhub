@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAllSlugs } from "@/lib/blog-admin";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top";
 
 interface PingResult {
   engine: string;

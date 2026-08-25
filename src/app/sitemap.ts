@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllBlogSlugs } from "@/lib/blog";
 import { locales, localesWithHreflang } from "@/i18n/config";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top";
 
 const toolSlugs = [
   "percentage",

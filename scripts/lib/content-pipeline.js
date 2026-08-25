@@ -207,7 +207,7 @@ async function runPipeline() {
     // Step 5: Submit new article URLs to search engines
     console.log("\n[Step 5/5] Submitting new URLs to IndexNow...");
     try {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top";
 
       // Only submit the NEW articles to IndexNow (not full sitemap every day)
       const newUrls = articleSlugs.map((s) => `${siteUrl}/en/blog/${s}`);

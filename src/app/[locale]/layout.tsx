@@ -24,7 +24,7 @@ export async function generateMetadata({
   }
 
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com"),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top"),
     title: {
       default: t("homeTitle"),
       template: `%s | ${t("siteName")}`,

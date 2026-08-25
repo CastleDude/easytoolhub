@@ -4,7 +4,7 @@
 
 - **平台**: VPS (OpenCloudOS) + PM2
 - **项目路径**: `/www/easytoolhub`
-- **域名**: `easytoolhub.com`
+- **域名**: `easytoolhub.top`
 - **PM2 进程**: `easytoolhub` (Next.js) + `daily-fetch` (每日文章生成守护进程)
 
 ## 更新代码
@@ -52,7 +52,7 @@ cd /www/easytoolhub && git pull && npm install && rm -rf .next && npm run build 
 RUNWARE_API_KEY=xxx
 ANTHROPIC_AUTH_TOKEN=xxx
 ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
-NEXT_PUBLIC_SITE_URL=https://easytoolhub.com
+NEXT_PUBLIC_SITE_URL=https://easytoolhub.top
 JWT_SECRET=xxx
 ADMIN_PASSWORD_HASH=xxx
 ```

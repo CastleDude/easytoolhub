@@ -5,7 +5,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 import PHBadge from "@/components/PHBadge";
 import { OrganizationJsonLd, WebSiteJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;

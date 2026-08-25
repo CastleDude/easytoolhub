@@ -34,7 +34,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Blog" });
   if (!post) return { title: t("notFound") };
   const ogImage = post.image
-    ? [{ url: post.image.startsWith("http") ? post.image : `${process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com"}${post.image}`, width: 1024, height: 1024 }]
+    ? [{ url: post.image.startsWith("http") ? post.image : `${process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top"}${post.image}`, width: 1024, height: 1024 }]
     : undefined;
 
   return {
@@ -64,7 +64,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   if (!post) notFound();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top";
   const related = getRelatedPosts(slug, locale, 3);
   const allPosts = getBlogPosts(locale);
 

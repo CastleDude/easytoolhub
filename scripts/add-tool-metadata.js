@@ -79,7 +79,7 @@ for (const dir of dirs) {
   lines.push('  const title = t("' + toolKey + '.title");');
   lines.push('  const description = t("' + toolKey + '.description");');
   lines.push('  const url = `/${locale}/tools/' + slug + '`;');
-  lines.push('  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.com";');
+  lines.push('  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top";');
   lines.push("");
   lines.push("  return {");
   lines.push("    title,");
