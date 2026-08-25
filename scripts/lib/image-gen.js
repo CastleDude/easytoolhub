@@ -1,9 +1,9 @@
 /**
  * Image Generator — Generate article cover images
- * Uses: Runware REST API (FLUX.1 Schnell) → sharp → WebP (252×142, 16:9) > SVG placeholder fallback
+ * Uses: Runware REST API (FLUX.1 Schnell) → sharp → WebP (1024×576, 16:9 ratio = 252:142) > SVG placeholder fallback
  *
  * Output rules:
- * - Size: 252×142 (16:9)
+ * - Size: 1024×576 (16:9 — same ratio as 252×142), width 1024
  * - No text / watermark / letters
  * - Flat single-layer composition (no object-on-photo, no shadow/layered effect)
  */
@@ -86,9 +86,9 @@ function downloadAndConvertToWebP(url, outputPath) {
       res.on("end", async () => {
         try {
           const buffer = Buffer.concat(chunks);
-          // 252×142 (16:9) cover crop → WebP
+          // 16:9, width 1024 (same ratio as 252×142) → WebP
           const webp = await sharp(buffer)
-            .resize(252, 142, { fit: "cover" })
+            .resize(1024, 576, { fit: "cover" })
             .webp({ quality: 80 })
             .toBuffer();
           fs.writeFileSync(outputPath, webp);
@@ -110,14 +110,14 @@ function generatePlaceholderSVG() {
   const hue1 = Math.abs(hash % 360);
   const hue2 = (hue1 + 40) % 360;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="252" height="142" viewBox="0 0 252 142">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="576" viewBox="0 0 1024 576">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:hsl(${hue1},60%,50%)"/>
       <stop offset="100%" style="stop-color:hsl(${hue2},60%,40%)"/>
     </linearGradient>
   </defs>
-  <rect width="252" height="142" fill="url(#bg)"/>
+  <rect width="1024" height="576" fill="url(#bg)"/>
 </svg>`;
 }
 
