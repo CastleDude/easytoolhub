@@ -531,7 +531,9 @@
     "categoriesTitle": "Catégories",
     "popular": "Avis Populaires",
     "home": "Accueil",
-    "viewsCount": "vues"
+    "viewsCount": "vues",
+    "prevPost": "Article précédent",
+    "nextPost": "Article suivant"
   },
   "About": {
     "title": "À Propos",

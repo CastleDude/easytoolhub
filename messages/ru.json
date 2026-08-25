@@ -531,7 +531,9 @@
     "categoriesTitle": "Категории",
     "popular": "Популярные обзоры",
     "home": "Главная",
-    "viewsCount": "просмотров"
+    "viewsCount": "просмотров",
+    "prevPost": "Предыдущая статья",
+    "nextPost": "Следующая статья"
   },
   "About": {
     "title": "О нас",
