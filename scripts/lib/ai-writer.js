@@ -80,7 +80,7 @@ async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
         },
         body: JSON.stringify({
           model,
-          max_tokens: 4096,
+          max_tokens: 8192,
           temperature: 0.7,
           messages: [{ role: "user", content: prompt }],
         }),
