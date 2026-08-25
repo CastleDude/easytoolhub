@@ -177,6 +177,8 @@ async function runPipeline() {
           const translations = await translateArticle(article);
           console.log(`    "${article.title.substring(0, 40)}..." -> 8 locales`);
           for (const [locale, trans] of Object.entries(translations)) {
+            // English article was already saved in Step 2 — skip to avoid duplicates
+            if (locale === "en") continue;
             posts.push({
               id: nextId++, slug: article.slug, locale,
               title: trans.title, excerpt: trans.excerpt, date: today,
