@@ -550,7 +550,9 @@
     "categoriesTitle": "分类",
     "popular": "热门测评",
     "home": "首页",
-    "viewsCount": "次阅读"
+    "viewsCount": "次阅读",
+    "prevPost": "上一篇",
+    "nextPost": "下一篇"
   },
   "About": {
     "title": "关于我们",

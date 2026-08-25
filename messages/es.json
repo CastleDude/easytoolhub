@@ -550,7 +550,9 @@
     "categoriesTitle": "Categorías",
     "popular": "Reseñas Populares",
     "home": "Inicio",
-    "viewsCount": "vistas"
+    "viewsCount": "vistas",
+    "prevPost": "Artículo anterior",
+    "nextPost": "Artículo siguiente"
   },
   "About": {
     "title": "Sobre Nosotros",

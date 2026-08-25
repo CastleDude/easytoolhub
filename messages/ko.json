@@ -550,7 +550,9 @@
     "categoriesTitle": "카테고리",
     "popular": "인기 리뷰",
     "home": "홈",
-    "viewsCount": "회 읽기"
+    "viewsCount": "회 읽기",
+    "prevPost": "이전 글",
+    "nextPost": "다음 글"
   },
   "About": {
     "title": "회사 소개",

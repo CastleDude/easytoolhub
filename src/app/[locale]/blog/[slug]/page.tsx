@@ -67,6 +67,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://easytoolhub.top";
   const related = getRelatedPosts(slug, locale, 3);
   const allPosts = getBlogPosts(locale);
+  const idx = allPosts.findIndex((p) => p.slug === slug);
+  const prev = idx >= 0 && idx + 1 < allPosts.length ? allPosts[idx + 1] : null; // older
+  const next = idx > 0 ? allPosts[idx - 1] : null; // newer
 
   return (
     <>
@@ -174,6 +177,37 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </article>
 
           <BlogLikeButton slug={slug} />
+
+          {(prev || next) && (
+            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+              {prev ? (
+                <a
+                  href={`/${locale}/blog/${prev.slug}`}
+                  className="flex-1 block p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-300 dark:hover:border-primary-700 transition-colors group"
+                >
+                  <span className="text-xs text-gray-400">← {t("prevPost")}</span>
+                  <p className="text-sm font-medium line-clamp-2 mt-1 group-hover:text-primary-600 dark:group-hover:text-primary-400">
+                    {prev.title}
+                  </p>
+                </a>
+              ) : (
+                <span className="flex-1" />
+              )}
+              {next ? (
+                <a
+                  href={`/${locale}/blog/${next.slug}`}
+                  className="flex-1 block p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-300 dark:hover:border-primary-700 transition-colors group text-right"
+                >
+                  <span className="text-xs text-gray-400">{t("nextPost")} →</span>
+                  <p className="text-sm font-medium line-clamp-2 mt-1 group-hover:text-primary-600 dark:group-hover:text-primary-400">
+                    {next.title}
+                  </p>
+                </a>
+              ) : (
+                <span className="flex-1" />
+              )}
+            </div>
+          )}
 
           {related.length > 0 && (
             <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">

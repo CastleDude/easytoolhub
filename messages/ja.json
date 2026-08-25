@@ -550,7 +550,9 @@
     "categoriesTitle": "カテゴリ",
     "popular": "人気のレビュー",
     "home": "ホーム",
-    "viewsCount": "回閲覧"
+    "viewsCount": "回閲覧",
+    "prevPost": "前の記事",
+    "nextPost": "次の記事"
   },
   "About": {
     "title": "私たちについて",

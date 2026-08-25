@@ -550,7 +550,9 @@
     "categoriesTitle": "Categories",
     "popular": "Popular Reviews",
     "home": "Home",
-    "viewsCount": "views"
+    "viewsCount": "views",
+    "prevPost": "Previous Article",
+    "nextPost": "Next Article"
   },
   "About": {
     "title": "About Us",
