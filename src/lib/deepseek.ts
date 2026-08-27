@@ -95,46 +95,54 @@ Output this JSON structure:
   "category": "... (keep original)"
 }`;
 
-  try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 180000);
-    const res = await fetch(`${baseUrl}/messages`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model,
-        max_tokens: 8192,
-        temperature: 0.7,
-        messages: [{ role: "user", content: prompt }],
-      }),
-      signal: controller.signal,
-    });
-    clearTimeout(timer);
+  // DeepSeek intermittently returns without usable JSON — retry a few times
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 180000);
+      const res = await fetch(`${baseUrl}/messages`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: 8192,
+          temperature: 0.7,
+          messages: [{ role: "user", content: prompt }],
+        }),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
 
-    const json = await res.json();
-    const contentBlocks = json.content || [];
-    const textBlock = contentBlocks.find((c: { type: string }) => c.type === "text");
-    const text = textBlock?.text || json.choices?.[0]?.message?.content || "";
+      const json = await res.json();
+      const contentBlocks = json.content || [];
+      const textBlock = contentBlocks.find((c: { type: string }) => c.type === "text");
+      const text = textBlock?.text || json.choices?.[0]?.message?.content || "";
 
-    const match = text.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error("No JSON found in response");
-    const parsed = JSON.parse(match[0]);
+      const match = text.match(/\{[\s\S]*\}/);
+      if (!match) {
+        console.error(`[DeepSeek] No JSON (attempt ${attempt}/3). Raw sample: ${text.substring(0, 200)}`);
+        throw new Error("No JSON found in response");
+      }
+      const parsed = JSON.parse(match[0]);
 
-    if (!parsed.title || !parsed.content) return null;
-    // Treat a fallback-prefixed title as a failed translation
-    if (parsed.title.startsWith(fallbackPrefix)) return null;
+      if (!parsed.title || !parsed.content) throw new Error("Missing required fields");
+      // Treat a fallback-prefixed title as a failed translation
+      if (parsed.title.startsWith(fallbackPrefix)) throw new Error("Fallback-prefixed title");
 
-    return {
-      title: parsed.title,
-      excerpt: parsed.excerpt || "",
-      content: parsed.content,
-    };
-  } catch (e) {
-    console.error("[DeepSeek] Translation failed:", e);
-    return null;
+      return {
+        title: parsed.title,
+        excerpt: parsed.excerpt || "",
+        content: parsed.content,
+      };
+    } catch (e) {
+      console.error(`[DeepSeek] Attempt ${attempt}/3 failed:`, (e as Error).message);
+      if (attempt === 3) return null;
+      await new Promise((r) => setTimeout(r, 2000));
+    }
   }
+  return null;
 }
