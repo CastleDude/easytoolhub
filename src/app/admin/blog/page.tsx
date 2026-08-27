@@ -53,6 +53,7 @@ export default function AdminBlogList() {
   const [translating, setTranslating] = useState<{ slug: string; title: string; done: boolean } | null>(null);
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [translatingKeys, setTranslatingKeys] = useState<Set<string>>(new Set());
+  const [translatingAll, setTranslatingAll] = useState<Set<string>>(new Set());
 
   const router = useRouter();
   const [newSlug, setNewSlug] = useState<string | null>(null);
@@ -185,9 +186,10 @@ export default function AdminBlogList() {
     return map;
   }, [allPosts]);
 
-  async function handleTranslate(slug: string, locale: string) {
+  // Translate one locale; returns null on success, or an error message on failure
+  async function translateOne(slug: string, locale: string): Promise<string | null> {
     const key = `${slug}:${locale}`;
-    if (translatingKeys.has(key)) return;
+    if (translatingKeys.has(key)) return null;
     setTranslatingKeys((prev) => new Set(prev).add(key));
     try {
       const res = await fetch("/api/admin/blog/translate", {
@@ -195,21 +197,54 @@ export default function AdminBlogList() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug, locale }),
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        alert(data.error || "翻译失败");
-      } else {
-        const all = await fetch("/api/admin/blog").then((r) => r.json());
-        setAllPosts(all);
-      }
+      if (res.ok) return null;
+      const data = await res.json().catch(() => ({}));
+      return data.error || "翻译失败";
     } catch {
-      alert("翻译请求失败，请重试");
+      return "翻译请求失败，请重试";
     } finally {
       setTranslatingKeys((prev) => {
         const next = new Set(prev);
         next.delete(key);
         return next;
       });
+    }
+  }
+
+  async function handleTranslate(slug: string, locale: string) {
+    const err = await translateOne(slug, locale);
+    if (err) {
+      alert(err);
+      return;
+    }
+    const all = await fetch("/api/admin/blog").then((r) => r.json());
+    setAllPosts(all);
+  }
+
+  // Translate every not-yet-successful locale of this article, one by one
+  async function handleTranslateAll(slug: string) {
+    const statuses = localeStatusMap[slug] || {};
+    const todo = TRANSLATE_LOCALES.filter((loc) => statuses[loc] !== "ok");
+    if (todo.length === 0) return;
+
+    setTranslatingAll((prev) => new Set(prev).add(slug));
+    const failed: { loc: string; err: string }[] = [];
+    for (const loc of todo) {
+      const err = await translateOne(slug, loc);
+      if (err) failed.push({ loc, err });
+    }
+    const all = await fetch("/api/admin/blog").then((r) => r.json());
+    setAllPosts(all);
+    setTranslatingAll((prev) => {
+      const next = new Set(prev);
+      next.delete(slug);
+      return next;
+    });
+    if (failed.length > 0) {
+      alert(
+        `本篇文章有 ${failed.length} 个语言翻译失败：\n` +
+          failed.map((f) => `${f.loc.toUpperCase()}: ${f.err}`).join("\n"),
+      );
     }
   }
 
@@ -241,9 +276,30 @@ export default function AdminBlogList() {
           {
             key: "translations",
             label: "多语言翻译",
-            render: (row: Post) => (
-              <div className="flex flex-wrap gap-1.5 max-w-md">
-                {TRANSLATE_LOCALES.map((loc) => {
+            render: (row: Post) => {
+              const allLoading = translatingAll.has(row.slug);
+              const todoCount = TRANSLATE_LOCALES.filter(
+                (loc) => localeStatusMap[row.slug]?.[loc] !== "ok",
+              ).length;
+              return (
+                <div className="flex flex-wrap gap-1.5 max-w-md">
+                  <button
+                    onClick={() => handleTranslateAll(row.slug)}
+                    disabled={allLoading || todoCount === 0}
+                    title={
+                      todoCount === 0
+                        ? "所有语言均已翻译成功"
+                        : `一键翻译未成功的 ${todoCount} 个语言`
+                    }
+                    className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-[10px] font-semibold transition-colors ${
+                      todoCount === 0
+                        ? "bg-green-50 dark:bg-green-900 text-green-600 dark:text-green-400 cursor-default"
+                        : "bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    }`}
+                  >
+                    {allLoading ? "翻译中…" : `翻译${todoCount > 0 ? ` (${todoCount})` : ""}`}
+                  </button>
+                  {TRANSLATE_LOCALES.map((loc) => {
                   const status = localeStatusMap[row.slug]?.[loc] ?? "missing";
                   const loading = translatingKeys.has(`${row.slug}:${loc}`);
                   const short = TRANSLATE_SHORT[loc];
@@ -296,8 +352,9 @@ export default function AdminBlogList() {
                     </button>
                   );
                 })}
-              </div>
-            ),
+                </div>
+              );
+            },
           },
         ]
       : []),
