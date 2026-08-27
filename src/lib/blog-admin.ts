@@ -22,6 +22,7 @@ export interface BlogPostInput {
   date: string;
   category: string;
   content: string;
+  image?: string;
 }
 
 const STORE = "posts";

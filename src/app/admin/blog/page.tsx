@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import DataTable from "@/components/admin/DataTable";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
@@ -24,6 +24,17 @@ const LOCALE_NAMES: Record<string, string> = {
   ru: "Русский",
 };
 
+const TRANSLATE_LOCALES = ["zh", "es", "fr", "de", "ja", "ko", "ru"];
+const TRANSLATE_SHORT: Record<string, string> = {
+  zh: "ZH",
+  es: "ES",
+  fr: "FR",
+  de: "DE",
+  ja: "JA",
+  ko: "KO",
+  ru: "RU",
+};
+
 interface Post {
   id: number;
   title: string;
@@ -40,6 +51,8 @@ export default function AdminBlogList() {
   const [localeFilter, setLocaleFilter] = useState("zh");
   const [stats, setStats] = useState<{ total: number; zh: number }>({ total: 0, zh: 0 });
   const [translating, setTranslating] = useState<{ slug: string; title: string; done: boolean } | null>(null);
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
+  const [translatingKeys, setTranslatingKeys] = useState<Set<string>>(new Set());
 
   const router = useRouter();
   const [newSlug, setNewSlug] = useState<string | null>(null);
@@ -72,6 +85,17 @@ export default function AdminBlogList() {
     fetch(url)
       .then((r) => r.json())
       .then(setPosts);
+  }, [localeFilter]);
+
+  // In English view, also load ALL posts to build per-slug translation status
+  useEffect(() => {
+    if (localeFilter !== "en") {
+      setAllPosts([]);
+      return;
+    }
+    fetch("/api/admin/blog")
+      .then((r) => r.json())
+      .then((all: Post[]) => setAllPosts(all));
   }, [localeFilter]);
 
   // Detect new post from query param and start tracking translation progress
@@ -139,6 +163,56 @@ export default function AdminBlogList() {
     setDeleteId(null);
   }
 
+  // Build per-slug translation status map from ALL posts
+  const localeStatusMap = useMemo(() => {
+    const map: Record<string, Record<string, "ok" | "failed" | "missing">> = {};
+    for (const p of allPosts) {
+      if (p.locale === "en") continue;
+      if (!map[p.slug]) {
+        map[p.slug] = {
+          zh: "missing",
+          es: "missing",
+          fr: "missing",
+          de: "missing",
+          ja: "missing",
+          ko: "missing",
+          ru: "missing",
+        };
+      }
+      const prefix = `[${p.locale.toUpperCase()}]`;
+      map[p.slug][p.locale] = p.title.startsWith(prefix) ? "failed" : "ok";
+    }
+    return map;
+  }, [allPosts]);
+
+  async function handleTranslate(slug: string, locale: string) {
+    const key = `${slug}:${locale}`;
+    if (translatingKeys.has(key)) return;
+    setTranslatingKeys((prev) => new Set(prev).add(key));
+    try {
+      const res = await fetch("/api/admin/blog/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, locale }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        alert(data.error || "翻译失败");
+      } else {
+        const all = await fetch("/api/admin/blog").then((r) => r.json());
+        setAllPosts(all);
+      }
+    } catch {
+      alert("翻译请求失败，请重试");
+    } finally {
+      setTranslatingKeys((prev) => {
+        const next = new Set(prev);
+        next.delete(key);
+        return next;
+      });
+    }
+  }
+
   const columns = [
     { key: "title", label: "标题", sortable: true },
     {
@@ -162,6 +236,71 @@ export default function AdminBlogList() {
       ),
     },
     { key: "date", label: "日期", sortable: true },
+    ...(localeFilter === "en"
+      ? [
+          {
+            key: "translations",
+            label: "多语言翻译",
+            render: (row: Post) => (
+              <div className="flex flex-wrap gap-1.5 max-w-md">
+                {TRANSLATE_LOCALES.map((loc) => {
+                  const status = localeStatusMap[row.slug]?.[loc] ?? "missing";
+                  const loading = translatingKeys.has(`${row.slug}:${loc}`);
+                  const short = TRANSLATE_SHORT[loc];
+                  if (loading) {
+                    return (
+                      <span
+                        key={loc}
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300"
+                      >
+                        <svg className="animate-spin w-2.5 h-2.5" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
+                        </svg>
+                        {short}
+                      </span>
+                    );
+                  }
+                  if (status === "ok") {
+                    return (
+                      <span
+                        key={loc}
+                        title={`${LOCALE_NAMES[loc]}：翻译成功`}
+                        className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300"
+                      >
+                        {short} ✓
+                      </span>
+                    );
+                  }
+                  return (
+                    <button
+                      key={loc}
+                      title={
+                        status === "failed"
+                          ? `${LOCALE_NAMES[loc]}：翻译失败，点击重新翻译`
+                          : `${LOCALE_NAMES[loc]}：未翻译，点击翻译`
+                      }
+                      onClick={() => handleTranslate(row.slug, loc)}
+                      className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer ${
+                        status === "failed"
+                          ? "bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-800"
+                          : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`}
+                    >
+                      {short}
+                      {status === "failed" ? " ✗" : " ＋"}
+                    </button>
+                  );
+                })}
+              </div>
+            ),
+          },
+        ]
+      : []),
     {
       key: "actions",
       label: "操作",
