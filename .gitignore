@@ -39,6 +39,7 @@ src/data/fetch-log.json
 src/data/posts.json
 src/data/blog-stats.json
 src/data/api-test-results.json
+src/data/ai-config.json
 
 # typescript
 *.tsbuildinfo

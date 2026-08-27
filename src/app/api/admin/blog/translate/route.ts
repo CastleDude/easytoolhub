@@ -24,27 +24,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "English article not found" }, { status: 404 });
   }
 
-  const translated = await translateWithDeepSeek(en.title, en.excerpt, en.content, locale);
-  if (!translated) {
-    return NextResponse.json({ error: "Translation failed" }, { status: 502 });
+  const outcome = await translateWithDeepSeek(en.title, en.excerpt, en.content, locale);
+  if (!outcome.ok) {
+    return NextResponse.json({ error: "翻译失败：" + outcome.reason }, { status: 502 });
   }
 
   const existing = getPostBySlug(slug, locale);
   if (existing) {
     await updatePost(existing.id, {
-      title: translated.title,
-      excerpt: translated.excerpt,
-      content: translated.content,
+      title: outcome.title,
+      excerpt: outcome.excerpt,
+      content: outcome.content,
     });
   } else {
     await createPost({
       slug,
       locale,
-      title: translated.title,
-      excerpt: translated.excerpt,
+      title: outcome.title,
+      excerpt: outcome.excerpt,
       date: en.date,
       category: en.category,
-      content: translated.content,
+      content: outcome.content,
       image: en.image,
     });
   }

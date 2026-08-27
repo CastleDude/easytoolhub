@@ -93,6 +93,7 @@ export default function AdminSidebar() {
           <NavLink href="/admin/feedback">💬 用户反馈</NavLink>
           <NavLink href="/admin/visitors">👥 访客记录</NavLink>
           <NavLink href="/admin/api-test">🔌 接口测试</NavLink>
+          <NavLink href="/admin/settings">⚙️ 设置</NavLink>
         </nav>
 
         <div className="p-3 border-t border-gray-200 dark:border-gray-800 space-y-1">
