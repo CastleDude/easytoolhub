@@ -4,6 +4,32 @@
  * (Anthropic-compatible endpoint, thinking-aware max_tokens, 180s timeout).
  */
 
+import fs from "fs";
+import path from "path";
+
+// Read .env.local explicitly (same approach as the daily-fetch scripts),
+// as a fallback in case the Next.js process didn't auto-load it.
+function loadEnvFile(): Record<string, string> {
+  const env: Record<string, string> = {};
+  try {
+    const envPath = path.join(process.cwd(), ".env.local");
+    if (fs.existsSync(envPath)) {
+      const lines = fs.readFileSync(envPath, "utf8").split("\n");
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith("#")) continue;
+        const eq = trimmed.indexOf("=");
+        if (eq === -1) continue;
+        const key = trimmed.slice(0, eq).trim();
+        const val = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+        if (!process.env[key]) process.env[key] = val;
+        env[key] = val;
+      }
+    }
+  } catch {}
+  return env;
+}
+
 const LANG_NAMES: Record<string, string> = {
   zh: "Simplified Chinese (简体中文)",
   es: "Spanish (Español)",
@@ -21,10 +47,17 @@ export interface TranslationResult {
 }
 
 function getApiConfig() {
+  const env = loadEnvFile();
   return {
-    baseUrl: process.env.ANTHROPIC_BASE_URL || "https://api.deepseek.com/anthropic",
-    apiKey: process.env.ANTHROPIC_AUTH_TOKEN || "",
-    model: process.env.ANTHROPIC_DEFAULT_SONNET_MODEL || "deepseek-v4-pro",
+    baseUrl:
+      process.env.ANTHROPIC_BASE_URL ||
+      env.ANTHROPIC_BASE_URL ||
+      "https://api.deepseek.com/anthropic",
+    apiKey: process.env.ANTHROPIC_AUTH_TOKEN || env.ANTHROPIC_AUTH_TOKEN || "",
+    model:
+      process.env.ANTHROPIC_DEFAULT_SONNET_MODEL ||
+      env.ANTHROPIC_DEFAULT_SONNET_MODEL ||
+      "deepseek-v4-pro",
   };
 }
 
@@ -35,7 +68,10 @@ export async function translateWithDeepSeek(
   targetLocale: string,
 ): Promise<TranslationResult | null> {
   const { baseUrl, apiKey, model } = getApiConfig();
-  if (!apiKey) return null;
+  if (!apiKey) {
+    console.error("[DeepSeek] ANTHROPIC_AUTH_TOKEN not set (process.env / .env.local)");
+    return null;
+  }
 
   const langName = LANG_NAMES[targetLocale] || targetLocale;
   const fallbackPrefix = `[${targetLocale.toUpperCase()}]`;
