@@ -28,24 +28,26 @@ async function main() {
 
   if (isDaemon) {
     console.log("[DailyFetch] Starting daemon mode...");
-    console.log("[DailyFetch] Will run every day at 08:00 Beijing time (00:00 UTC)\n");
+    console.log("[DailyFetch] Will run every day at 20:00 Beijing time (12:00 UTC)\n");
 
-    // Calculate time until next 00:00 UTC
+    // Calculate time until next 12:00 UTC (= 20:00 Beijing)
     function scheduleNext() {
       const now = new Date();
       const next = new Date(now);
-      next.setUTCHours(24, 12, 0, 0); // Next 12:00 UTC = 20:00 Beijing
+      next.setUTCHours(12, 0, 0, 0); // Today 12:00 UTC
+      if (next.getTime() <= now.getTime()) {
+        next.setUTCDate(next.getUTCDate() + 1); // Already past → tomorrow
+      }
 
       const msUntilNext = next.getTime() - now.getTime();
       const hours = Math.floor(msUntilNext / 3600000);
       const mins = Math.floor((msUntilNext % 3600000) / 60000);
 
-      console.log(`\n[DailyFetch] Next run in ${hours}h ${mins}m`);
+      console.log(`\n[DailyFetch] Next run in ${hours}h ${mins}m (${next.toISOString()})`);
 
       setTimeout(() => {
-        runPipeline().then(() => {
-          scheduleNext();
-        });
+        // Always reschedule, even if a run fails, so the daemon keeps going
+        runPipeline().finally(scheduleNext);
       }, msUntilNext);
     }
 
