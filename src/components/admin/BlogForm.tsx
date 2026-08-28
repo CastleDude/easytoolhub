@@ -39,6 +39,8 @@ export default function BlogForm({
   const [error, setError] = useState("");
   const [generating, setGenerating] = useState(false);
   const [uploading, setUploading] = useState(false);
+  // Preview uses a cache-busting timestamp so a regenerated cover shows immediately
+  const [previewImage, setPreviewImage] = useState("");
 
   useEffect(() => {
     if (initial) {
@@ -55,6 +57,7 @@ export default function BlogForm({
           initial.imagePrompt ||
           (initial.title ? `Realistic tech product photo related to: ${initial.title}` : ""),
       });
+      setPreviewImage(initial.image || "");
     }
   }, [initial]);
 
@@ -124,6 +127,7 @@ export default function BlogForm({
         return;
       }
       setForm((prev) => ({ ...prev, image: data.imageUrl, imagePrompt: data.prompt }));
+      setPreviewImage(`${data.imageUrl}?t=${Date.now()}`);
     } catch {
       setError("生成请求失败，请重试");
     } finally {
@@ -153,6 +157,7 @@ export default function BlogForm({
         return;
       }
       setForm((prev) => ({ ...prev, image: data.imageUrl }));
+      setPreviewImage(`${data.imageUrl}?t=${Date.now()}`);
     } catch {
       setError("上传请求失败，请重试");
     } finally {
@@ -182,9 +187,9 @@ export default function BlogForm({
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-shrink-0">
             <div className="w-52 aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-              {form.image ? (
+              {previewImage ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={form.image} alt="封面预览" className="w-full h-full object-cover" />
+                <img src={previewImage} alt="封面预览" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-xs text-gray-400 dark:text-gray-500">暂无主图</span>
               )}
