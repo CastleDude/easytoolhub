@@ -36,6 +36,8 @@ export async function POST(request: NextRequest) {
     date: date || new Date().toISOString().split("T")[0],
     category: category || "General",
     content: content || "",
+    image: body.image || undefined,
+    imagePrompt: body.imagePrompt || undefined,
   };
 
   const post = await createPost(input);

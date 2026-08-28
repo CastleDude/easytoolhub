@@ -12,6 +12,8 @@ interface BlogFormData {
   date: string;
   category: string;
   content: string;
+  image?: string;
+  imagePrompt?: string;
 }
 
 export default function BlogForm({
@@ -30,9 +32,13 @@ export default function BlogForm({
     date: new Date().toISOString().split("T")[0],
     category: "Software",
     content: "",
+    image: "",
+    imagePrompt: "",
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [generating, setGenerating] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (initial) {
@@ -44,6 +50,10 @@ export default function BlogForm({
         date: initial.date || new Date().toISOString().split("T")[0],
         category: initial.category || "Software",
         content: initial.content || "",
+        image: initial.image || "",
+        imagePrompt:
+          initial.imagePrompt ||
+          (initial.title ? `Realistic tech product photo related to: ${initial.title}` : ""),
       });
     }
   }, [initial]);
@@ -94,6 +104,62 @@ export default function BlogForm({
     setSaving(false);
   }
 
+  // AI-generate a new cover image (regenerates & replaces on each click)
+  async function handleGenerate() {
+    if (!form.slug) {
+      setError("请先填写别名（slug）再生成主图");
+      return;
+    }
+    setGenerating(true);
+    setError("");
+    try {
+      const res = await fetch("/api/admin/blog/image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: form.slug, prompt: form.imagePrompt }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "生成失败");
+        return;
+      }
+      setForm((prev) => ({ ...prev, image: data.imageUrl, imagePrompt: data.prompt }));
+    } catch {
+      setError("生成请求失败，请重试");
+    } finally {
+      setGenerating(false);
+    }
+  }
+
+  // Upload a local image to replace the cover
+  async function handleUpload(file: File) {
+    if (!form.slug) {
+      setError("请先填写别名（slug）再上传图片");
+      return;
+    }
+    setUploading(true);
+    setError("");
+    try {
+      const fd = new FormData();
+      fd.append("slug", form.slug);
+      fd.append("file", file);
+      const res = await fetch("/api/admin/blog/image/upload", {
+        method: "POST",
+        body: fd,
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "上传失败");
+        return;
+      }
+      setForm((prev) => ({ ...prev, image: data.imageUrl }));
+    } catch {
+      setError("上传请求失败，请重试");
+    } finally {
+      setUploading(false);
+    }
+  }
+
   const categoryOptions = [
     { value: "Software", label: "软件" },
     { value: "Equipment", label: "设备" },
@@ -109,6 +175,61 @@ export default function BlogForm({
           {error}
         </div>
       )}
+
+      {/* Cover image block */}
+      <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-5 space-y-3">
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">封面图</h3>
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-shrink-0">
+            <div className="w-52 aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+              {form.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={form.image} alt="封面预览" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-xs text-gray-400 dark:text-gray-500">暂无主图</span>
+              )}
+            </div>
+            <label className="inline-block mt-2 px-3 py-1.5 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+              {uploading ? "上传中..." : "上传图片"}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                disabled={uploading}
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) handleUpload(f);
+                  e.target.value = "";
+                }}
+              />
+            </label>
+          </div>
+
+          <div className="flex-1 space-y-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              生图提示词
+            </label>
+            <textarea
+              value={form.imagePrompt}
+              onChange={(e) => updateField("imagePrompt", e.target.value)}
+              rows={3}
+              placeholder="描述想要生成的封面图... 留空则自动根据文章内容提炼"
+              className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none resize-none"
+            />
+            <button
+              type="button"
+              onClick={handleGenerate}
+              disabled={generating}
+              className="px-4 py-2 text-sm font-medium bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 transition-colors"
+            >
+              {generating ? "AI 生成中..." : "AI 生图"}
+            </button>
+            <p className="text-xs text-gray-400 dark:text-gray-500">
+              点击按提示词生成一张新主图替换当前图，可多次点击生成不同效果；留空提示词会先根据文章内容自动提炼。
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="md:col-span-2">

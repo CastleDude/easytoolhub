@@ -10,6 +10,7 @@ export interface BlogPost {
   category: string;
   content: string;
   image?: string;
+  imagePrompt?: string;
   created_at: string;
   updated_at: string;
 }
@@ -23,6 +24,7 @@ export interface BlogPostInput {
   category: string;
   content: string;
   image?: string;
+  imagePrompt?: string;
 }
 
 const STORE = "posts";

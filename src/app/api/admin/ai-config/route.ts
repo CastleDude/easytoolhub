@@ -11,10 +11,14 @@ export async function GET(request: NextRequest) {
   const auth = await verifyAdmin(request);
   if (auth) return auth;
 
-  const key = getAiConfig().deepseekApiKey || "";
+  const cfg = getAiConfig();
+  const deep = cfg.deepseekApiKey || "";
+  const runware = cfg.runwareApiKey || "";
   return NextResponse.json({
-    hasKey: key.length > 0,
-    keyMasked: key ? maskKey(key) : "",
+    hasKey: deep.length > 0,
+    keyMasked: deep ? maskKey(deep) : "",
+    runwareHasKey: runware.length > 0,
+    runwareKeyMasked: runware ? maskKey(runware) : "",
   });
 }
 
@@ -23,11 +27,27 @@ export async function POST(request: NextRequest) {
   if (auth) return auth;
 
   const body = await request.json().catch(() => ({}));
-  const key = typeof body.deepseekApiKey === "string" ? body.deepseekApiKey.trim() : "";
-  if (!key) {
-    return NextResponse.json({ error: "DeepSeek API Key 不能为空" }, { status: 400 });
+  const current = getAiConfig();
+
+  // Only overwrite a key when a non-empty value was submitted; empty/absent keeps the old one
+  const deepseek =
+    typeof body.deepseekApiKey === "string" ? body.deepseekApiKey.trim() : null;
+  const runware =
+    typeof body.runwareApiKey === "string" ? body.runwareApiKey.trim() : null;
+
+  if (deepseek === null && runware === null) {
+    return NextResponse.json({ error: "请至少填写一个 API Key" }, { status: 400 });
   }
 
-  await saveAiConfig({ deepseekApiKey: key });
-  return NextResponse.json({ ok: true, keyMasked: maskKey(key) });
+  const cfg = {
+    deepseekApiKey: deepseek !== null ? deepseek : current.deepseekApiKey,
+    runwareApiKey: runware !== null ? runware : current.runwareApiKey,
+  };
+  await saveAiConfig(cfg);
+
+  return NextResponse.json({
+    ok: true,
+    keyMasked: cfg.deepseekApiKey ? maskKey(cfg.deepseekApiKey) : "",
+    runwareKeyMasked: cfg.runwareApiKey ? maskKey(cfg.runwareApiKey) : "",
+  });
 }
