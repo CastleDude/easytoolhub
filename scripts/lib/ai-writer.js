@@ -85,6 +85,7 @@ async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
           model,
           max_tokens: 8192,
           temperature: 0.7,
+          thinking: { type: "disabled" },
           messages: [{ role: "user", content: prompt }],
         }),
         signal: controller.signal,
@@ -93,10 +94,14 @@ async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
 
       const json = await res.json();
 
-      // DeepSeek: text is in content[].text, may have thinking blocks first
+      // DeepSeek: text is in content[].text; reasoning models may prepend thinking blocks.
+      // Join ALL text blocks (defensive) and ignore any thinking blocks.
       const contentBlocks = json.content || [];
-      const textBlock = contentBlocks.find((c) => c.type === "text");
-      const text = textBlock?.text || json.choices?.[0]?.message?.content || "";
+      const text =
+        contentBlocks
+          .filter((c) => c.type === "text")
+          .map((c) => c.text || "")
+          .join("") || json.choices?.[0]?.message?.content || "";
 
       // Extract JSON from response (may have markdown wrapping)
       const jsonMatch = text.match(/\{[\s\S]*\}/);

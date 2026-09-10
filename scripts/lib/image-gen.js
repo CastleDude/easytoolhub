@@ -56,15 +56,19 @@ Article content excerpt: ${excerpt}`;
         model,
         max_tokens: 200,
         temperature: 0.7,
+        thinking: { type: "disabled" },
         messages: [{ role: "user", content: prompt }],
       }),
     });
     const json = await res.json();
-    const textBlock = (json.content || []).find((c) => c.type === "text");
-    const text = (textBlock?.text || json.choices?.[0]?.message?.content || "").trim();
-    if (!text) return null;
+    const text = (json.content || [])
+      .filter((c) => c.type === "text")
+      .map((c) => c.text || "")
+      .join("");
+    const finalText = (text || json.choices?.[0]?.message?.content || "").trim();
+    if (!finalText) return null;
     // Strip wrapping quotes
-    return text.replace(/^["']|["']$/g, "").substring(0, 300);
+    return finalText.replace(/^["']|["']$/g, "").substring(0, 300);
   } catch (e) {
     console.error(`  [ImageGen] LLM prompt build failed:`, e.message);
     return null;

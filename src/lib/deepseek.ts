@@ -117,6 +117,7 @@ Output this JSON structure:
           model,
           max_tokens: 8192,
           temperature: 0.7,
+          thinking: { type: "disabled" },
           messages: [{ role: "user", content: prompt }],
         }),
         signal: controller.signal,
@@ -136,8 +137,10 @@ Output this JSON structure:
 
       const json = await res.json();
       const contentBlocks = json.content || [];
-      const textBlock = contentBlocks.find((c: { type: string }) => c.type === "text");
-      const text = textBlock?.text || json.choices?.[0]?.message?.content || "";
+      const text = contentBlocks
+        .filter((c: { type: string }) => c.type === "text")
+        .map((c: { text?: string }) => c.text || "")
+        .join("") || json.choices?.[0]?.message?.content || "";
 
       const match = text.match(/\{[\s\S]*\}/);
       if (!match) {

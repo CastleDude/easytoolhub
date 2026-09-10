@@ -73,13 +73,16 @@ Article content excerpt: ${excerpt}`;
         "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
       },
-      body: JSON.stringify({ model, max_tokens: 200, temperature: 0.7, messages: [{ role: "user", content: prompt }] }),
+      body: JSON.stringify({ model, max_tokens: 200, temperature: 0.7, thinking: { type: "disabled" }, messages: [{ role: "user", content: prompt }] }),
     });
     const json = await res.json();
-    const textBlock = (json.content || []).find((c: { type: string }) => c.type === "text");
-    const text = (textBlock?.text || json.choices?.[0]?.message?.content || "").trim();
-    if (!text) return null;
-    return text.replace(/^["']|["']$/g, "").substring(0, 300);
+    const text = (json.content || [])
+      .filter((c: { type: string }) => c.type === "text")
+      .map((c: { text?: string }) => c.text || "")
+      .join("");
+    const finalText = (text || json.choices?.[0]?.message?.content || "").trim();
+    if (!finalText) return null;
+    return finalText.replace(/^["']|["']$/g, "").substring(0, 300);
   } catch {
     return null;
   }
