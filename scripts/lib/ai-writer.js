@@ -92,6 +92,16 @@ async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
       });
       clearTimeout(timer);
 
+      // Non-2xx → surface the upstream error (balance, invalid key, rate limit...)
+      if (!res.ok) {
+        let detail = "";
+        try {
+          const j = await res.json();
+          detail = j?.error?.message || "";
+        } catch {}
+        throw new Error(`HTTP ${res.status}${detail ? ": " + detail : ""}`);
+      }
+
       const json = await res.json();
 
       // DeepSeek: text is in content[].text; reasoning models may prepend thinking blocks.
@@ -102,6 +112,16 @@ async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
           .filter((c) => c.type === "text")
           .map((c) => c.text || "")
           .join("") || json.choices?.[0]?.message?.content || "";
+
+      // DeepSeek occasionally ignores thinking:disabled and returns a thinking block
+      // that eats the token budget, leaving text empty. Detect it and retry.
+      const thinkingLen = contentBlocks
+        .filter((c) => c.type === "thinking")
+        .map((c) => c.thinking || c.text || "")
+        .join("").length;
+      if (!text && thinkingLen > 0) {
+        throw new Error(`Thinking block returned with empty text (${thinkingLen} chars) — thinking:disabled was ignored`);
+      }
 
       // Extract JSON from response (may have markdown wrapping)
       const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -116,7 +136,9 @@ async function fetchWithRetry(baseUrl, apiKey, model, prompt, retries) {
     } catch (e) {
       console.error(`[AIWriter] Attempt ${attempt + 1}/${retries} failed:`, e.message);
       if (attempt === retries - 1) throw e;
-      await new Promise((r) => setTimeout(r, 2000));
+      // Exponential backoff: 2s → 4s → 8s → 16s (capped) to ride out transient upstream jitter
+      const delay = Math.min(2000 * Math.pow(2, attempt), 15000);
+      await new Promise((r) => setTimeout(r, delay));
     }
   }
 }

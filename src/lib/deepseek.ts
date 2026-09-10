@@ -142,6 +142,18 @@ Output this JSON structure:
         .map((c: { text?: string }) => c.text || "")
         .join("") || json.choices?.[0]?.message?.content || "";
 
+      // DeepSeek occasionally ignores thinking:disabled and returns a thinking block
+      // that eats the token budget, leaving text empty. Detect it and retry.
+      const thinkingLen = contentBlocks
+        .filter((c: { type: string }) => c.type === "thinking")
+        .map((c: { thinking?: string; text?: string }) => c.thinking || c.text || "")
+        .join("").length;
+      if (!text && thinkingLen > 0) {
+        lastReason = "模型返回了思考块但文本为空（thinking:disabled 被忽略），请稍后重试";
+        console.error(`[DeepSeek] Thinking block with empty text (attempt ${attempt}/3)`);
+        throw new Error("Thinking block returned with empty text");
+      }
+
       const match = text.match(/\{[\s\S]*\}/);
       if (!match) {
         lastReason = "模型响应为空或未返回 JSON，请稍后重试";
@@ -173,7 +185,9 @@ Output this JSON structure:
         : lastReason || msg;
       console.error(`[DeepSeek] Attempt ${attempt}/3 failed:`, msg);
       if (attempt === 3) return { ok: false, reason };
-      await new Promise((r) => setTimeout(r, 2000));
+      // Exponential backoff: 2s → 4s → 8s (capped) to ride out transient upstream jitter
+      const delay = Math.min(2000 * Math.pow(2, attempt - 1), 15000);
+      await new Promise((r) => setTimeout(r, delay));
     }
   }
   return { ok: false, reason: lastReason };
